@@ -179,6 +179,10 @@ The function tells you whether the 3x3 square starting from the row/column numbe
 obtained by the parameter is correctly filled, ie whether each of the numbers 1 to 9 is in it at most once.
 Note that the function to be implemented in this task is a little more general than what is actually needed in sudoku.
 In reality, the real sudoku only looks at (0, 0), (0, 3), (0, 6), (3, 0), (3, 3), (3, 6), (6, 0), (6 , 3) and (6, 6).
+
+Expected output:
+False
+True
 """
 def nelio_oikein(sudoku: list, rivi_nro: int, sarake_nro: int):
     frequency_dic = {'1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7': 0, '8': 0, '9': 0}
@@ -223,3 +227,158 @@ if __name__ == "__main__":
 
     print(nelio_oikein(sudoku, 0, 0))
     print(nelio_oikein(sudoku, 1, 2))
+
+#osa5-06 tee ratkaisu tänne
+"""
+Make a function sudoku_oikein(sudoku: list) that gets a two-dimensional table representing a sudoku grid as a parameter.
+Using the functions of the previous three problems (copy them to the code of this task),
+the function tells whether the grid obtained by the parameter is filled correctly,
+ie each row, each column and all separate 3x3 squares contain at most each of the numbers 1-9.
+Note: The image above shows the 3x3 squares that should be considered when solving the sudoku grid.
+These are thus from (0, 0), (0, 3), (0, 6), (3, 0), (3, 3), (3, 6), (6, 0), (6, 3 ) and (6, 6) begin at nine squares.
+
+Expected output:
+False
+True
+"""
+def sudoku_oikein(sudoku: list):
+    frequency_row_dic = {
+    '0': {'1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7': 0, '8': 0, '9': 0},
+    '1': {'1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7': 0, '8': 0, '9': 0},
+    '2': {'1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7': 0, '8': 0, '9': 0},
+    '3': {'1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7': 0, '8': 0, '9': 0},
+    '4': {'1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7': 0, '8': 0, '9': 0},
+    '5': {'1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7': 0, '8': 0, '9': 0},
+    '6': {'1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7': 0, '8': 0, '9': 0},
+    '7': {'1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7': 0, '8': 0, '9': 0},
+    '8': {'1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7': 0, '8': 0, '9': 0}}
+
+    for i in range(0, len(sudoku)):
+        for j in range(0, len(sudoku[i])):
+            if sudoku[i][j] == 1:
+                frequency_row_dic[str(i)]['1'] = frequency_row_dic[str(i)]['1'] + 1
+            if sudoku[i][j] == 2:
+                frequency_row_dic[str(i)]['2'] = frequency_row_dic[str(i)]['2'] + 1
+            if sudoku[i][j] == 3:
+                frequency_row_dic[str(i)]['3'] = frequency_row_dic[str(i)]['3'] + 1
+            if sudoku[i][j] == 4:
+                frequency_row_dic[str(i)]['4'] = frequency_row_dic[str(i)]['4'] + 1
+            if sudoku[i][j] == 5:
+                frequency_row_dic[str(i)]['5'] = frequency_row_dic[str(i)]['5'] + 1
+            if sudoku[i][j] == 6:
+                frequency_row_dic[str(i)]['6'] = frequency_row_dic[str(i)]['6'] + 1
+            if sudoku[i][j] == 7:
+                frequency_row_dic[str(i)]['7'] = frequency_row_dic[str(i)]['7'] + 1
+            if sudoku[i][j] == 8:
+                frequency_row_dic[str(i)]['8'] = frequency_row_dic[str(i)]['8'] + 1
+            if sudoku[i][j] == 9:
+                frequency_row_dic[str(i)]['9'] = frequency_row_dic[str(i)]['9'] + 1
+
+    frequency_column_dic = {
+    '0': {'1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7': 0, '8': 0, '9': 0},
+    '1': {'1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7': 0, '8': 0, '9': 0},
+    '2': {'1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7': 0, '8': 0, '9': 0},
+    '3': {'1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7': 0, '8': 0, '9': 0},
+    '4': {'1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7': 0, '8': 0, '9': 0},
+    '5': {'1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7': 0, '8': 0, '9': 0},
+    '6': {'1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7': 0, '8': 0, '9': 0},
+    '7': {'1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7': 0, '8': 0, '9': 0},
+    '8': {'1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7': 0, '8': 0, '9': 0}}
+
+    for i in sudoku:
+        for j in range(0, len(i)):
+            if i[j] == 1:
+                frequency_column_dic[str(j)]['1'] = frequency_column_dic[str(j)]['1'] + 1
+            if i[j] == 2:
+                frequency_column_dic[str(j)]['2'] = frequency_column_dic[str(j)]['2'] + 1
+            if i[j] == 3:
+                frequency_column_dic[str(j)]['3'] = frequency_column_dic[str(j)]['3'] + 1
+            if i[j] == 4:
+                frequency_column_dic[str(j)]['4'] = frequency_column_dic[str(j)]['4'] + 1
+            if i[j] == 5:
+                frequency_column_dic[str(j)]['5'] = frequency_column_dic[str(j)]['5'] + 1
+            if i[j] == 6:
+                frequency_column_dic[str(j)]['6'] = frequency_column_dic[str(j)]['6'] + 1
+            if i[j] == 7:
+                frequency_column_dic[str(j)]['7'] = frequency_column_dic[str(j)]['7'] + 1
+            if i[j] == 8:
+                frequency_column_dic[str(j)]['8'] = frequency_column_dic[str(j)]['8'] + 1
+            if i[j] == 9:
+                frequency_column_dic[str(j)]['9'] = frequency_column_dic[str(j)]['9'] + 1
+
+    frequency_square_dic = {
+    '0': {'1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7': 0, '8': 0, '9': 0},
+    '1': {'1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7': 0, '8': 0, '9': 0},
+    '2': {'1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7': 0, '8': 0, '9': 0},
+    '3': {'1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7': 0, '8': 0, '9': 0},
+    '4': {'1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7': 0, '8': 0, '9': 0},
+    '5': {'1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7': 0, '8': 0, '9': 0},
+    '6': {'1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7': 0, '8': 0, '9': 0},
+    '7': {'1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7': 0, '8': 0, '9': 0},
+    '8': {'1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7': 0, '8': 0, '9': 0}}
+
+    for i in range(0, 7, 3):
+        for j in range(0, 7, 3):
+            for x in range(i, i+3):
+                for y in range(j, j+3):
+                    if sudoku[x][y] == 1:
+                        frequency_square_dic[str(int(i+j/3))]['1'] = frequency_square_dic[str(int(i+j/3))]['1'] + 1                    
+                    if sudoku[x][y] == 2:
+                        frequency_square_dic[str(int(i+j/3))]['2'] = frequency_square_dic[str(int(i+j/3))]['2'] + 1 
+                    if sudoku[x][y] == 3:
+                        frequency_square_dic[str(int(i+j/3))]['3'] = frequency_square_dic[str(int(i+j/3))]['3'] + 1 
+                    if sudoku[x][y] == 4:
+                        frequency_square_dic[str(int(i+j/3))]['4'] = frequency_square_dic[str(int(i+j/3))]['4'] + 1 
+                    if sudoku[x][y] == 5:
+                        frequency_square_dic[str(int(i+j/3))]['5'] = frequency_square_dic[str(int(i+j/3))]['5'] + 1 
+                    if sudoku[x][y] == 6:
+                        frequency_square_dic[str(int(i+j/3))]['6'] = frequency_square_dic[str(int(i+j/3))]['6'] + 1 
+                    if sudoku[x][y] == 7:
+                        frequency_square_dic[str(int(i+j/3))]['7'] = frequency_square_dic[str(int(i+j/3))]['7'] + 1 
+                    if sudoku[x][y] == 8:
+                        frequency_square_dic[str(int(i+j/3))]['8'] = frequency_square_dic[str(int(i+j/3))]['8'] + 1 
+                    if sudoku[x][y] == 9:
+                        frequency_square_dic[str(int(i+j/3))]['9'] = frequency_square_dic[str(int(i+j/3))]['9'] + 1
+
+    for value in frequency_row_dic.values():
+        if value[max(value, key = value.get)] > 1:
+            return False
+
+    for value in frequency_column_dic.values():
+        if value[max(value, key = value.get)] > 1:
+            return False
+
+    for value in frequency_square_dic.values():
+        if value[max(value, key = value.get)] > 1:
+            return False
+
+    return True
+
+if __name__ == "__main__":
+    sudoku1 = [
+    [9, 0, 0, 0, 8, 0, 3, 0, 0],
+    [2, 0, 0, 2, 5, 0, 7, 0, 0],
+    [0, 2, 0, 3, 0, 0, 0, 0, 4],
+    [2, 9, 4, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 7, 3, 0, 5, 6, 0],
+    [7, 0, 5, 0, 6, 0, 4, 0, 0],
+    [0, 0, 7, 8, 0, 3, 9, 0, 0],
+    [0, 0, 1, 0, 0, 0, 0, 0, 3],
+    [3, 0, 0, 0, 0, 0, 0, 0, 2]
+    ]
+
+    print(sudoku_oikein(sudoku1))
+
+    sudoku2 = [
+    [2, 6, 7, 8, 3, 9, 5, 0, 4],
+    [9, 0, 3, 5, 1, 0, 6, 0, 0],
+    [0, 5, 1, 6, 0, 0, 8, 3, 9],
+    [5, 1, 9, 0, 4, 6, 3, 2, 8],
+    [8, 0, 2, 1, 0, 5, 7, 0, 6],
+    [6, 7, 4, 3, 2, 0, 0, 0, 5],
+    [0, 0, 0, 4, 5, 7, 2, 6, 3],
+    [3, 2, 0, 0, 8, 0, 0, 5, 7],
+    [7, 4, 5, 0, 0, 3, 9, 0, 1]
+    ]
+
+    print(sudoku_oikein(sudoku2))
