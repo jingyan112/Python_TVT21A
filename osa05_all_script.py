@@ -180,3 +180,46 @@ obtained by the parameter is correctly filled, ie whether each of the numbers 1 
 Note that the function to be implemented in this task is a little more general than what is actually needed in sudoku.
 In reality, the real sudoku only looks at (0, 0), (0, 3), (0, 6), (3, 0), (3, 3), (3, 6), (6, 0), (6 , 3) and (6, 6).
 """
+def nelio_oikein(sudoku: list, rivi_nro: int, sarake_nro: int):
+    frequency_dic = {'1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6': 0, '7': 0, '8': 0, '9': 0}
+    
+    for i in range(rivi_nro, rivi_nro+3):
+        for j in range(sarake_nro, sarake_nro+3):
+            if sudoku[i][j] == 1:
+                frequency_dic['1'] = frequency_dic['1'] + 1
+            if sudoku[i][j] == 2:
+                frequency_dic['2'] = frequency_dic['2'] + 1
+            if sudoku[i][j] == 3:
+                frequency_dic['3'] = frequency_dic['3'] + 1
+            if sudoku[i][j] == 4:
+                frequency_dic['4'] = frequency_dic['4'] + 1        
+            if sudoku[i][j] == 5:
+                frequency_dic['5'] = frequency_dic['5'] + 1
+            if sudoku[i][j] == 6:
+                frequency_dic['6'] = frequency_dic['6'] + 1
+            if sudoku[i][j] == 7:
+                frequency_dic['7'] = frequency_dic['7'] + 1
+            if sudoku[i][j] == 8:
+                frequency_dic['8'] = frequency_dic['8'] + 1
+            if sudoku[i][j] == 9:
+                frequency_dic['9'] = frequency_dic['9'] + 1
+
+    if frequency_dic[max(frequency_dic, key = frequency_dic.get)] > 1:
+        return False
+    return True
+
+if __name__ == "__main__":
+    sudoku = [
+    [9, 0, 0, 0, 8, 0, 3, 0, 0],
+    [2, 0, 0, 2, 5, 0, 7, 0, 0],
+    [0, 2, 0, 3, 0, 0, 0, 0, 4],
+    [2, 9, 4, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 7, 3, 0, 5, 6, 0],
+    [7, 0, 5, 0, 6, 0, 4, 0, 0],
+    [0, 0, 7, 8, 0, 3, 9, 0, 0],
+    [0, 0, 1, 0, 0, 0, 0, 0, 3],
+    [3, 0, 0, 0, 0, 0, 0, 0, 2]
+    ]
+
+    print(nelio_oikein(sudoku, 0, 0))
+    print(nelio_oikein(sudoku, 1, 2))
