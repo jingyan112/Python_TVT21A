@@ -382,3 +382,156 @@ if __name__ == "__main__":
     ]
 
     print(sudoku_oikein(sudoku2))
+
+#osa5-06a tee ratkaisu tänne
+"""
+Make a function tuplaa_alkiot(luvut: list) that gets a list of numbers as its parameter.
+The function returns a new list in which the items in the original list are multiplied by two.
+The function must not change the original list.
+
+Expected output:
+alkuperäinen: [2, 4, 5, 3, 11, -4]
+tuplattu: [4, 8, 10, 6, 22, -8]
+"""
+def tuplaa_alkiot(luvut: list):
+    new_luvut = []
+    for i in range(0, len(luvut)):
+        new_luvut.append(luvut[i]*2)
+    return new_luvut
+
+if __name__ == "__main__":
+    luvut = [2, 4, 5, 3, 11, -4]
+    tuplaluvut = tuplaa_alkiot(luvut)
+    print("alkuperäinen:", luvut)
+    print("tuplattu:", tuplaluvut)
+
+#osa5-06b tee ratkaisu tänne
+"""
+Make a function poista_pienin(luvut: list) that gets a list of numbers as its parameter.
+The function finds and removes the smallest item from the list. You can assume that the smallest item appears in the list only once.
+So the function does not return anything, but modifies the list it receives as a parameter!
+
+Expected output:
+[2, 4, 6, 3, 5]
+"""
+def poista_pienin(luvut: list):
+    return luvut.remove(min(luvut))
+
+if __name__ == "__main__":
+    luvut = [2, 4, 6, 1, 3, 5]
+    poista_pienin(luvut)
+    print(luvut)
+
+#osa5-07 tee ratkaisu tänne
+"""
+In this task, two more functions are implemented for sudoku: tulostaand lisays.
+The function tulosta obtains a two-dimensional list representing the sudoku grid as a parameter and prints it in the format according to the example output below.
+The function lisays(sudoku: list, rivi_nro: int, sarake_nro: int, luku:int) gets a two-dimensional list representing a sudoku grid, row and column numbers, and a number from 1 to 9.
+The function inserts a sudoku grid at the point indicated by the number parameters.
+
+Expected output:
+_ _ _  _ _ _  _ _ _
+_ _ _  _ _ _  _ _ _
+_ _ _  _ _ _  _ _ _
+
+_ _ _  _ _ _  _ _ _
+_ _ _  _ _ _  _ _ _
+_ _ _  _ _ _  _ _ _
+
+_ _ _  _ _ _  _ _ _
+_ _ _  _ _ _  _ _ _
+_ _ _  _ _ _  _ _ _
+
+Kolme numeroa lisätty:
+
+2 _ _  _ _ _  _ _ _
+_ _ 7  _ _ _  _ _ _
+_ _ _  _ _ _  _ _ _
+
+_ _ _  _ _ _  _ _ _
+_ _ _  _ _ _  _ _ _
+_ _ _  _ _ _  _ 3 _
+
+_ _ _  _ _ _  _ _ _
+_ _ _  _ _ _  _ _ _
+_ _ _  _ _ _  _ _ _
+"""
+def tulosta(sudoku: list):
+    for i in range(0, len(sudoku)):
+        for j in range(0, len(sudoku[i])):
+            if sudoku[i][j] == 0:
+                print("_", end = "")
+                print(" ", end = "")
+            else:
+                print(sudoku[i][j], end = "")
+                print(" ", end = "")
+
+            if (j+1) % 3 == 0:
+                print(" ", end = "")
+
+        if (i+1)%3 == 0:
+            print()
+        print()
+
+def lisays(sudoku: list, rivi_nro: int, sarake_nro: int, luku:int):
+    sudoku[rivi_nro][sarake_nro] = luku
+    return sudoku
+
+if __name__ == "__main__":
+    sudoku  = [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ]
+
+    tulosta(sudoku)
+    lisays(sudoku, 0, 0, 2)
+    lisays(sudoku, 1, 2, 7)
+    lisays(sudoku, 5, 7, 3)
+    print()
+    print("Kolme numeroa lisätty:")
+    print()
+    tulosta(sudoku)
+
+#osa5-08 tee ratkaisu tänne
+"""
+The last task on sudoku implements a slightly different version of the function to add new numbers to the sudoku grid.
+The function kopioi_ja_lisaa(sudoku: list, rivi_nro: int, sarake_nro: int, luku:int) gets its parameters from
+a two-dimensional list representing a sudoku grid, a row number, a column number, and a number between 1 and 9.
+The function returns a copy of the sudoku grid obtained by the parameter,
+plus the number obtained by the parameter placed at the location obtained by the parameter.
+The function must not change the sudoku grid given by the parameter.
+
+Expected output:
+Alkuperäinen:
+_ _ _  _ _ _  _ _ _
+_ _ _  _ _ _  _ _ _
+_ _ _  _ _ _  _ _ _
+
+_ _ _  _ _ _  _ _ _
+_ _ _  _ _ _  _ _ _
+_ _ _  _ _ _  _ _ _
+
+_ _ _  _ _ _  _ _ _
+_ _ _  _ _ _  _ _ _
+_ _ _  _ _ _  _ _ _
+
+Kopio:
+2 _ _  _ _ _  _ _ _
+_ _ _  _ _ _  _ _ _
+_ _ _  _ _ _  _ _ _
+
+_ _ _  _ _ _  _ _ _
+_ _ _  _ _ _  _ _ _
+_ _ _  _ _ _  _ _ _
+
+_ _ _  _ _ _  _ _ _
+_ _ _  _ _ _  _ _ _
+_ _ _  _ _ _  _ _ _
+"""
