@@ -644,3 +644,95 @@ def transponoi(matriisi: list):
     for i in range(0, len(matriisi)):
         for j in range(0, len(matriisi[i])):
             matriisi[i][j] = matriisi_copy[j][i]
+
+#osa5-10b tee ratkaisu tänne
+"""
+Make a function kertaa_kymmenen(alku: int, loppu: int) that creates and returns a new dictionary.
+The dictionary contains the keys to the figures between alku.. loppu.
+The value of each key is the key multiplied by ten.
+
+Examples:
+d = kertaa_kymmenen(3, 6)
+print(d)
+
+Output:
+{3:30, 4:40, 5:50, 6:60}
+"""
+def kertaa_kymmenen(alku: int, loppu: int):
+    dic = {}
+    for i in range(alku, loppu+1):
+        dic[i] = i * 10
+    return dic
+
+if __name__ == "__main__":
+    d = kertaa_kymmenen(3, 6)
+    print(d)
+
+#osa5-11 tee ratkaisu tänne
+"""
+Make a function kertomat(n: int) that returns the numbers n multiplied by the numbers 1 .. in the dictionary
+so that the number is the key and the value multiplied by the number to which the key refers.
+As a reminder: n told by a chapter n! is calculated by multiplying the number by any positive integer less than itself.
+The multiplication of Chapter 4 is therefore 4 * 3 * 2 * 1 = 24.
+
+Examples:
+k = kertomat(5)
+print(k[1])
+print(k[3])
+print(k[5])
+
+Output:
+1
+6
+120
+"""
+def kertomat(n: int):
+    dic = {}
+    for i in range(1, n+1):
+        value = 1
+        for j in range(1, i+1):
+            value = value * j
+        dic[i] = value
+    return dic
+
+if __name__ == "__main__":
+    k = kertomat(5)
+    print(k[1])
+    print(k[3])
+    print(k[5])
+
+#osa5-12 tee ratkaisu tänne
+"""
+Make a function histogrammi that takes the parameter string and
+prints a histogram of the number of different letters in the string,
+with one star printed on each line of the letter.
+
+Examples:
+histogrammi("abba")
+histogrammi("saippuakauppias")
+
+Output:
+a **
+b **
+
+s **
+a ****
+i **
+p ****
+u **
+k *
+"""
+def histogrammi(string: str):
+    dic = {}
+    for i in range(0, len(string)):
+        if string[i] not in dic:
+            dic[string[i]] = string.count(string[i])
+    for key, value in dic.items():
+        print(key, end = " ")
+        for i in range(0, value):
+            print("*", end = "")
+        print()
+
+if __name__ == "__main__":
+    histogrammi("abba")
+    histogrammi("saippuakauppias")
