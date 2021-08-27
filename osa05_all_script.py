@@ -914,3 +914,96 @@ if __name__ == "__main__":
 
     lista = etsi_elokuvat(rekisteri, "python")
     print(lista)
+
+#osa5-17c tee ratkaisu tänne
+"""
+Make a function tee_tuple(x: int, y: int, z: int) that generates and
+returns a double of the integers it receives as a parameter
+according to the following rules:
+    The first element of the double is the smallest of the parameters
+    The second element of the double is the largest of the parameters
+    The third element of the double is the sum of the parameters
+
+Examples:
+print(tee_tuple(5, 3, -1))
+
+Output:
+(-1, 5, 7)
+"""
+def tee_tuple(x: int, y: int, z: int):
+    num0 = min([x, y, z])
+    num1 = max([x, y, z])
+    num2 = sum([x, y, z])
+    return (num0, num1, num2)
+
+if __name__ == "__main__":
+    print(tee_tuple(5, 3, -1))
+
+#osa5-18 tee ratkaisu tänne
+"""
+Make a function vanhin(henkilot: list) that gets as a parameter a list of doubles representing persons.
+The function searches for and returns the name of the oldest person.
+The person duplicate first contains the person's name as a string and the second item the person's Year of Birth.
+
+Examples:
+h1 = ("Arto", 1977)
+h2 = ("Einari", 1985)
+h3 = ("Maija", 1953)
+h4 = ("Essi", 1997)
+hlista = [h1, h2, h3, h4]
+
+print(vanhin(hlista))
+
+Output:
+Maija
+"""
+def vanhin(henkilot: list):
+    search_min = []
+    for i in range(0, len(henkilot)):
+        search_min.append(henkilot[i][1])
+    for i in range(0, len(henkilot)):
+        if henkilot[i][1] == min(search_min):
+            return henkilot[i][0]
+
+if __name__ == "__main__":
+    h1 = ("Arto", 1977)
+    h2 = ("Einari", 1985)
+    h3 = ("Maija", 1953)
+    h4 = ("Essi", 1997)
+    hlista = [h1, h2, h3, h4]
+
+    print(vanhin(hlista))
+
+#osa5-19 tee ratkaisu tänne
+"""
+Write a function vanhemmat(henkilot: list, vuosi: int) that returns a new list that stores
+all the names of people born before the given year from the list of people obtained by the parameter.
+
+Examples:
+h1 = ("Arto", 1977)
+h2 = ("Einari", 1985)
+h3 = ("Maija", 1953)
+h4 = ("Essi", 1997)
+hlista = [h1, h2, h3, h4]
+
+vanhemmat_henkilot = vanhemmat(hlista, 1979)
+print(vanhemmat_henkilot)
+
+Output:
+['Arto', Maija ']
+"""
+def vanhemmat(henkilot: list, vuosi: int):
+    for i in range(0, len(henkilot)):
+        if henkilot[i][1] < vuosi:
+            search_min.append(henkilot[i][0])
+    return search_min
+
+if __name__ == "__main__":
+    h1 = ("Arto", 1977)
+    h2 = ("Einari", 1985)
+    h3 = ("Maija", 1953)
+    h4 = ("Essi", 1997)
+    hlista = [h1, h2, h3, h4]
+
+    vanhemmat_henkilot = vanhemmat(hlista, 1979)
+    print(vanhemmat_henkilot)
