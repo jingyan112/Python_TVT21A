@@ -534,8 +534,56 @@ _ _ _  _ _ _  _ _ _
 _ _ _  _ _ _  _ _ _
 _ _ _  _ _ _  _ _ _
 _ _ _  _ _ _  _ _ _
-"""
 
+Note:
+All the three methods here will have an influence on the original list when trying to modify the copied list
+copy_list = org_list
+copy_list = org_list[:]
+copy_list = list(org_list)
+"""
+import copy
+
+def tulosta(sudoku: list):
+    for i in range(0, len(sudoku)):
+        for j in range(0, len(sudoku[i])):
+            if sudoku[i][j] == 0:
+                print("_", end = "")
+                print(" ", end = "")
+            else:
+                print(sudoku[i][j], end = "")
+                print(" ", end = "")
+
+            if (j+1) % 3 == 0:
+                print(" ", end = "")
+
+        if (i+1)%3 == 0:
+            print()
+        print()
+
+def kopioi_ja_lisaa(sudoku: list, rivi_nro: int, sarake_nro: int, luku:int):
+    sudoku_copy = copy.deepcopy(sudoku)
+    sudoku_copy[rivi_nro][sarake_nro] = luku
+    return sudoku_copy
+
+if __name__ == "__main__":
+    sudoku  = [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ]
+
+    kopio = kopioi_ja_lisaa(sudoku, 0, 0, 2)
+    print("Alkuperäinen:")
+    tulosta(sudoku)
+    print()
+    print("Kopio:")
+    tulosta(kopio)
 
 #osa5-09 tee ratkaisu tänne
 """
@@ -559,7 +607,16 @@ Expected output:
 True
 [['', '', 'X'], ['', '', ''], ['', '', '']]
 """
+def pelaa_siirto(lauta: list, x: int, y: int, nappula: str):
+    if y >= 0 and y <= 2 and x >= 0 and x <= 2 and lauta[y][x] != 'X' and lauta[y][x] != 'O':
+        lauta[y][x] = nappula
+        return True
+    return False
 
+if __name__ == "__main__":
+    lauta = [['', '', 'X'], ['', '', ''], ['', '', 'O']]
+    print(pelaa_siirto(lauta, 3, 0, "X"))
+    print(lauta)
 
 #osa5-10 tee ratkaisu tänne
 """
