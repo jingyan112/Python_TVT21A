@@ -651,11 +651,7 @@ Make a function kertaa_kymmenen(alku: int, loppu: int) that creates and returns 
 The dictionary contains the keys to the figures between alku.. loppu.
 The value of each key is the key multiplied by ten.
 
-Examples:
-d = kertaa_kymmenen(3, 6)
-print(d)
-
-Output:
+Expected output:
 {3:30, 4:40, 5:50, 6:60}
 """
 def kertaa_kymmenen(alku: int, loppu: int):
@@ -675,13 +671,7 @@ so that the number is the key and the value multiplied by the number to which th
 As a reminder: n told by a chapter n! is calculated by multiplying the number by any positive integer less than itself.
 The multiplication of Chapter 4 is therefore 4 * 3 * 2 * 1 = 24.
 
-Examples:
-k = kertomat(5)
-print(k[1])
-print(k[3])
-print(k[5])
-
-Output:
+Expected output:
 1
 6
 120
@@ -707,11 +697,7 @@ Make a function histogrammi that takes the parameter string and
 prints a histogram of the number of different letters in the string,
 with one star printed on each line of the letter.
 
-Examples:
-histogrammi("abba")
-histogrammi("saippuakauppias")
-
-Output:
+Expected output:
 a **
 b **
 
@@ -803,11 +789,7 @@ while True:
 Write a function kaanna(sanakirja: dict) that gets a dictionary as its parameter and translates it
 so that the values ​​become keys and vice versa.
 
-Examples:
-s = {1: "eka", 2: "toka", 3: "kolmas", 4: "neljas"}
-kaanna(s)
-print(s)
-
+Expected output:
 {"eka": 1, "toka": 2, "kolmas": 3, "neljas": 4}
 """
 def kaanna(sanakirja: dict):
@@ -829,15 +811,7 @@ Write a function lukukirja() that returns a new dictionary.
 The returned structure contains numbers from zero to 99 as keys.
 The values ​​in the dictionary are numbers written in letters.
 
-Examples:
-luvut = lukukirja()
-print(luvut[2])
-print(luvut[11])
-print(luvut[45])
-print(luvut[99])
-print(luvut[0])
-
-Output:
+Expected output:
 kaksi
 yksitoista
 neljäkymmentäviisi
@@ -865,13 +839,7 @@ Write a function lisaa_elokuva(rekisteri: list, nimi: str, ohjaaja: str, vuosi: 
 The register is implemented as a list, and each item in the list is one dictionary. The dictionary has the following keys:
 name; supervisor; year; length
 
-Examples:
-rekisteri = []
-lisaa_elokuva(rekisteri, "Pythonin viemää", "Pekka Python", 2017, 116)
-lisaa_elokuva(rekisteri, "Python lentokoneessa", "Renny Pytholin", 2001, 94)
-print(rekisteri)
-
-Output:
+Expected output:
 [{"name": "taken by Python", "director": "Pekka Python", "year": 2017, "length": 116}, {"name": "Python on a plane", "director": "Renny Pytholin "," year ": 2001," length ": 94}]
 """
 def lisaa_elokuva(rekisteri: list, nimi: str, ohjaaja: str, vuosi: int, pituus: int):
@@ -889,15 +857,7 @@ Write a function etsi_elokuvat(rekisteri: list, hakusana: str) that handles the 
 The function creates a new list to which the movies with the keyword in the name are copied from the register.
 Lowercase and uppercase letters are not marked in the search, so the keyword pajmust include both movie Tappajahaiand movie Pajatoiminnan historia.
 
-Examples:
-rekisteri = [{"nimi": "Pythonin viemää", "ohjaaja": "Pekka Python", "vuosi": 2017, "pituus": 116},
-{"nimi": "Python lentokoneessa", "ohjaaja": "Renny Pythonen", "vuosi": 2001, "pituus": 94},
-{"nimi": "Koodaajien yö", "ohjaaja": "M. Night Python", "vuosi": 2011, "pituus": 101}]
-
-lista = etsi_elokuvat(rekisteri, "python")
-print(lista)
-
-Output:
+Expected output:
 [{"name": "taken by Python", "director": "Pekka Python", "year": 2017, "length": 116}, {"name": "Python on a plane", "director": "Renny Pythonen "," year ": 2001," length ": 94}]
 """
 def etsi_elokuvat(rekisteri: list, hakusana: str):
@@ -924,10 +884,7 @@ according to the following rules:
     The second element of the double is the largest of the parameters
     The third element of the double is the sum of the parameters
 
-Examples:
-print(tee_tuple(5, 3, -1))
-
-Output:
+Expected output:
 (-1, 5, 7)
 """
 def tee_tuple(x: int, y: int, z: int):
@@ -945,16 +902,7 @@ Make a function vanhin(henkilot: list) that gets as a parameter a list of double
 The function searches for and returns the name of the oldest person.
 The person duplicate first contains the person's name as a string and the second item the person's Year of Birth.
 
-Examples:
-h1 = ("Arto", 1977)
-h2 = ("Einari", 1985)
-h3 = ("Maija", 1953)
-h4 = ("Essi", 1997)
-hlista = [h1, h2, h3, h4]
-
-print(vanhin(hlista))
-
-Output:
+Expected output:
 Maija
 """
 def vanhin(henkilot: list):
@@ -979,17 +927,7 @@ if __name__ == "__main__":
 Write a function vanhemmat(henkilot: list, vuosi: int) that returns a new list that stores
 all the names of people born before the given year from the list of people obtained by the parameter.
 
-Examples:
-h1 = ("Arto", 1977)
-h2 = ("Einari", 1985)
-h3 = ("Maija", 1953)
-h4 = ("Essi", 1997)
-hlista = [h1, h2, h3, h4]
-
-vanhemmat_henkilot = vanhemmat(hlista, 1979)
-print(vanhemmat_henkilot)
-
-Output:
+Expected output:
 ['Arto', Maija ']
 """
 def vanhemmat(henkilot: list, vuosi: int):
@@ -1008,3 +946,71 @@ if __name__ == "__main__":
 
     vanhemmat_henkilot = vanhemmat(hlista, 1979)
     print(vanhemmat_henkilot)
+
+#osa5-20 tee ratkaisu tänne
+"""
+Implement a function to lisaa_opiskelija add a new student,
+Implement a function tulosta that prints the data of one student.
+Implement a function lisaa_suoritus that can be used to increase the student's course performance.
+Implement a function koostethat prints a summary of student performance.
+
+Expected output:
+pekka:
+ ei suorituksia
+emilia:
+ ei suorituksia
+ei löytynyt ketään nimellä antti
+"""
+
+def lisaa_opiskelija(all_info: dict, student_name: str):
+    all_info[student_name] = {}
+
+def lisaa_suoritus(all_info: dict, student_name: str, course_grade: tuple):
+    if course_grade[0] in all_info[student_name]:
+        if all_info[student_name][course_grade[0]] < course_grade[1]:
+            all_info[student_name][course_grade[0]] = course_grade[1]
+    else:
+        if course_grade[1] != 0:
+            all_info[student_name][course_grade[0]] = course_grade[1]
+
+def tulosta(all_info: dict, student_name: str):
+    if student_name in all_info:
+        print(student_name + ":")
+        if len(all_info[student_name]) == 0:
+            print(" ei suorituksia")
+        else:
+            print(f" suorituksia {len(all_info[student_name])} kurssilta:")
+
+            sum = 0
+            for i in all_info[student_name]:
+                print(f"  {i} {all_info[student_name][i]}")
+                sum = sum + all_info[student_name][i]
+            
+            print(f" keskiarvo {sum/len(all_info[student_name])}")
+    
+    else:
+        print("ei löytynyt ketään nimellä " + student_name)
+    
+def kooste(all_info: dict):
+    print(f"opiskelijoita {len(all_info)}")
+
+    courses_num = {}
+    for i in all_info:
+        courses_num[i] = len(all_info[i])
+    print(f"eniten suorituksia {courses_num[max(courses_num, key=courses_num.get)]} {max(courses_num, key=courses_num.get)}")
+
+    grade_average = {}
+    for i in all_info:
+        sum = 0
+        for j in all_info[i]:
+            sum = sum + all_info[i][j]
+        grade_average[i] = sum / len(all_info[i])
+    print(f"paras keskiarvo {grade_average[max(grade_average, key=grade_average.get)]} {max(grade_average, key=grade_average.get)}")
+
+if __name__ == "__main__":
+    opiskelijat = {}
+    lisaa_opiskelija(opiskelijat, "pekka")
+    lisaa_opiskelija(opiskelijat, "emilia")
+    tulosta(opiskelijat, "pekka")
+    tulosta(opiskelijat, "emilia")
+    tulosta(opiskelijat, "antti")
