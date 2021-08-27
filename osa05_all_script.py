@@ -535,3 +535,55 @@ _ _ _  _ _ _  _ _ _
 _ _ _  _ _ _  _ _ _
 _ _ _  _ _ _  _ _ _
 """
+
+
+#osa5-09 tee ratkaisu tänne
+"""
+The cross zero is played on a 3 x 3 grid with players alternately marking a cross or zero.
+The game is won by the player who gets the first three chips vertically, horizontally or at an angle.
+The game ends in a draw if neither player gets three sets.
+Write a function pelaa_siirto(lauta: list, x: int, y: int, nappula: str)
+in which a given game piece is placed at the given coordinates on the game board.
+Coordinate values ​​are between 0..2.
+
+Note that in this task, the parameters are different from those in sudoku,
+first describing the column x and then describing the row y.
+The game board consists of strings as follows:
+"": blank box
+"X": 1 character of the player
+"O": Player 2 character
+The function returns a value Trueif a piece could be placed on the board (i.e., if the location was empty),
+and a value Falseif the location was reserved OR if the coordinate value was too small or large (i.e., not between 0..2).
+
+Expected output:
+True
+[['', '', 'X'], ['', '', ''], ['', '', '']]
+"""
+
+
+#osa5-10 tee ratkaisu tänne
+"""
+Write a function transponoi(matriisi: list) that gets a two-dimensional integer table or matrix as its parameter.
+The function transposes the matrix, that is, converts the rows into columns and vice versa.
+You can assume that a matrix has as many rows as there are columns (that is, the matrix is ​​a square matrix ).
+
+Examples:
+1 2 3
+4 5 6
+7 8 9
+
+Output:
+1 4 7
+2 5 8
+3 6 9
+"""
+def transponoi(matriisi: list):
+    matriisi_copy = []
+    for i in range(0,len(matriisi)):
+        matriisi_copy.append([])
+        for j in range(0, len(matriisi[i])):
+            matriisi_copy[i].append(matriisi[i][j])
+
+    for i in range(0, len(matriisi)):
+        for j in range(0, len(matriisi[i])):
+            matriisi[i][j] = matriisi_copy[j][i]
