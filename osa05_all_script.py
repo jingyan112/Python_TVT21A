@@ -736,3 +736,181 @@ def histogrammi(string: str):
 if __name__ == "__main__":
     histogrammi("abba")
     histogrammi("saippuakauppias")
+
+#osa5-13 tee ratkaisu tänne
+"""
+Make a phone book that works like this:
+command (1 search, 2 more, 3 stop): 2 
+name: Pekka 
+number: 040-5466745 
+ok! 
+command (1 search, 2 more, 3 stop): 1 
+name: Pekka 
+040-5466745
+command (1 search, 2 more, 3 stop):3 
+ending ...
+"""
+phonebook_dic = {}
+while True:
+    operation = int(input("komento (1 hae, 2 lisää, 3 lopeta):"))
+    if operation == 1:
+        name = input("nimi: ")
+        if name in phonebook_dic:
+            print(phonebook_dic[name])
+        else:
+            print("ei numeroa")
+
+    if operation == 2:
+        name = input("nimi: ")
+        phonenumber = input("numero: ")
+        phonebook_dic[name] = phonenumber
+        print("ok!")
+
+    if operation == 3:
+        print("lopetetaan...")
+        break
+
+#osa5-14 tee ratkaisu tänne
+"""
+Make an enhanced version of your phonebook, where each person can have multiple phone numbers.
+"""
+phonebook_dic = {}
+while True:
+    operation = int(input("komento (1 hae, 2 lisää, 3 lopeta):"))
+    if operation == 1:
+        name = input("nimi: ")
+        if name in phonebook_dic:
+            for i in range(0, len(phonebook_dic[name])):
+                print(phonebook_dic[name][i])
+        else:
+            print("ei numeroa")
+
+    if operation == 2:
+        name = input("nimi: ")
+        phonenumber = input("numero: ")
+        if name in phonebook_dic:
+            phonebook_dic[name].append(phonenumber)
+        else:
+            phonebook_dic[name] = [phonenumber]
+        print("ok!")
+
+    if operation == 3:
+        print("lopetetaan...")
+        break
+
+#osa5-15 tee ratkaisu tänne
+"""
+Write a function kaanna(sanakirja: dict) that gets a dictionary as its parameter and translates it
+so that the values ​​become keys and vice versa.
+
+Examples:
+s = {1: "eka", 2: "toka", 3: "kolmas", 4: "neljas"}
+kaanna(s)
+print(s)
+
+{"eka": 1, "toka": 2, "kolmas": 3, "neljas": 4}
+"""
+def kaanna(sanakirja: dict):
+    tmp_dic = {}
+    for key, value in sanakirja.items():
+        tmp_dic[value] = key
+    sanakirja.clear() 
+    for key, value in tmp_dic.items():
+        sanakirja[key] = value
+
+if __name__ == "__main__":
+    s = {1: "eka", 2: "toka", 3: "kolmas", 4: "neljas"}
+    kaanna(s)
+    print(s)
+
+#osa5-16 tee ratkaisu tänne
+"""
+Write a function lukukirja() that returns a new dictionary.
+The returned structure contains numbers from zero to 99 as keys.
+The values ​​in the dictionary are numbers written in letters.
+
+Examples:
+luvut = lukukirja()
+print(luvut[2])
+print(luvut[11])
+print(luvut[45])
+print(luvut[99])
+print(luvut[0])
+
+Output:
+kaksi
+yksitoista
+neljäkymmentäviisi
+yhdensänkymmentäyhdeksän
+nolla
+"""
+def lukukirja():
+    number_list = ["nolla", "yksi", "kaksi", "kolme", "neljä", "viisi", "kuusi", "seitsemän", "kahdeksan", "yhdeksän", "kymmenen", "yksitoista", "kaksitoista", "kolmetoista", "neljätoista", "viisitoista", "kuusitoista", "seitsemäntoista", "kahdeksantoista", "yhdeksäntoista", "kaksikymmentä", "kaksikymmentäyksi", "kaksikymmentäkaksi", "kaksikymmentäkolme", "kaksikymmentäneljä", "kaksikymmentäviisi", "kaksikymmentäkuusi", "kaksikymmentäseitsemän", "kaksikymmentäkahdeksan", "kaksikymmentäyhdeksän", "kolmekymmentä", "kolmekymmentäyksi", "kolmekymmentäkaksi", "kolmekymmentäkolme", "kolmekymmentäneljä", "kolmekymmentäviisi", "kolmekymmentäkuusi", "kolmekymmentäseitsemän", "kolmekymmentäkahdeksan", "kolmekymmentäyhdeksän", "neljäkymmentä", "neljäkymmentäyksi", "neljäkymmentäkaksi", "neljäkymmentäkolme", "neljäkymmentäneljä", "neljäkymmentäviisi", "neljäkymmentäkuusi", "neljäkymmentäseitsemän", "neljäkymmentäkahdeksan", "neljäkymmentäyhdeksän", "viisikymmentä", "viisikymmentäyksi", "viisikymmentäkaksi", "viisikymmentäkolme", "viisikymmentäneljä", "viisikymmentäviisi", "viisikymmentäkuusi", "viisikymmentäseitsemän", "viisikymmentäkahdeksan", "viisikymmentäyhdeksän", "kuusikymmentä", "kuusikymmentäyksi", "kuusikymmentäkaksi", "kuusikymmentäkolme", "kuusikymmentäneljä", "kuusikymmentäviisi", "kuusikymmentäkuusi", "kuusikymmentäseitsemän", "kuusikymmentäkahdeksan", "kuusikymmentäyhdeksän", "seitsemänkymmentä", "seitsemänkymmentäyksi", "seitsemänkymmentäkaksi", "seitsemänkymmentäkolme", "seitsemänkymmentäneljä", "seitsemänkymmentäviisi", "seitsemänkymmentäkuusi", "seitsemänkymmentäseitsemän", "seitsemänkymmentäkahdeksan", "seitsemänkymmentäyhdeksän", "kahdeksankymmentä", "kahdeksankymmentäyksi", "kahdeksankymmentäkaksi", "kahdeksankymmentäkolme", "kahdeksankymmentäneljä", "kahdeksankymmentäviisi", "kahdeksankymmentäkuusi", "kahdeksankymmentäseitsemän", "kahdeksankymmentäkahdeksan", "kahdeksankymmentäyhdeksän", "yhdeksänkymmentä", "yhdeksänkymmentäyksi", "yhdeksänkymmentäkaksi", "yhdeksänkymmentäkolme", "yhdeksänkymmentäneljä", "yhdeksänkymmentäviisi", "yhdeksänkymmentäkuusi", "yhdeksänkymmentäseitsemän", "yhdeksänkymmentäkahdeksan", "yhdeksänkymmentäyhdeksän"]
+    number_dic = {}
+    for i in range(0, 100):
+        number_dic[i] = number_list[i]
+    return number_dic
+
+if __name__ == "__main__":
+    luvut = lukukirja()
+    print(luvut[2])
+    print(luvut[11])
+    print(luvut[45])
+    print(luvut[99])
+    print(luvut[0])
+
+#osa5-17 tee ratkaisu tänne
+"""
+Write a function lisaa_elokuva(rekisteri: list, nimi: str, ohjaaja: str, vuosi: int, pituus: int) that adds one movie object to the movie register.
+The register is implemented as a list, and each item in the list is one dictionary. The dictionary has the following keys:
+name; supervisor; year; length
+
+Examples:
+rekisteri = []
+lisaa_elokuva(rekisteri, "Pythonin viemää", "Pekka Python", 2017, 116)
+lisaa_elokuva(rekisteri, "Python lentokoneessa", "Renny Pytholin", 2001, 94)
+print(rekisteri)
+
+Output:
+[{"name": "taken by Python", "director": "Pekka Python", "year": 2017, "length": 116}, {"name": "Python on a plane", "director": "Renny Pytholin "," year ": 2001," length ": 94}]
+"""
+def lisaa_elokuva(rekisteri: list, nimi: str, ohjaaja: str, vuosi: int, pituus: int):
+    rekisteri.append({"nimi": nimi, "ohjaaja": ohjaaja, "vuosi": vuosi, "pituus": pituus})
+
+if __name__ == "__main__":
+    rekisteri = []
+    lisaa_elokuva(rekisteri, "Pythonin viemää", "Pekka Python", 2017, 116)
+    lisaa_elokuva(rekisteri, "Python lentokoneessa", "Renny Pytholin", 2001, 94)
+    print(rekisteri)
+
+#osa5-17b tee ratkaisu tänne
+"""
+Write a function etsi_elokuvat(rekisteri: list, hakusana: str) that handles the movie register created in the previous task.
+The function creates a new list to which the movies with the keyword in the name are copied from the register.
+Lowercase and uppercase letters are not marked in the search, so the keyword pajmust include both movie Tappajahaiand movie Pajatoiminnan historia.
+
+Examples:
+rekisteri = [{"nimi": "Pythonin viemää", "ohjaaja": "Pekka Python", "vuosi": 2017, "pituus": 116},
+{"nimi": "Python lentokoneessa", "ohjaaja": "Renny Pythonen", "vuosi": 2001, "pituus": 94},
+{"nimi": "Koodaajien yö", "ohjaaja": "M. Night Python", "vuosi": 2011, "pituus": 101}]
+
+lista = etsi_elokuvat(rekisteri, "python")
+print(lista)
+
+Output:
+[{"name": "taken by Python", "director": "Pekka Python", "year": 2017, "length": 116}, {"name": "Python on a plane", "director": "Renny Pythonen "," year ": 2001," length ": 94}]
+"""
+def etsi_elokuvat(rekisteri: list, hakusana: str):
+    result_search = []
+    for i in range(0, len(rekisteri)):
+        if hakusana.lower() in rekisteri[i]["nimi"].lower():
+            result_search.append(rekisteri[i])
+    return result_search
+
+if __name__ == "__main__":
+    rekisteri = [{"nimi": "Pythonin viemää", "ohjaaja": "Pekka Python", "vuosi": 2017, "pituus": 116},
+                {"nimi": "Python lentokoneessa", "ohjaaja": "Renny Pythonen", "vuosi": 2001, "pituus": 94},
+                {"nimi": "Koodaajien yö", "ohjaaja": "M. Night Python", "vuosi": 2011, "pituus": 101}]
+
+    lista = etsi_elokuvat(rekisteri, "python")
+    print(lista)
