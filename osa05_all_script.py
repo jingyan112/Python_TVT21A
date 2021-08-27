@@ -993,6 +993,7 @@ Output:
 ['Arto', Maija ']
 """
 def vanhemmat(henkilot: list, vuosi: int):
+    search_min = []
     for i in range(0, len(henkilot)):
         if henkilot[i][1] < vuosi:
             search_min.append(henkilot[i][0])
