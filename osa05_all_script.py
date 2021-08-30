@@ -1014,3 +1014,37 @@ if __name__ == "__main__":
     tulosta(opiskelijat, "pekka")
     tulosta(opiskelijat, "emilia")
     tulosta(opiskelijat, "antti")
+
+#osa5-21 Kirjoita ratkaisu tähän
+"""
+This section culminates in a relatively challenging problem-solving task that can be refined in many different ways.
+While the task is in the chapter on doubles, doubles are hardly worth using here.
+Make a program that prints a letter grid according to the examples below.
+You can assume a maximum of 26 layers.
+
+Examples:
+Floors: 3
+
+CCCCC
+CBBBC
+CBABC
+CBBBC
+CCCCC
+"""
+layer_letter_table = {}
+for layer in range(0, 26):
+    layer_letter_table[layer] = chr(int(layer + 65))
+
+floor_number = int(input("Kerrokset: "))
+letter_table = []
+
+for i in range(0, floor_number * 2 - 1):
+    letter_table.append([])
+    for j in range(0, floor_number * 2 - 1):
+        layer = max(abs(i - floor_number + 1), abs(j - floor_number + 1))
+        letter_table[i].append(layer_letter_table[layer])
+
+for i in letter_table:
+    for j in i:
+        print(j, end = "")
+    print()
