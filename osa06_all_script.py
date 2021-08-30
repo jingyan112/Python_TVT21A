@@ -111,3 +111,126 @@ with open(assignment_info_csvname) as tiedosto:
 
 for key, value in student_id_name.items():
     print(value, student_id_assignments[key])
+
+#osa6-05 tee ratkaisu tänne
+"""
+The previous task is further expanded so that the student's test points are also read from the CSV file.
+"""
+student_info_csvname = input("Opiskelijatiedot: ")
+assignment_info_csvname = input("Tehtävätiedot: ")
+points_info_csvname = input("Koepisteet: ")
+
+with open(student_info_csvname) as tiedosto:
+    next(tiedosto)
+    student_id_name = {}
+    for lines in tiedosto:
+        lines = lines.replace("\n", "")
+        student_info = lines.split(';')
+        student_id_name[student_info[0]] = student_info[1] + " " + student_info[2]
+
+with open(assignment_info_csvname) as tiedosto:
+    next(tiedosto)
+    student_id_assignments = {}
+    for lines in tiedosto:
+        lines = lines.replace("\n", "")
+        student_info = lines.split(';')
+        student_id_assignments[student_info[0]] = 0
+        for i in student_info[1:]:
+            student_id_assignments[student_info[0]] = student_id_assignments[student_info[0]] + int(i)
+
+with open(points_info_csvname) as tiedosto:
+    next(tiedosto)
+    student_id_point = {}
+    for lines in tiedosto:
+        lines = lines.replace("\n", "")
+        student_info = lines.split(';')
+        student_id_point[student_info[0]] = 0
+        for i in student_info[1:]:
+            student_id_point[student_info[0]] = student_id_point[student_info[0]] + int(i)
+
+student_assignment_point = {}
+student_total_point = {}
+
+for key, value in student_id_name.items():
+    student_assignment_point[key] = student_id_assignments[key] // 4
+    student_total_point[key] = student_id_assignments[key] // 4 + student_id_point[key]
+    if student_total_point[key] >= 0 and student_total_point[key] <= 14:
+        print(f"{value} 0")
+    if student_total_point[key] >= 15 and student_total_point[key] <= 17:
+        print(f"{value} 1")
+    if student_total_point[key] >= 18 and student_total_point[key] <= 20:
+        print(f"{value} 2")
+    if student_total_point[key] >= 21 and student_total_point[key] <= 23:
+        print(f"{value} 3")
+    if student_total_point[key] >= 24 and student_total_point[key] <= 27:
+        print(f"{value} 4")
+    if student_total_point[key] >= 28:
+        print(f"{value} 5")
+
+#osa6-06 tee ratkaisu tänne
+"""
+Analysis and output all the infomation in the previous tasks
+
+Examples:
+nimi                          teht_lkm  teht_pist koe_pist  yht_pist  arvosana
+pekka peloton                 21        5         9         14        	0
+jaana javanainen              27        6         11        17        	1
+liisa virtanen                35        8         14        22        	3
+"""
+if True:
+    student_info_csvname = input("Opiskelijatiedot: ")
+    assignment_info_csvname = input("Tehtävätiedot: ")
+    points_info_csvname = input("Koepisteet: ")
+else:
+    student_info_csvname = "opiskelijat1.csv"
+    assignment_info_csvname = "tehtavat1.csv"
+    points_info_csvname = "koepisteet1.csv"
+
+with open(student_info_csvname) as tiedosto:
+    next(tiedosto)
+    student_id_name = {}
+    for lines in tiedosto:
+        lines = lines.replace("\n", "")
+        student_info = lines.split(';')
+        student_id_name[student_info[0]] = student_info[1] + " " + student_info[2]
+
+with open(assignment_info_csvname) as tiedosto:
+    next(tiedosto)
+    student_id_assignments = {}
+    for lines in tiedosto:
+        lines = lines.replace("\n", "")
+        student_info = lines.split(';')
+        student_id_assignments[student_info[0]] = 0
+        for i in student_info[1:]:
+            student_id_assignments[student_info[0]] = student_id_assignments[student_info[0]] + int(i)
+
+with open(points_info_csvname) as tiedosto:
+    next(tiedosto)
+    student_id_point = {}
+    for lines in tiedosto:
+        lines = lines.replace("\n", "")
+        student_info = lines.split(';')
+        student_id_point[student_info[0]] = 0
+        for i in student_info[1:]:
+            student_id_point[student_info[0]] = student_id_point[student_info[0]] + int(i)
+
+student_assignment_point = {}
+student_total_point = {}
+
+title_list = ["nimi", "teht_lkm", "teht_pist", "koe_pist", "yht_pist", "arvosana"]
+print(f"{title_list[0]:<30}{title_list[1]:<10}{title_list[2]:<10}{title_list[3]:<10}{title_list[4]:<10}{title_list[5]}")
+for key, value in student_id_name.items():
+    student_assignment_point[key] = student_id_assignments[key] // 4
+    student_total_point[key] = student_id_assignments[key] // 4 + student_id_point[key]
+    if student_total_point[key] >= 0 and student_total_point[key] <= 14:
+        print(f"{value:<30}{student_id_assignments[key]:<10}{student_assignment_point[key]:<10}{student_id_point[key]:<10}{student_total_point[key]:<10}0")
+    if student_total_point[key] >= 15 and student_total_point[key] <= 17:
+        print(f"{value:<30}{student_id_assignments[key]:<10}{student_assignment_point[key]:<10}{student_id_point[key]:<10}{student_total_point[key]:<10}1")
+    if student_total_point[key] >= 18 and student_total_point[key] <= 20:
+        print(f"{value:<30}{student_id_assignments[key]:<10}{student_assignment_point[key]:<10}{student_id_point[key]:<10}{student_total_point[key]:<10}2")
+    if student_total_point[key] >= 21 and student_total_point[key] <= 23:
+        print(f"{value:<30}{student_id_assignments[key]:<10}{student_assignment_point[key]:<10}{student_id_point[key]:<10}{student_total_point[key]:<10}3")
+    if student_total_point[key] >= 24 and student_total_point[key] <= 27:
+        print(f"{value:<30}{student_id_assignments[key]:<10}{student_assignment_point[key]:<10}{student_id_point[key]:<10}{student_total_point[key]:<10}4")
+    if student_total_point[key] >= 28:
+        print(f"{value:<30}{student_id_assignments[key]:<10}{student_assignment_point[key]:<10}{student_id_point[key]:<10}{student_total_point[key]:<10}5")
