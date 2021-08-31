@@ -234,3 +234,24 @@ for key, value in student_id_name.items():
         print(f"{value:<30}{student_id_assignments[key]:<10}{student_assignment_point[key]:<10}{student_id_point[key]:<10}{student_total_point[key]:<10}4")
     if student_total_point[key] >= 28:
         print(f"{value:<30}{student_id_assignments[key]:<10}{student_assignment_point[key]:<10}{student_id_point[key]:<10}{student_total_point[key]:<10}5")
+
+#osa6-07 tee ratkaisu tänne
+"""
+Make a program that asks the user to type a line of English text.
+The program performs a spell check on the text and prints the same text 
+so that all misspelled words are surrounded by asterisks.
+The program recognizes correctly spelled words using a file in the task template wordlist.txt.
+"""
+sentence_list = input("Write text: ").split(" ")
+
+with open("wordlist.txt") as tiedosto:
+    word_dic = []
+    for lines in tiedosto:
+        lines = lines.replace("\n", "")
+        word_dic.append(lines)
+
+for i in range(0, len(sentence_list)):
+    if sentence_list[i].lower() not in word_dic:
+        sentence_list[i] = "*" + sentence_list[i] + "*"
+    print(sentence_list[i], end = " ")
+print()
