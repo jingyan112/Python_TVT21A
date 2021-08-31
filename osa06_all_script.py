@@ -323,3 +323,73 @@ if __name__ == "__main__":
     loydetyt = hae_raakaaine("reseptit2.txt", "vesi")
     for resepti in loydetyt:
         print(resepti)
+
+#osa-09 tee ratkaisu tänne
+"""
+The info from the file:
+Longitude;Latitude;FID;name;total_slot;operative;id
+24.950292890004903;60.155444793742276;1;Kaivopuisto;30;Yes;001
+
+- Make a function hae_asematiedot(tiedosto: str) that reads the drive information from the file and returns
+{"Kaivopuisto: (24.950292890004903, 60.155444793742276)}
+
+- Perform a function etaisyys(asemat: dict, asema1: str, asema2: str) that reads the drive information from the file and returns
+the distance between the stations multiplied by the parameter.
+Calculation process:
+import math
+x_kilometreina = (longitude1 - longitude2) * 55.26
+y_kilometreina = (latitude1 - latitude2) * 111.2
+etaisyys = math.sqrt(x_kilometreina**2 + y_kilometreina**2)
+
+Examples:
+asemat = hae_asematiedot('stations1.csv')
+e = etaisyys(asemat, "Designmuseo", "Hietalahdentori")
+print(e)
+0.9032737292463177
+
+- Make a function suurin_etaisyys(asemat: dict) that finds out which two stations are furthest apart.
+The function returns a double whose first two values ​​tell the names of the stations and the third value the distance between them.
+
+Examples:
+asemat = hae_asematiedot('stations1.csv')
+asema1, asema2, suurin = suurin_etaisyys(asemat)
+print(asema1, asema2, suurin)
+Laivasillankatu Hietalahdentori 1.478708873076181
+"""
+import math
+def hae_asematiedot(tiedosto: str):
+    citybike_dic = {}
+    with open(tiedosto) as filename:
+        next(filename)
+        for lines in filename:
+            lines = lines.replace("\n", "")
+            citybike_info = lines.split(";")
+            citybike_dic[citybike_info[3]] = (float(citybike_info[0]), float(citybike_info[1]))
+    return citybike_dic
+
+def etaisyys(asemat: dict, asema1: str, asema2: str):
+    x_kilometreina = (asemat[asema1][0] - asemat[asema2][0]) * 55.26
+    y_kilometreina = (asemat[asema1][1] - asemat[asema2][1]) * 111.2
+    etaisyys = math.sqrt(x_kilometreina**2 + y_kilometreina**2)
+    return etaisyys
+
+def suurin_etaisyys(asemat: dict):
+    station_list = []
+    for station in asemat:
+        station_list.append(station)
+    distance_dic = {}
+    for i in range(0, len(station_list)-1):
+        for j in range(i+1, len(station_list)):
+            distance_dic[(station_list[i], station_list[j])] = etaisyys(asemat, station_list[i], station_list[j])
+    return max(distance_dic, key = distance_dic.get)[0], max(distance_dic, key = distance_dic.get)[1], distance_dic[max(distance_dic, key = distance_dic.get)]
+
+if __name__ == "__main__":
+    asemat = hae_asematiedot('stations1.csv')
+
+    e = etaisyys(asemat, "Designmuseo", "Hietalahdentori")
+    print(e)
+    e = etaisyys(asemat, "Viiskulma", "Kaivopuisto")
+    print(e)
+
+    asema1, asema2, suurin = suurin_etaisyys(asemat)
+    print(asema1, asema2, suurin)
