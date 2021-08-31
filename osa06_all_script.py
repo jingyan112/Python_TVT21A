@@ -465,3 +465,123 @@ def suodata_laskut():
     with open("vaarat.csv", "w") as tiedosto:
         for info in incorrect_content:
             tiedosto.write(info+"\n")
+
+#osa6-13 tee ratkaisu tänne
+"""
+Write a function tallenna_henkilo(henkilo: tuple) that gets a tuple of the person as its parameter.
+Save the person's information to a file henkilot.csva fter the existing information.
+The data must be saved in the form: name, age, length
+"""
+def tallenna_henkilo(henkilo: tuple):
+    with open("henkilot.csv", "a") as tiedosto:
+        content = henkilo[0] + ";" + str(henkilo[1]) + ";" + str(henkilo[2])
+        tiedosto.write(content + "\n")
+
+if __name__ == "__main__":
+    tallenna_henkilo((("Kimmo Kimmonen", 37, 175.5)))
+
+#osa6-14 tee ratkaisu tänne
+"""
+Read student_info, assignment_info, exam_points and course_info from files.
+After calculation and analysis, save the result to tulos.txt and tulos.csv.
+
+The format of tulos.txt:
+Ohjelmoinnin perusteet, 5 opintopistettä
+========================================
+nimi                          teht_lkm  teht_pist koe_pist  yht_pist  arvosana
+pekka peloton                 21        5         9         14        0
+jaana javanainen              27        6         11        17        1
+liisa virtanen                35        8         14        22        3
+
+The format of tulos.csv:
+12345678;pekka peloton;0
+12345687;jaana javanainen;1
+12345699;liisa virtanen;3
+"""
+student_info_file = input("opiskelijatiedot: ")
+assignment_info_file = input("tehtävätiedot: ")
+exam_points_file = input("koepisteet: ")
+course_info_file = input("kurssin tiedot: ")
+
+student_info_dic = {} # {id: name}
+with open(student_info_file) as filename:
+    next(filename)
+    for line in filename:
+        info = line.replace("\n", "").split(";")
+        student_info_dic[info[0]] = info[1] + " " + info[2]
+
+assignment_info_dic = {} # {id: assignment_num}
+with open(assignment_info_file) as filename:
+    next(filename)
+    for line in filename:
+        info = line.replace("\n", "").split(";")
+        assignment_info_dic[info[0]] = 0
+        for num in info[1:]:
+            assignment_info_dic[info[0]] = assignment_info_dic[info[0]] + int(num)
+
+assignment_points_dic = {}
+for key, value in assignment_info_dic.items():
+    assignment_points_dic[key] = value // 4
+
+exam_points_dic = {} # {id: exam_points}
+with open(exam_points_file) as filename:
+    next(filename)
+    for line in filename:
+        info = line.replace("\n", "").split(";")
+        exam_points_dic[info[0]] = 0
+        for num in info[1:]:
+            exam_points_dic[info[0]] = exam_points_dic[info[0]] + int(num)
+
+total_points_dic = {} # {id: total_points}
+for key in assignment_points_dic:
+    total_points_dic[key] = assignment_points_dic[key] + exam_points_dic[key]
+
+open("tulos.txt", "w").close()
+open("tulos.csv", "w").close()
+
+course_info_list = []
+with open(course_info_file) as filename:
+    for line in filename:
+        course_info_list.append(line.replace("\n", "").split(": ")[1])
+
+with open("tulos.txt", "a") as filename:
+    content = f"{course_info_list[0]}, {course_info_list[1]} opintopistettä"
+    filename.write(content + "\n")
+
+    isolation_line = ""
+    for i in range(0, len(content)):
+        isolation_line = isolation_line + "="
+    filename.write(isolation_line + "\n")
+    title_list = ["nimi", "teht_lkm", "teht_pist", "koe_pist", "yht_pist", "arvosana"]
+    filename.write(f"{title_list[0]:<30}{title_list[1]:<10}{title_list[2]:<10}{title_list[3]:<10}{title_list[4]:<10}{title_list[5]}\n")
+
+    for key, value in total_points_dic.items():
+        if total_points_dic[key] >= 0 and total_points_dic[key] <= 14:
+            filename.write(f"{student_info_dic[key]:<30}{assignment_info_dic[key]:<10}{assignment_points_dic[key]:<10}{exam_points_dic[key]:<10}{total_points_dic[key]:<10}0\n")
+        if total_points_dic[key] >= 15 and total_points_dic[key] <= 17:
+            filename.write(f"{student_info_dic[key]:<30}{assignment_info_dic[key]:<10}{assignment_points_dic[key]:<10}{exam_points_dic[key]:<10}{total_points_dic[key]:<10}1\n")
+        if total_points_dic[key] >= 18 and total_points_dic[key] <= 20:
+            filename.write(f"{student_info_dic[key]:<30}{assignment_info_dic[key]:<10}{assignment_points_dic[key]:<10}{exam_points_dic[key]:<10}{total_points_dic[key]:<10}2\n")
+        if total_points_dic[key] >= 21 and total_points_dic[key] <= 23:
+            filename.write(f"{student_info_dic[key]:<30}{assignment_info_dic[key]:<10}{assignment_points_dic[key]:<10}{exam_points_dic[key]:<10}{total_points_dic[key]:<10}3\n")
+        if total_points_dic[key] >= 24 and total_points_dic[key] <= 27:
+            filename.write(f"{student_info_dic[key]:<30}{assignment_info_dic[key]:<10}{assignment_points_dic[key]:<10}{exam_points_dic[key]:<10}{total_points_dic[key]:<10}4\n")
+        if total_points_dic[key] >= 28:
+            filename.write(f"{student_info_dic[key]:<30}{assignment_info_dic[key]:<10}{assignment_points_dic[key]:<10}{exam_points_dic[key]:<10}{total_points_dic[key]:<10}5\n")
+
+with open("tulos.csv", "a") as filename:
+    for key, value in total_points_dic.items():
+        if total_points_dic[key] >= 0 and total_points_dic[key] <= 14:
+            filename.write(f"{key};{student_info_dic[key]};0\n")
+        if total_points_dic[key] >= 15 and total_points_dic[key] <= 17:
+            filename.write(f"{key};{student_info_dic[key]};1\n")
+        if total_points_dic[key] >= 18 and total_points_dic[key] <= 20:
+            filename.write(f"{key};{student_info_dic[key]};2\n")
+        if total_points_dic[key] >= 21 and total_points_dic[key] <= 23:
+            filename.write(f"{key};{student_info_dic[key]};3\n")
+        if total_points_dic[key] >= 24 and total_points_dic[key] <= 27:
+            filename.write(f"{key};{student_info_dic[key]};4\n")
+        if total_points_dic[key] >= 28:
+            filename.write(f"{key};{student_info_dic[key]};5\n")
+
+print("Tulokset talletettu tiedostoihin tulos.txt ja tulos.csv")
