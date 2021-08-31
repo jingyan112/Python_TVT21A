@@ -393,3 +393,75 @@ if __name__ == "__main__":
 
     asema1, asema2, suurin = suurin_etaisyys(asemat)
     print(asema1, asema2, suurin)
+
+#osa6-10 tee ratkaisu tänne
+"""
+Write the content with inputting user_name to the file based on the inputting file_name
+"""
+user_name = input("Kenelle teos omistetaan: ")
+file_name = input("Mihin kirjoitetaan: ")
+content = "Hei " + user_name + ", toivomme viihtyisiä hetkiä python-kurssimateriaalin parissa! Terveisin mooc.fi-tiimi"
+with open(file_name, "w") as tiedosto:
+    tiedosto.write(content)
+
+#osa6-11 tee ratkaisu tänne
+"""
+Make a program that models a simple diary.
+The program should save the journal entries to a file paivakirja.txt.
+When the program is started, it reads the entries from the file.
+"""
+while True:
+    print("1 - lisää merkintä, 2 - lue merkinnät, 0 - lopeta")
+    selection = int(input("Valinta: "))
+    if selection == 0:
+        print("Heippa!")
+        break
+    if selection == 1:
+        with open("paivakirja.txt", "a") as tiedosto:
+            tiedosto.write(input("Anna merkintä: ") + '\n')
+        print("Päiväkirja tallennettu")
+    if selection == 2:
+        print("Merkinnät:")
+        with open("paivakirja.txt") as tiedosto:
+            for lines in tiedosto:
+                print(lines)
+
+#osa6-12 tee ratkaisu tänne
+"""
+Write a function suodata_laskut() that reads the laskut.csv contents of the file and
+    - write to the file oikeat.csv the lines with the correct result of the calculation as well
+    - writes to the file vaarat.csv the lines on which the result of the calculation is incorrect.
+"""
+def suodata_laskut():
+    # Clear the content in these two files in case this function is called for multiple times
+    open('oikeat.csv', 'w').close()
+    open('vaarat.csv', 'w').close()
+    correct_content = []
+    incorrect_content = []
+
+    with open("laskut.csv") as tiedosto:
+        for line in tiedosto:
+            info = line.replace("\n", "").split(";")
+            if "+" in info[1]:
+                info.append(info[1].split("+")[0])
+                info.append(info[1].split("+")[1])
+                if int(info[3]) + int(info[4]) == int(info[2]):
+                    correct_content.append(info[0] + ";" + info[1] + ";" + info[2])
+                else:
+                    incorrect_content.append(info[0] + ";" + info[1] + ";" + info[2])
+
+            if "-" in info[1]:
+                info.append(info[1].split("-")[0])
+                info.append(info[1].split("-")[1])
+                if int(info[3]) - int(info[4]) == int(info[2]):
+                    correct_content.append(info[0] + ";" + info[1] + ";" + info[2])
+                else:
+                    incorrect_content.append(info[0] + ";" + info[1] + ";" + info[2])
+
+    with open("oikeat.csv", "w") as tiedosto:
+        for info in correct_content:
+            tiedosto.write(info+"\n")
+
+    with open("vaarat.csv", "w") as tiedosto:
+        for info in incorrect_content:
+            tiedosto.write(info+"\n")
