@@ -255,3 +255,71 @@ for i in range(0, len(sentence_list)):
         sentence_list[i] = "*" + sentence_list[i] + "*"
     print(sentence_list[i], end = " ")
 print()
+
+#osa6-08 tee ratkaisu tänne
+"""
+Make a function hae_nimi(tiedosto: str, sana: str) that retrieves recipes from a file with a given parameter name
+that contain a string given by another parameter.
+The function returns a list in which each recipe found corresponds to a string that tells the name of the recipe.
+
+Make a function hae_aika(tiedosto: str, aika: int) that retrieves recipes from the file with the given name
+of the parameter, the preparation time of which is at most the number of minutes multiplied by the parameter.
+
+Make a function hae_raakaaine(tiedosto: str, aine: str)that retrieves recipes from the file with the parameter
+given that contain the raw material given by the second parameter.
+Recipes that meet the criteria are returned to the list as in the previous task. 
+"""
+def file_processing(tiedosto: str):
+    with open(tiedosto) as filename:
+        content_list = []
+        for lines in filename:
+            content_list.append(lines)
+
+    recipe_dic = {}
+    for i in range(0, content_list.count("\n") + 1):
+        recipe_dic[i] = []
+
+    i = 0
+    for j in content_list:
+        if j == "\n":
+            i = i + 1
+            continue
+        else:
+            recipe_dic[i].append(j.strip())
+
+    return recipe_dic
+
+def hae_nimi(tiedosto: str, sana: str):
+    recipe_search = []
+    for key, value in file_processing(tiedosto).items():
+        if sana.lower() in value[0].lower():
+            recipe_search.append(value[0])
+    return recipe_search
+
+def hae_aika(tiedosto: str, aika: int):
+    recipe_search = []
+    for key, value in file_processing(tiedosto).items():
+        if aika >= int(value[1]):
+            recipe_search.append(f"{value[0]}, valmistusaika {value[1]} min")
+    return recipe_search
+
+def hae_raakaaine(tiedosto: str, aine: str):
+    recipe_search = []
+    for key, value in file_processing(tiedosto).items():
+        for single_ingredient in value[2:]:
+            if single_ingredient == aine:
+                recipe_search.append(f"{value[0]}, valmistusaika {value[1]} min")
+    return recipe_search
+
+if __name__ == "__main__":
+    loydetyt = hae_nimi("reseptit1.txt", "pulla")
+    for resepti in loydetyt:
+        print(resepti)
+
+    loydetyt = hae_aika("reseptit2.txt", 20)
+    for resepti in loydetyt:
+        print(resepti)
+
+    loydetyt = hae_raakaaine("reseptit2.txt", "vesi")
+    for resepti in loydetyt:
+        print(resepti)
