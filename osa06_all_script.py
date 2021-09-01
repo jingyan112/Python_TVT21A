@@ -585,3 +585,63 @@ with open("tulos.csv", "a") as filename:
             filename.write(f"{key};{student_info_dic[key]};5\n")
 
 print("Tulokset talletettu tiedostoihin tulos.txt ja tulos.csv")
+
+#osa6-15 tee ratkaisu tänne
+"""
+Write a function hae_sanat(hakusana: str) that returns words from the file sanat.txt that match the given keyword in the list.
+Matching rules:
+- A dot . means that any character goes
+    - e.g., ca. matches the words cat and car, the p.ng words ping and pong, and the .a.e words sane, care, or late.
+- An asterisk * means that the beginning or end of a word is any string
+    - e.g., ca* corresponds to the words california, cat, caring or catapult.  *ane corresponds to crane, insane or airplane.
+- If there are no special characters in the keyword, only the word that exactly matches the keyword is searched.
+
+The words in the file are completely lowercase.
+You can also assume that the function parameter is given in all lowercase.
+If no results are found, the function returns an empty list.
+
+Expected output:
+['cane']
+['convokes', 'equivokes', 'evokes', 'invokes', 'provokes', 'reinvokes', 'revokes']
+['canine', 'canines', 'caning', 'caninity', 'canister', 'canisters']
+['cannie', 'carnie', 'catnip']
+"""
+import re
+
+def hae_sanat(hakusana: str):
+    search_list = []
+
+    word_list = []
+
+    with open("sanat.txt") as filename:
+        for line in filename:
+            word_list.append(line.replace("\n", ""))
+
+    if "." not in hakusana and "*" not in hakusana:
+        for i in range(0, len(word_list)):
+            if hakusana == word_list[i]:
+                search_list.append(word_list[i])
+
+    if "*" in hakusana:
+        if hakusana.startswith("*"):
+            for i in range(0, len(word_list)):
+                if word_list[i].endswith(hakusana[1:]):
+                    search_list.append(word_list[i])
+        if hakusana.endswith("*"):
+            for i in range(0, len(word_list)):
+                if word_list[i].startswith(hakusana[0:-1]):
+                    search_list.append(word_list[i])
+  
+    if "." in hakusana:
+        r = re.compile(r"^%s$" % (hakusana),re.DOTALL)
+        for i in range(0, len(word_list)):
+            if r.search(word_list[i]) is not None:
+                search_list.append(word_list[i])
+
+    return search_list
+
+if __name__ == "__main__":
+    print(hae_sanat("cane"))
+    print(hae_sanat("*vokes"))
+    print(hae_sanat("cani*"))
+    print(hae_sanat("ca.ni."))
