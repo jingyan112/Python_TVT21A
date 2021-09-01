@@ -733,3 +733,50 @@ def uusi_henkilo(nimi: str, ika: int):
         person_tuple = (nimi, ika)
     
     return person_tuple
+
+#osa6-19 tee ratkaisu tänne
+"""
+The file lottonumerot.csv is stored in the lotto numbers
+There should be a title viikko x, and then seven digits between 1 ... 39, for example,
+viikko 1;17,19,35,23,8,20,36
+viikko 2;24,28,35,8,3,22
+
+However, the file is partially corrupt. The following lines are examples of invalid lines,
+    - Weekly number wrong: viikko zzc, 1,5,13,22,24,25,26
+    - Number or numbers wrong: viikko 22; 1, **, 5,6,13,2b, 34
+    - Too few numbers: viikko 13, 4,6,17,19,24,33
+    - Numbers too small or large: viikko 39, 5,9,15,35,39,41,105
+    - The same number appears twice in a line: viikko 41; 5,12,3,35,12,14,36
+
+Type the function suodata_virheelliset() that creates the file korjatut_numerot.csv.
+Valid lines from the original file have been copied to the file.
+"""
+def suodata_virheelliset():
+    correct_data_info = {}
+    with open("lottonumerot.csv") as filename:
+    #with open("test.csv") as filename:
+        for lines in filename:
+            week_info = lines.replace("\n", "").split(";")[0].replace("viikko ", "")
+            lottonum_info = lines.replace("\n", "").split(";")[1].split(",")
+            try:
+                if int(week_info) and int(week_info) >=1 and int(week_info) <=52:
+                    valid_num = 0
+                    for i in lottonum_info:
+                        try:
+                            if int(i) and int(i) >= 1 and int(i) <= 39 and lottonum_info.count(i) == 1:
+                                valid_num = valid_num + 1
+                        except ValueError:
+                                pass # print("Wrong format of lotto num")
+                    if valid_num == 7:
+                        correct_data_info[week_info] = lottonum_info
+            except ValueError:
+                pass # print("Wrong week info")
+
+    open("korjatut_numerot.csv", "w").close()
+    with open("korjatut_numerot.csv", "w") as filename:
+        for week_info, lottonum_info in correct_data_info.items():
+            content = "viikko " + week_info + ";"
+            for i in lottonum_info:
+                content = content + i + ","
+            content = content[:-1]
+            filename.write(content + "\n")
