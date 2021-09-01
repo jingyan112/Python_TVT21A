@@ -679,3 +679,57 @@ while True:
     if selection == 3:
         print("Moi!")
         break
+
+#osa6-17 tee ratkaisu tänne
+"""
+Make a function lue that asks the user for input until it is an integer defined by parameters.
+The function returns user input.
+
+Typical err type:
+ValueError:
+    - float("1,23")
+TypeError:
+    - len(10)
+IndexError:
+    - "abc"[5]
+ZeroDivisionError: 
+    - sum(lista) / len(lista) when lista is an empty list
+File Exceptions:
+    - FileNotFoundError (trying to read a file that does not exist)
+    - io.UnsupportedOperation (the file is opened in a state that does not allow operation)
+    - PermissionError (the program does not have permission to process the file)
+"""
+def lue(input_info: str, min_num: int, max_num: int):
+    while True:
+        try:
+            num = int(input(input_info))
+            if num >= min_num and num <= max_num:
+                return num
+        except ValueError:
+            pass
+        
+        print("Syötteen on oltava kokonaisluku väliltä 5...10")
+
+if __name__ == "__main__":
+    luku = lue("syötä luku: ", 5, 10)
+    print("syötit luvun:", luku)
+
+#osa6-18 tee ratkaisu tänne
+"""
+Write a function uusi_henkilo(nimi: str, ika: int) that creates and returns a new person double.
+In a double, the first item is the name and the latter the age.
+If the parameters of the function are incorrect, it should produce an ValueError exception instead of returning a double .
+Invalid parameters in this case are:
+    - the name is an empty string
+    - the name does not consist of at least two words
+    - the name is longer than 40 characters
+    - age is a negative number
+    - age is greater than 150
+"""
+def uusi_henkilo(nimi: str, ika: int):
+    if nimi == "" or len(nimi.split(" ")) < 2 or len(nimi) > 40 or ika < 0 or ika > 150:
+        raise ValueError("Error")
+    else:
+        person_tuple = (nimi, ika)
+    
+    return person_tuple
