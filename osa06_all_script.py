@@ -645,3 +645,37 @@ if __name__ == "__main__":
     print(hae_sanat("*vokes"))
     print(hae_sanat("cani*"))
     print(hae_sanat("ca.ni."))
+
+#osa6-16 tee ratkaisu tänne
+"""
+Make a dictionary modeling program where you can enter new words or retrieve entered words.
+1 means adding finnish-english word pair, 2 means searching finnish-english word pair containing the keyword, 3 means quitting
+"""
+while True:
+    print("1 - Lisää sana, 2 - Hae sanaa, 3 - Poistu")
+    selection = int(input("Valinta: "))
+    if selection == 1:
+        fi_word = input("Anna sana suomeksi: ")
+        en_word = input("Anna sana englanniksi: ")
+
+        content = fi_word + ":" + en_word
+        with open("sanakirja.txt", "a") as filename:
+            filename.write(content + "\n")
+
+        print("Sanapari lisätty")
+    
+    if selection == 2:
+        search_keyword = input("Anna sana: ")
+        
+        content_list = []
+        with open("sanakirja.txt") as filename:
+            for line in filename:
+                content_list.append((line.replace("\n", "").split(":")[0], line.replace("\n", "").split(":")[1]))
+
+        for i in range(0, len(content_list)):
+            if search_keyword in content_list[i][0] or search_keyword in content_list[i][1]:
+                print("%s - %s" % (content_list[i][0], content_list[i][1]))
+
+    if selection == 3:
+        print("Moi!")
+        break
