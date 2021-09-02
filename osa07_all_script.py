@@ -26,6 +26,11 @@ The function returns a double, in which the characters of the string obtained by
     - The second queue contains all punctuationthe punctuation specified in the standard
     - The third string contains all characters (including, for example, spaces) that do not belong to the previous two groups
     - The characters should be stored in the returned strings in the order in which they appear in the original string.
+
+Expected output:
+TmontestiToimiikomit
+!!!,?
+ää    ä
 """
 import string
 
@@ -50,3 +55,29 @@ def jaa_merkkeihin(merkkijono: str):
 
 if __name__ == "__main__":
     jaa_merkkeihin("Tämä on testi!!! Toimiiko, mitä?")
+
+#osa7-03 tee ratkaisu tänne
+"""
+Get acquainted with the Python module fractions and use it to implement a function jaa_palasiksi(maara: int) that gets the number of pieces as its parameter. 
+The function divides according to the parameter of Chapter 1 into equal fractional pieces and returns these pieces in the list.
+
+Expected output:
+1/3
+1/3
+1/3
+
+[Fraction(1, 5), Fraction(1, 5), Fraction(1, 5), Fraction(1, 5), Fraction(1, 5)]
+"""
+from fractions import Fraction
+
+def jaa_palasiksi(maara: int):
+    fraction_list = []
+    for i in range(0, maara):
+        fraction_list.append(Fraction(1, maara))
+    return fraction_list
+
+if __name__ == "__main__":
+    for p in jaa_palasiksi(3):
+        print(p)
+    print()
+    print(jaa_palasiksi(5))
