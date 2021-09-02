@@ -81,3 +81,127 @@ if __name__ == "__main__":
         print(p)
     print()
     print(jaa_palasiksi(5))
+
+#osa7-04 tee ratkaisu tänne
+"""
+Make a function lottonumerot(maara: int, alaraja: int, ylaraja: int) that
+draws a given number of random numbers between alaraja...ylaraja, stores them in a list,
+and returns a list. The numbers should be in the returned list in order of magnitude.
+Since these are lottery numbers, the same number must not appear twice in the list.
+"""
+from random import randint
+
+def lottonumerot(maara: int, alaraja: int, ylaraja: int):
+    lottery_num = []
+    while len(lottery_num) < maara:
+        num = randint(alaraja, ylaraja)
+        if num not in lottery_num:
+            lottery_num.append(num)
+    return sorted(lottery_num)
+
+if __name__ == "__main__":
+    for numero in lottonumerot(7, 1, 40):
+        print(numero, end =" ")
+    print()
+
+#osa7-05 tee ratkaisu tänne
+"""
+Make a function that makes it possible to create passwords of random lengths (between az) of the desired length.
+
+Note:
+ASCII table: https://python-reference.readthedocs.io/en/latest/docs/str/ASCII.html
+encode/decode ASCII functions: chr(int); ord(str)
+"""
+from random import randint
+
+def luo_salasana(length: int):
+    password = ""
+    while len(password) < length:
+        letter = chr(randint(97, 122))
+        password = password + letter
+    return password
+
+if __name__ == "__main__":
+    for i in range(10):
+        print(luo_salasana(8))
+
+#osa7-06 tee ratkaisu tänne
+"""
+Make an improved version of the function in the previous task. 
+The function now gets three parameters:
+    - if the second parameter is True, the password also contains (one or more) numbers
+    - if the third parameter is True, the password also contains (one or more) special characters from the set !?=+-()#
+Regardless of the parameters, the password must always contain at least one letter.
+You can assume that the function is always called with parameters that make it possible to generate the desired types of passwords.
+ASCII: !?=+-()# ==> (33, 63, 61, 43, 45, 40, 41, 35); a-z ==> (97, 122); 0-9 ==> (48, 57)
+"""
+from random import randint, sample
+
+def luo_hyva_salasana(length: int, boolval1: bool, boolval2: bool):
+    password = chr(randint(97, 122))
+
+    special_characters_list = [33, 63, 61, 43, 45, 40, 41, 35]
+    if length == 0:
+        # Raise error when the length of password is 0
+        raise ValueError("Wrong parameters for the function")
+    elif length == 1:
+        if boolval1 == False and boolval2 == False:
+            # The length of password is 1 and should contain 1 letter
+            pass
+        else:
+            # Raise error when the length of password is 1 and should contain at least 1 letter, 1 number and 1 special character
+            raise ValueError("Wrong parameters for the function")
+    elif length == 2:
+        if boolval1 == True and boolval2 == True:
+            # Raise error when the length of password is 2 and should contain at least 1 letter, 1 number and 1 special character
+            raise ValueError("Wrong parameters for the function")
+        elif boolval1 == False and boolval2 == True:
+            # The length of password is 2 and should contain 1 letter and 1 special character
+            password = password + chr(special_characters_list[randint(0, 7)])
+        elif boolval1 == True and boolval2 == False:
+            # The length of password is 2 and should contain 1 letter and 1 number
+            password = password + chr(randint(48, 57))
+        else:
+            # The length of password is 2 and should contain 2 letters
+            password = password + chr(randint(97, 122))
+    else:
+        if boolval1 == True and boolval2 == True:
+            # Contains at least 1 number, 1 special character and 1 letter
+            num_numbers = randint(1, length - 2)
+            num_special_characters = randint(1, length - 1 - num_numbers)
+            for i in range(0, num_numbers):
+                password = password + chr(randint(48, 57))
+            for i in range(0, num_special_characters):
+                password = password + chr(special_characters_list[randint(0, 7)])
+            for i in range(0, length - 1 - num_numbers - num_special_characters):
+                password = password + chr(randint(97, 122))  
+        elif boolval1 == False and boolval2 == True:
+            # Contains at least 1 special character and 1 letter
+            num_special_characters = randint(1, length - 1)
+            for i in range(0, num_special_characters):
+                password = password + chr(special_characters_list[randint(0, 7)])
+            for i in range(0, length - 1 - num_special_characters):
+                password = password + chr(randint(97, 122))                     
+        elif boolval1 == True and boolval2 == False:
+            # Contains at least 1 number and 1 letter
+            num_numbers = randint(1, length - 1)
+            for i in range(0, num_numbers):
+                password = password + chr(randint(48, 57))
+            for i in range(0, length - 1 - num_numbers):
+                password = password + chr(randint(97, 122))
+        else:
+            # Only contains letter
+            for i in range(0, length-1):
+                password = password + chr(randint(97, 122))
+    
+    return ''.join(sample(password, len(password)))
+
+if __name__ == "__main__":
+    print(luo_hyva_salasana(1, False, False))
+    print(luo_hyva_salasana(2, False, True))
+    print(luo_hyva_salasana(2, True, False))
+    print(luo_hyva_salasana(2, False, False))
+    print(luo_hyva_salasana(10, True, True))
+    print(luo_hyva_salasana(10, False, True))
+    print(luo_hyva_salasana(10, True, False))
+    print(luo_hyva_salasana(10, False, False))
