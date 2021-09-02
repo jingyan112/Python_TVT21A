@@ -297,3 +297,130 @@ if target_time > birth_time:
     print(f"Olit {(target_time - birth_time).days} päivää vanha, kun vuosituhat vaihtui.")
 else:
     print("Et ollut syntynyt, kun vuosituhat vaihtui.")
+
+#osa7-10 tee ratkaisu tänne
+"""
+Make a function onko_validi(hetu: str) that returns True or False depending on whether the given ID is correct.
+Identity number of the form ppkkvvXyyyz, which ppkkvv tells your date of birth(day/month/year),
+X is the birth of a century hanging punctuation mark, yyy a personal and individual number z tarkistemerkki.
+
+The program should check that
+    - the beginning is a date in the format ddmmyy, which is an existing date
+    - the punctuation mark is +(19th century), -(20th century) or A(2000s) and
+    - the check mark at the end is correct.
+
+The check mark is calculated by dividing the series of numbers consisting of
+the date of birth and the individual number by 31 and taking the remainder of the division.
+The character is then selected from the index of the division remainder from the string 0123456789ABCDEFHJKLMNPRSTUVWXY.
+For example, if the remainder is 12, the character in index 12 is selected C.
+More information on the calculation can be found, for example, on the website of the Digital and Population Information Agency .
+"""
+import string
+
+from datetime import datetime
+
+def onko_validi(hetu: str):
+    check_mark = "0123456789ABCDEFHJKLMNPRSTUVWXY"
+
+    # Check the length of the SSN
+    if len(hetu) != 11:
+        return False
+
+    # Check the format of the birth date of the SSN
+    for i in range(0, 6):
+        if hetu[i] not in string.digits:
+            return False
+        
+    # Check the punctuation mark of the SSN
+    if hetu[6] not in ["+", "-", "A"]:
+        return False
+        
+    # Check the validity of the birth date, means check the birth date and the punctuation mark of the SSN
+    if hetu[6] == "+":
+        year = int("18" + hetu[4] + hetu[5])
+    if hetu[6] == "-":
+        year = int("19" + hetu[4] + hetu[5])
+    if hetu[6] == "A":
+        year = int("20" + hetu[4] + hetu[5])
+    
+    month = int(hetu[2] + hetu[3])
+    date = int(hetu[0] + hetu[1])
+
+    isValidDate = True
+    try:
+        datetime(year, month, date)
+    except ValueError:
+        isValidDate = False
+
+    if not isValidDate:
+        return False
+    
+    # Check the check mark of the SSN
+    if check_mark[int(hetu[0:6] + hetu[7:10]) % 31] != hetu[10]:
+        return False
+    
+    return True 
+
+if __name__ == "__main__":
+    print(onko_validi("081842-720N"))
+
+#osa7-11 tee ratkaisu tänne,
+"""
+The program writes "frame times" to a user-defined file, that is,
+the time a user spends on television, a computer, and a mobile device on certain days.
+
+Examples:
+yanjing@yanjingdeMacBook-Pro src % python3 ruutuaika.py
+Tiedosto: test.txt
+Aloituspäivä: 01.09.2020
+Montako päivää: 4
+Anna ruutuajat kunakin päivänä minuutteina (TV tietokone mobiililaite):
+Ruutuaika 01.09.2020:10 10 10
+Ruutuaika 02.09.2020:20 20 20
+Ruutuaika 03.09.2020:30 30 30
+Ruutuaika 04.09.2020:40 40 40
+Tiedot tallennettu tiedostoon test.txt
+
+yanjing@yanjingdeMacBook-Pro src % cat test.txt
+Ajanjakso: 01.09.2020-04.09.2020
+Yht. minuutteja: 300
+Keskim. minuutteja: 75.0
+01.09.2020: 10/10/10
+02.09.2020: 20/20/20
+03.09.2020: 30/30/30
+04.09.2020: 40/40/40
+"""
+from datetime import datetime, timedelta
+
+file_name = input("Tiedosto: ")
+start_date = input("Aloituspäivä: ")
+number_of_days = int(input("Montako päivää: "))
+
+print("Anna ruutuajat kunakin päivänä minuutteina (TV tietokone mobiililaite): ")
+
+all_time_info = {}
+for i in range(0, int(number_of_days)):
+    date_time = (datetime.strptime(start_date, "%d.%m.%Y") + timedelta(days=i)).strftime('%d.%m.%Y')
+    single_time_info = input(f"Ruutuaika {date_time}:").strip().split(" ")
+    all_time_info[date_time] = single_time_info
+
+total_time = 0
+for key, value in all_time_info.items():
+    tmp = ""
+    for i in range(0, len(value)):
+        total_time = total_time + int(value[i])
+        tmp = tmp + value[i] + "/"
+    new_value = tmp[:-1]
+    all_time_info[key] = new_value
+
+average_time = total_time / number_of_days
+
+open(file_name, 'w').close()
+with open(file_name, 'w') as filename:
+    filename.write("Ajanjakso: %s-%s" % (list(all_time_info.keys())[0], list(all_time_info.keys())[-1]) + "\n")
+    filename.write("Yht. minuutteja: %s" % total_time + "\n")
+    filename.write("Keskim. minuutteja: %s" % average_time + "\n")
+    for key, value in all_time_info.items():
+        filename.write("%s: %s" % (key, value) + "\n")
+
+print(f"Tiedot tallennettu tiedostoon {file_name}")
