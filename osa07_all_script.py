@@ -280,3 +280,20 @@ if __name__ == "__main__":
     lista = sanat(3, "ca")
     for sana in lista:
         print(sana)
+
+#osa7-09 tee ratkaisu tänne
+"""
+Make a program that asks for the user's date of birth (separately day, month, and year) and
+prints how many days old the user was on December 31, 1999.
+"""
+from datetime import datetime
+
+target_time = datetime(1999, 12, 31)
+date = int(input("Päivä: "))
+month = int(input("Kuukausi: "))
+year = int(input("Vuosi: "))
+birth_time = datetime(year, month, date)
+if target_time > birth_time:
+    print(f"Olit {(target_time - birth_time).days} päivää vanha, kun vuosituhat vaihtui.")
+else:
+    print("Et ollut syntynyt, kun vuosituhat vaihtui.")
