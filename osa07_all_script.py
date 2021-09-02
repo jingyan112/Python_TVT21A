@@ -205,3 +205,78 @@ if __name__ == "__main__":
     print(luo_hyva_salasana(10, False, True))
     print(luo_hyva_salasana(10, True, False))
     print(luo_hyva_salasana(10, False, False))
+
+#osa7-07 tee ratkaisu tänne
+"""
+Make a function heita(noppa: str) that rolls the non-transitive dice multiplied by its parameter.
+Dice A has the numbers 3, 3, 3, 3, 3, 6; Dice B have the numbers 2, 2, 2, 5, 5, 5; Dice C have the numbers 1, 4, 4, 4, 4, 4
+
+Make another function pelaa(noppa1: str, noppa2: str, kertaa: int) that throws the number of dice that are parameters as an integer.
+The function returns a tuple that tells you the number of times that dice 1 wins, the number of times that dice 2 wins, and the number of times of ties.
+"""
+from random import randint
+
+def heita(noppa: str):
+    dice_dic = {"A": [3, 3, 3, 3, 3, 6], "B": [2, 2, 2, 5, 5, 5], "C": [1, 4, 4, 4, 4, 4]}
+    if noppa not in dice_dic:
+        raise ValueError("Wrong parameter for this function!")
+    return dice_dic[noppa][randint(0,5)]
+
+def pelaa(noppa1: str, noppa2: str, kertaa: int):
+    noppa1_noppa2_equal = [0, 0, 0]
+
+    for i in range(0, kertaa):
+        noppa1_point = heita(noppa1)
+        noppa2_point = heita(noppa2)
+        if  noppa1_point > noppa2_point:
+            noppa1_noppa2_equal[0] = noppa1_noppa2_equal[0] + 1
+        elif noppa1_point < noppa2_point:
+            noppa1_noppa2_equal[1] = noppa1_noppa2_equal[1] + 1
+        else:
+            noppa1_noppa2_equal[2] = noppa1_noppa2_equal[2] + 1
+
+    return (noppa1_noppa2_equal[0], noppa1_noppa2_equal[1], noppa1_noppa2_equal[2])
+
+if __name__ == "__main__":
+    tulos = pelaa("A", "B", 1000)
+    print(tulos)
+    tulos = pelaa("B", "C", 1000)
+    print(tulos)
+    tulos = pelaa("C", "C", 1000)
+    print(tulos)
+
+#osa7-08 tee ratkaisu tänne
+"""
+The task template contains a file sanat.txt containing English words, one word per line.
+Type a function sanat(n: int, alku: str) that returns a list nof random words from a file.
+All returned words must begin with the given string.
+If the function, for example, were called with parameters sanat(3, "ca"),
+it could return the words "cat", "car" and "carbon" in the list, for example.
+The same word must not appear twice in the list.
+If words beginning with a given string are not found enough to form a group of a given size,
+the function produces an exception ValueError.
+"""
+from random import randint
+
+def sanat(n: int, alku: str):
+    word_list = []
+    with open("sanat.txt") as filename:
+        for lines in filename:
+            if lines.replace("\n", "").startswith(alku):
+                word_list.append(lines.replace("\n", ""))
+    
+    random_list = []
+    if n > len(word_list):
+        raise ValueError("Words beginning with a given string are not found enough to form a group of a given size!")
+    else:
+        while len(random_list) < n:
+            word = word_list[randint(0, len(word_list)-1)]
+            if word not in random_list:
+                random_list.append(word)
+    
+    return random_list
+
+if __name__ == "__main__":
+    lista = sanat(3, "ca")
+    for sana in lista:
+        print(sana)
