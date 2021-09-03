@@ -424,3 +424,27 @@ with open(file_name, 'w') as filename:
         filename.write("%s: %s" % (key, value) + "\n")
 
 print(f"Tiedot tallennettu tiedostoon {file_name}")
+
+#osa7-12 tee ratkaisu tänne
+"""
+Implement a function tulosta_henkilot(tiedosto: str) that reads an exemplary JSON file with the following format:
+    - [{"nimi": "Pekka Pythonisti", "ika": 27, "harrastukset": ["koodaus", "kutominen"]}]
+Then prints them in the following format:
+    - Pekka Pythonisti 27 vuotta (koodaus, kutominen)
+"""
+import json
+
+def tulosta_henkilot(tiedosto: str):
+    with open(tiedosto) as filename:
+        data = filename.read()
+    content = json.loads(data)
+    for element in content:
+        tmp = ""
+        for i in element["harrastukset"]:
+            tmp = tmp + i + ", "
+        sub_element = tmp[:-2]
+        print("%s %s vuotta (%s)" % (element["nimi"], element["ika"], sub_element))
+
+if __name__ == "__main__":
+    tulosta_henkilot("tiedosto2.json")
+
