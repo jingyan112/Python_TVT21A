@@ -504,3 +504,34 @@ def hae_kurssi(kurssi: str):
     course_infomation["tehtavia_keskimaarin"] = int(exercise_total/max(student_list))
 
     return course_infomation
+
+#osa7-14 tee ratkaisu tänne
+"""
+The file tentin_aloitus.csv contains student name and exam start times in the form tunnus;hh:mm.
+The file palautus.csv contains student name, tasks, scores and end times in the form tunnus;tehtävä;pisteet;hh:mm.
+Write a function huijarit() that returns a list of user IDs for cheated students.
+Students whose return on a task has been made more than 3 hours from the start time of the exam will be regarded as cheating.
+"""
+from datetime import datetime
+import csv
+
+def huijarit():
+    cheating_list = []
+    all_info = []
+    with open("tentin_aloitus.csv") as filename1:
+        for lines in csv.reader(filename1, delimiter=";"):
+            all_info.append({"name": lines[0], "start_time": lines[1], "end_time": 0, "time_cost": 0})
+
+    with open("palautus.csv") as filename2:
+        for lines in csv.reader(filename2, delimiter=";"):
+            for item in range(0, len(all_info)):
+                if all_info[item]["name"] == lines[0]:
+                    all_info[item]["end_time"] = lines[3]
+                    start_time = datetime(datetime.now().year, datetime.now().month, datetime.now().day, int(all_info[item]["start_time"].split(":")[0]), int(all_info[item]["start_time"].split(":")[1]))
+                    end_time = datetime(datetime.now().year, datetime.now().month, datetime.now().day, int(all_info[item]["end_time"].split(":")[0]), int(all_info[item]["end_time"].split(":")[1]))
+                    all_info[item]["time_cost"] = float("{:.2f}".format(((end_time - start_time).seconds)/3600))
+                    if all_info[item]["time_cost"] > 3:
+                        if all_info[item]["name"] not in cheating_list:
+                            cheating_list.append(all_info[item]["name"])
+    
+    return cheating_list
