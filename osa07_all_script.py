@@ -448,3 +448,59 @@ def tulosta_henkilot(tiedosto: str):
 if __name__ == "__main__":
     tulosta_henkilot("tiedosto2.json")
 
+#osa7-13 tee ratkaisu tänne
+"""
+Make a function hae_kaikki() that retrieves and returns data for all running courses (as a field enabledvalue True) in a list of tuple.
+The format is as follows: [('Full Stack Open 2020', 'ofs2019', 2020, 201), ('DevOps with Docker 2019', 'docker2019', 2019, 36)]
+
+Make a function in your program hae_kurssi(kurssi: str) that returns more detailed task statistics for the course in a dictionary.
+The format is as follows: {'weeks': 4, 'students': 220, 'hours': 5966, 'hours_average': 27, 'tasks': 4988, 'Tasks_average': 22}
+"""
+import urllib.request as urlrq
+import certifi
+import json
+import ssl
+
+def hae_kaikki():
+    courses_information = []
+    url = "https://studies.cs.helsinki.fi/stats-mock/api/courses"
+    res = urlrq.urlopen(url, context=ssl.create_default_context(cafile=certifi.where()))
+    # Convert bytes to a string, and then convert string to json
+    if type(res.read()) == bytes:
+        context = json.loads(res.read().decode("utf-8"))
+    else:
+        context = json.loads(res.read())
+    for item in context:
+        if item["enabled"] == True:
+            tuple_info = (item["fullName"], item["name"], item["year"], sum(item["exercises"]))
+            courses_information.append(tuple_info)
+    return courses_information
+
+def hae_kurssi(kurssi: str):
+    course_infomation = {}
+    url = "https://studies.cs.helsinki.fi/stats-mock/api/courses/" + kurssi + "/stats"
+    res = urlrq.urlopen(url, context=ssl.create_default_context(cafile=certifi.where()))
+    # Convert bytes to a string, and then convert string to json
+    if type(res.read()) == bytes:
+        context = json.loads(res.read().decode("utf-8"))
+    else:
+        context = json.loads(res.read())
+
+    weeks_num = 0
+    hours_total = 0
+    exercise_total = 0
+    student_list = []
+    for key, value in context.items():
+        weeks_num = weeks_num + 1
+        student_list.append(value["students"])
+        hours_total = hours_total + value["hour_total"]
+        exercise_total = exercise_total + value["exercise_total"]
+    
+    course_infomation["viikkoja"] = weeks_num
+    course_infomation["opiskelijoita"] = max(student_list)
+    course_infomation["tunteja"] = hours_total
+    course_infomation["tunteja_keskimaarin"] = int(hours_total/max(student_list))
+    course_infomation["tehtavia"] = exercise_total
+    course_infomation["tehtavia_keskimaarin"] = int(exercise_total/max(student_list))
+
+    return course_infomation
