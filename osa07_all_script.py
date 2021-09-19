@@ -535,3 +535,65 @@ def huijarit():
                             cheating_list.append(all_info[item]["name"])
     
     return cheating_list
+
+#osa7-15 tee ratkaisu tänne
+from datetime import datetime
+import csv
+
+def viralliset_pisteet():
+    # Deal with the name and start_time csv file
+    name_starttime = []
+    with open("tentin_aloitus.csv") as filename1:
+        for lines in csv.reader(filename1, delimiter=";"):
+            name_starttime.append({"name": lines[0], "start_time": lines[1]})
+
+    # Deal with the name, task_id, task_score and end_time csv file
+    name_task_time = []
+    with open("palautus.csv") as filename2:
+        for lines in csv.reader(filename2, delimiter=";"):
+            for item in name_starttime:
+                if lines[0] == item["name"]:
+                    name_task_time.append({"name": lines[0], "task_id": lines[1], "task_score": lines[2], "start_time": item["start_time"], "end_time": lines[3], "time_cost": ""})
+
+    year = datetime.now().year
+    month = datetime.now().month
+    day = datetime.now().day
+    
+    # Combine the record and calculate the time cost
+    for item in name_task_time:
+        start_time = datetime(year, month, day, int(item["start_time"].split(":")[0]), int(item["start_time"].split(":")[1]), 0)
+        end_time = datetime(year, month, day, int(item["end_time"].split(":")[0]), int(item["end_time"].split(":")[1]), 0)
+        item["time_cost"] = float("{:.2f}".format(((end_time - start_time).seconds)/3600))
+
+    # Remove the item with time cost more than 3 hours
+    for item in name_task_time:
+        if item["time_cost"] > 3:
+            name_task_time.remove(item)
+    
+    for item in name_task_time:
+        item.pop("start_time")
+        item.pop("end_time")
+        item.pop("time_cost")
+    
+    # Get the record with high task_score for same name and task_id
+    tmp = {}
+    for item in name_task_time:
+        tmp[str(item["name"]) + ":" + str(item["task_id"])] = []
+    
+    for item in name_task_time:
+        tmp[str(item["name"]) + ":" + str(item["task_id"])].append(item["task_score"])
+
+    tmp1 = {}
+    final_dic = {}
+    for key, value in tmp.items():
+        tmp1[key] = max(value)
+        final_dic[key.split(":")[0]] = 0
+
+    for key, value in tmp1.items():
+        if key.split(":")[0] in final_dic:
+            final_dic[key.split(":")[0]] = final_dic[key.split(":")[0]] + int(value)
+        
+    return final_dic
+
+if __name__ == "__main__":
+    viralliset_pisteet()
