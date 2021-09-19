@@ -537,6 +537,14 @@ def huijarit():
     return cheating_list
 
 #osa7-15 tee ratkaisu tänne
+"""
+Write a function viralliset_pisteet() that returns the students' test scores in the dictionary (dict) according to the following rules:
+- If multiple returns have been made to the same task number, the return of the highest score will be considered
+- If the return is made more than 3 hours after the start of the exam, the return will not be taken into account at all
+The tasks are numbered 1–8 and you can get 0–6 points for each task.
+In the returned dictionary, the ID is the key and the total score value of the tasks.
+This task is based on the previous task.
+"""
 from datetime import datetime
 import csv
 
@@ -597,3 +605,47 @@ def viralliset_pisteet():
 
 if __name__ == "__main__":
     viralliset_pisteet()
+
+#osa7-16 tee ratkaisu tänne
+"""
+As with the version in the previous section, the program prompts the user to enter a line of English text.
+The program performs a spell check on the text and prints the same text so that all misspelled words are surrounded by asterisks.
+In addition to this, the program provides a list of correction suggestions for misspelled words.
+
+Examples:
+write text: We use ptython to make a spell checker
+
+We use * ptython * to make a spell checker
+suggestions for improvement:
+ptython: python, pythons, Typhon
+
+write text: this is acually a good and usefull program
+
+this is * acually * a good and * usefull * program
+suggestions for improvement:
+acually: actually, tactually, factually
+usefull: usefully, useful, museful
+"""
+import difflib
+
+sentence_list = input("Write text: ").split(" ")
+wrong_words = {}
+
+with open("wordlist.txt") as tiedosto:
+    word_dic = []
+    for lines in tiedosto:
+        lines = lines.replace("\n", "")
+        word_dic.append(lines)
+
+for i in range(0, len(sentence_list)):
+    if sentence_list[i].lower() not in word_dic:
+        wrong_words[sentence_list[i]] = ""
+        for item in difflib.get_close_matches(sentence_list[i], word_dic):
+            wrong_words[sentence_list[i]] = wrong_words[sentence_list[i]] + item + ", "
+        sentence_list[i] = "*" + sentence_list[i] + "*"
+    print(sentence_list[i], end = " ")
+print()
+
+print("korjausehdotukset:")
+for key, value in wrong_words.items():
+    print("%s: %s" % (key, value[:-2]))
