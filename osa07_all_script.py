@@ -649,3 +649,53 @@ print()
 print("korjausehdotukset:")
 for key, value in wrong_words.items():
     print("%s: %s" % (key, value[:-2]))
+
+#osa7-17 tee ratkaisu tänne
+"""
+Make a module merkkiapuri that includes the following functions:
+The function vaihda_koko(merkkijono: str) gets a string as its parameter.
+The function creates and returns a new string in which the lowercase letters of the original string are converted to uppercase and vice versa.
+
+The function puolita(merkkijono: str) returns the first and second halves of the string it received as a parameter.
+If the string has an odd number of letters, the first half is shorter.
+
+The function poista_erikoismerkit(merkkijono: str) returns a string from which all characters other than the alphabet [a ... ö, A ... Ö], numbers, and spaces have been removed.
+"""
+import string
+
+def vaihda_koko(merkkijono: str):
+    new_string = ""
+    for i in merkkijono:
+        if i in string.ascii_lowercase:
+            new_string = new_string + i.upper()
+        elif i in string.ascii_uppercase:
+            new_string = new_string + i.lower()
+        elif i == "Ö":
+            new_string = new_string + "ö"
+        elif i == "ö":
+            new_string = new_string + "Ö"
+        elif i == "Ä":
+            new_string = new_string + "ä"
+        elif i == "ä":
+            new_string = new_string + "Ä"
+        elif i == "Å":
+            new_string = new_string + "å"
+        elif i == "å":
+            new_string = new_string + "Å"
+        elif i == "Ž":
+            new_string = new_string + "ž"
+        elif i == "ž":
+            new_string = new_string + "Ž"
+        else:
+            new_string = new_string + i
+    return new_string
+
+def puolita(merkkijono: str):
+    return merkkijono[0:int(len(merkkijono)/2)], merkkijono[int(len(merkkijono)/2):len(merkkijono)]
+
+def poista_erikoismerkit(merkkijono: str):
+    new_string = ""
+    for i in merkkijono:
+        if i in string.ascii_letters or i in string.digits or i in string.whitespace or i in ["Ö", "ö", "Ä", "ä", "Å", "å", "Ž","ž"]:
+            new_string = new_string + i
+    return new_string
