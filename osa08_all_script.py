@@ -95,3 +95,48 @@ if __name__ == "__main__":
     lista.lisaa("omenat", 5)
     lista.lisaa("ananas", 1)
     print(tuotteita_yhteensa(lista))
+
+#osa8-06 Tee ratkaisusi tähän:
+"""
+Make a class Kirjathat has attributes of variables nimi, kirjoittaja, genre and kirjoitusvuosi
+as well as constructor that initializes the variables.
+"""
+from datetime import date
+
+class Kirja:
+
+    def __init__(self, nimi: str, kirjoittaja: str, genre: str, kirjoitusvuosi: date.year):
+        self.nimi = nimi
+        self.kirjoittaja = kirjoittaja
+        self.genre = genre
+        self.kirjoitusvuosi = kirjoitusvuosi
+
+if __name__ == "__main__":
+    python = Kirja("Fluent Python", "Luciano Ramalho", "ohjelmointi", 2015)
+    everest = Kirja("Huipulta huipulle", "Carina Räihä", "elämänkerta", 2010)
+
+    print(f"{python.kirjoittaja}: {python.nimi} ({python.kirjoitusvuosi})")
+    print(f"Kirjan {everest.nimi} genre on {everest.genre}")
+
+#osa8-07 Tee ratkaisusi tähän:
+"""
+Create the categories requested below based on the names and types of attributes are described below each category.
+For each class, also write a constructor in which the attributes are given in the order in which they are given in the description.
+"""
+class Muistilista:
+    def __init__(self, otsikko: str, merkinnat: list):
+        self.otsikko = otsikko
+        self.merkinnat = merkinnat
+
+class Asiakas:
+    def __init__(self, tunniste: str, saldo: float, alennusprosentti: int):
+        self.tunniste = tunniste
+        self.saldo = saldo
+        self.alennusprosentti = alennusprosentti
+
+class Kaapeli:
+    def __init__(self, malli: str, pituus: float, maksiminopeus: int, kaksisuuntainen: bool):
+        self.malli = malli
+        self.pituus = pituus
+        self.maksiminopeus = maksiminopeus
+        self.kaksisuuntainen = kaksisuuntainen
