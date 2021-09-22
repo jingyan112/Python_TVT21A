@@ -266,3 +266,92 @@ if __name__ == "__main__":
     laskuri.tulosta_arvo()
     laskuri.palauta_alkuperainen_arvo()
     laskuri.tulosta_arvo()
+
+#osa8-10b Tee ratkaisusi tähän:
+"""
+Write a class Henkilo that has only one attribute nimi that is set in the constructor.
+In addition, two methods should be written for the class:
+- The method anna_etunimi returns the person's first name and the method anna_sukunim returns the person's last name irespectively.
+You can assume in the methods that the name given in the constructs has a first and last name separated by a space and no other names.
+"""
+class Henkilo:
+    def __init__(self, nimi: str):
+        self.nimi = nimi
+    
+    def anna_etunimi(self):
+        return self.nimi.split(" ")[0]
+    
+    def anna_sukunimi(self):
+        return self.nimi.split(" ")[1]
+    
+if __name__ == "__main__":
+    pekka = Henkilo("Pekka Python")
+    print(pekka.anna_etunimi())
+    print(pekka.anna_sukunimi())
+
+    pauli = Henkilo("Pauli Pythonen")
+    print(pauli.anna_etunimi())
+    print(pauli.anna_sukunimi())
+
+#osa8-11 Tee ratkaisusi tähän:
+"""
+Make a class Lukutilasto that knows the following functions:
+- the method lisaa_luku adds a new number to the statistic
+- the method lukujen_maara tells you the number of numbers added
+- the method summa tells the sum of the added numbers (the sum of the empty number statistics is 0)
+- the method keskiarvo tells the average of the added numbers (the average of the empty number statistic is 0)
+"""
+class  Lukutilasto:
+    def __init__(self):
+        self.counterlist = []
+
+    def lisaa_luku(self, luku:int):
+        self.counterlist.append(luku)
+
+    def lukujen_maara(self):
+        return len(self.counterlist)
+
+    def summa(self):
+        if len(self.counterlist) == 0:
+            return 0
+        else:
+            return sum(self.counterlist)
+
+    def keskiarvo(self):
+        if len(self.counterlist) == 0:
+            return 0
+        else:
+            return sum(self.counterlist)/len(self.counterlist)
+    
+    def summa_even(self):
+        summa_even = 0
+
+        for item in self.counterlist:
+            if item % 2 == 0:
+                summa_even = summa_even + item
+        
+        return summa_even
+
+    def summa_odd(self):
+        summa_odd = 0
+
+        for item in self.counterlist:
+            if item % 2 == 1:
+                summa_odd = summa_odd + item
+        
+        return summa_odd
+
+tilasto = Lukutilasto()
+print("Anna lukuja:")
+
+while True:
+    num = int(input())
+    if num == -1:
+        break
+    else:
+        tilasto.lisaa_luku(num)
+
+print("Summa:", tilasto.summa())
+print("Keskiarvo:", tilasto.keskiarvo())
+print("Parillisten summa:", tilasto.summa_even())
+print("Parittomien summa:", tilasto.summa_odd())
