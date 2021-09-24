@@ -355,3 +355,123 @@ print("Summa:", tilasto.summa())
 print("Keskiarvo:", tilasto.keskiarvo())
 print("Parillisten summa:", tilasto.summa_even())
 print("Parittomien summa:", tilasto.summa_odd())
+
+#osa8-11a Tee ratkaisusi tähän:
+"""
+Implement a class Sekuntikello that prints minute:second through __str__ method.
+In addition, the method tick takes the clock one second forward, and the value of both seconds and minutes is at most 59
+
+Implement a class Kello that prints hour:minute:second through __str__ method.
+In addition,  the method tick takes the clock one second forward, and the value of both seconds and minutes is at most 59, and the value of hours is at most 24.
+Furthermore, the method aseta will reset the time with new values of hours and minutes, the value for seconds will be 0.
+Output for the main function:
+00:00
+00:01
+00:02
+...
+59:58
+59:59
+00:00
+00:01
+
+23:59:55
+23:59:56
+23:59:57
+23:59:58
+23:59:59
+00:00:00
+00:00:01
+12:05:00
+"""
+class Sekuntikello:
+    def __init__(self):
+        self.sekunnit = 0
+        self.minuutit = 0
+
+    def __str__(self):
+        if self.sekunnit in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]:
+            if self.minuutit in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]:
+                return f"0{self.minuutit}:0{self.sekunnit}"
+            else:
+                return f"{self.minuutit}:0{self.sekunnit}"
+        else:
+            if self.minuutit in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]:
+                return f"0{self.minuutit}:{self.sekunnit}"
+            else:
+                return f"{self.minuutit}:{self.sekunnit}" 
+
+    def tick(self):
+        self.sekunnit = self.sekunnit + 1
+        if self.sekunnit == 60:
+            self.sekunnit = 0
+            self.minuutit = self.minuutit + 1
+        if self.minuutit == 60:
+            self.minuutit = 0
+
+class Kello:
+    def __init__(self, hour: int, minute: int, second: int):
+        self.hour = hour
+        self.minute = minute
+        self.second = second
+
+    def __str__(self):
+        if self.second in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]:
+            if self.minute in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]:
+                if self.hour in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]:
+                    return f"0{self.hour}:0{self.minute}:0{self.second}"
+                else:
+                    return f"{self.hour}:0{self.minute}:0{self.second}"
+            else:
+                if self.hour in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]:
+                    return f"0{self.hour}:{self.minute}:0{self.second}"
+                else:
+                    return f"{self.hour}:{self.minute}:0{self.second}"
+        else:
+            if self.minute in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]:
+                if self.hour in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]:
+                    return f"0{self.hour}:0{self.minute}:{self.second}"
+                else:
+                    return f"{self.hour}:0{self.minute}:{self.second}"
+            else:
+                if self.hour in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]:
+                    return f"0{self.hour}:{self.minute}:{self.second}"
+                else:
+                    return f"{self.hour}:{self.minute}:{self.second}"                   
+
+    def tick(self):
+        self.second = self.second + 1
+        if self.second == 60:
+            self.second = 0
+            self.minute = self.minute + 1
+        if self.minute == 60:
+            self.minute = 0
+            self.hour = self.hour + 1
+        if self.hour == 24:
+            self.hour = 0
+    
+    def aseta(self, hour: int, minute: int):
+        self.hour = hour
+        self.minute = minute
+        self.second = 0
+
+if __name__ == "__main__":
+    kello = Sekuntikello()
+    for i in range(3600):
+        print(kello)
+        kello.tick()
+    kello = Kello(23, 59, 55)
+    print(kello)
+    kello.tick()
+    print(kello)
+    kello.tick()
+    print(kello)
+    kello.tick()
+    print(kello)
+    kello.tick()
+    print(kello)
+    kello.tick()
+    print(kello)
+    kello.tick()
+    print(kello)
+    kello.aseta(12, 5)
+    print(kello)
