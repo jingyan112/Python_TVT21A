@@ -536,3 +536,72 @@ pekan_kortti.syo_edullisesti()
 print("Pekka:", pekan_kortti)
 matin_kortti.lataa_rahaa(50)
 print("Matti:", matin_kortti)
+
+#osa8-14 Tee ratkaisusi tähän:
+"""
+Implement class Sarja with the following methods:
+- the constructor __init__ sets the name of the series, the number of its performance periods, and a list of which genres the series represents.
+- the method arvostele(arvosana: int) that allows you to add a grade to the series that is an integer between 0 and 5.
+- the method __str__ should also be changed to give the number and average of reviews rounded to one decimal place (if reviews have been given).
+
+Do two functions arvosana_vahintaan(arvosana: float, sarjat: list) and sisaltaa_genren(genre: str, sarjat: list) to make it possible to search for sets in a list.
+"""
+class Sarja:
+    def __init__(self, nimi: str, performances: int, genres: list):
+        self.nimi = nimi
+        self.performances = performances
+        self.genres = genres
+        self.review_num = 0
+        self.sum_score = 0
+    
+    def __str__(self):
+        all_genres = ", ".join(self.genres)
+        if self.review_num == 0:
+            return "{} ({} esityskautta)\ngenret: {}\nei arvosteluja".format(self.nimi, self.performances, all_genres)
+        else:
+            average_score = self.sum_score/self.review_num
+            return "{} ({} esityskautta)\ngenret: {}\narvosteluja {}, keskiarvo {:.1f} pistettä".format(self.nimi, self.performances, all_genres, self.review_num, average_score)
+    
+    def arvostele(self, arvosana: int):
+        self.review_num = self.review_num + 1
+        self.sum_score = self.sum_score + arvosana
+    
+    def average_score(self):
+        if self.review_num == 0:
+            return 0
+        else:
+            return self.sum_score/self.review_num
+
+def arvosana_vahintaan(arvosana: float, sarjat: list):
+    name_list = []
+    for item in sarjat:
+        if item.average_score() >= arvosana:
+            name_list.append(item)
+    return name_list
+
+def sisaltaa_genren(genre: str, sarjat: list):
+    genre_list = []
+    for item in sarjat:
+        if genre in item.genres:
+            genre_list.append(item)
+    return genre_list
+
+if __name__ == "__main__":
+    s1 = Sarja("Dexter", 8, ["Crime", "Drama", "Mystery", "Thriller"])
+    s1.arvostele(5)
+
+    s2 = Sarja("South Park", 24, ["Animation", "Comedy"])
+    s2.arvostele(3)
+
+    s3 = Sarja("Friends", 10, ["Romance", "Comedy"])
+    s3.arvostele(2)
+
+    sarjat = [s1, s2, s3]
+
+    print("arvosana vähintään 4.5:")
+    for sarja in arvosana_vahintaan(4.5, sarjat):
+        print(sarja.nimi)
+    
+    print("genre Comedy:")
+    for sarja in sisaltaa_genren("Comedy", sarjat):
+        print(sarja.nimi)
