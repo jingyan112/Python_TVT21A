@@ -480,3 +480,59 @@ if __name__ == "__main__":
     print(kello)
     kello.aseta(12, 5)
     print(kello)
+
+#osa8-13 Tee ratkaisusi tähän:
+"""
+Implement Maksukortti class with the following methods:
+- __str__method that returns the card balance in the form "The card has money X euros".
+- syo_edullisesti method which reduces the card balance by 2.60 euros,
+the card balance will no longer decrease if the balance is insufficient when paying
+- syo_maukkaasti method which reduces the card balance by 4.60 euros,
+the card balance will no longer decrease if the balance is insufficient when paying
+- lataa_rahaa method which increase the card balance by the amount of money given by the parameter,
+and will raise an error if the given value is negative
+
+Plus, implement the program to output the following infomation:
+Pekka: Kortilla on rahaa 15.4 euroa
+Matti: Kortilla on rahaa 27.4 euroa
+Pekka: Kortilla on rahaa 35.4 euroa
+Matti: Kortilla on rahaa 22.8 euroa
+Pekka: Kortilla on rahaa 30.2 euroa
+Matti: Kortilla on rahaa 72.8 euroa
+"""
+class Maksukortti:
+    def __init__(self, alkusaldo: float):
+        self.saldo = alkusaldo
+
+    def __str__(self):
+        return "Kortilla on rahaa {:.1f} euroa".format(self.saldo)
+    
+    def syo_edullisesti(self):
+        if self.saldo >= 2.60:
+            self.saldo = self.saldo - 2.60
+    
+    def syo_maukkaasti(self):
+        if self.saldo >= 4.60:
+            self.saldo = self.saldo - 4.60
+    
+    def lataa_rahaa(self, increasing_value: float):
+        if increasing_value >= 0:
+            self.saldo = self.saldo + increasing_value
+        else:
+            raise ValueError("Kortille ei saa ladata negatiivista summaa")
+    
+pekan_kortti = Maksukortti(20)
+matin_kortti = Maksukortti(30)
+pekan_kortti.syo_maukkaasti()
+print("Pekka:", pekan_kortti)
+matin_kortti.syo_edullisesti()
+print("Matti:", matin_kortti)
+pekan_kortti.lataa_rahaa(20)
+print("Pekka:", pekan_kortti)
+matin_kortti.syo_maukkaasti()
+print("Matti:", matin_kortti)
+pekan_kortti.syo_edullisesti()
+pekan_kortti.syo_edullisesti()
+print("Pekka:", pekan_kortti)
+matin_kortti.lataa_rahaa(50)
+print("Matti:", matin_kortti)
