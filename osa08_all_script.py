@@ -361,10 +361,6 @@ print("Parittomien summa:", tilasto.summa_odd())
 Implement a class Sekuntikello that prints minute:second through __str__ method.
 In addition, the method tick takes the clock one second forward, and the value of both seconds and minutes is at most 59
 
-Implement a class Kello that prints hour:minute:second through __str__ method.
-In addition,  the method tick takes the clock one second forward, and the value of both seconds and minutes is at most 59, and the value of hours is at most 24.
-Furthermore, the method aseta will reset the time with new values of hours and minutes, the value for seconds will be 0.
-Output for the main function:
 00:00
 00:01
 00:02
@@ -373,15 +369,6 @@ Output for the main function:
 59:59
 00:00
 00:01
-
-23:59:55
-23:59:56
-23:59:57
-23:59:58
-23:59:59
-00:00:00
-00:00:01
-12:05:00
 """
 class Sekuntikello:
     def __init__(self):
@@ -408,6 +395,28 @@ class Sekuntikello:
         if self.minuutit == 60:
             self.minuutit = 0
 
+if __name__ == "__main__":
+    kello = Sekuntikello()
+    for i in range(3600):
+        print(kello)
+        kello.tick()
+
+#osa8-12 Tee ratkaisusi tähän:
+"""
+Implement a class Kello that prints hour:minute:second through __str__ method.
+In addition,  the method tick takes the clock one second forward, and the value of both seconds and minutes is at most 59, and the value of hours is at most 24.
+Furthermore, the method aseta will reset the time with new values of hours and minutes, the value for seconds will be 0.
+Output for the main function:
+
+23:59:55
+23:59:56
+23:59:57
+23:59:58
+23:59:59
+00:00:00
+00:00:01
+12:05:00
+"""
 class Kello:
     def __init__(self, hour: int, minute: int, second: int):
         self.hour = hour
@@ -455,10 +464,6 @@ class Kello:
         self.second = 0
 
 if __name__ == "__main__":
-    kello = Sekuntikello()
-    for i in range(3600):
-        print(kello)
-        kello.tick()
     kello = Kello(23, 59, 55)
     print(kello)
     kello.tick()
