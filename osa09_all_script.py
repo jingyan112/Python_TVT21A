@@ -1,9 +1,11 @@
-#osa9-01
+# osa9-01
 """
 Write a function nopein_auto(autot: list) that gets Autoobjects in the list class as its parameter.
 The function returns the fastest car mark of the cars in the list.
 You can assume that the fastest car is unambiguous. Do not change the original list or category Auto.
 """
+
+
 class Auto:
     def __init__(self, merkki: str, huippunopeus: int):
         self.merkki = merkki
@@ -12,11 +14,13 @@ class Auto:
     def __str__(self):
         return f"Auto (merkki: {self.merkki}, huippunopeus: {self.huippunopeus})"
 
+
 def nopein_auto(autot: list):
     new_dic = {}
     for item in autot:
         new_dic[item.merkki] = item.huippunopeus
-    return max(new_dic, key = new_dic.get)
+    return max(new_dic, key=new_dic.get)
+
 
 if __name__ == "__main__":
     auto1 = Auto("Mersu", 195)
@@ -27,13 +31,15 @@ if __name__ == "__main__":
     autot = [auto1, auto2, auto3, auto4]
     print(nopein_auto(autot))
 
-#osa9-02
+# osa9-02
 """
 Class Koesuoritus that models the test performance according to its name with two attributes, namely suorittaja(str) and pisteet(int).
 Write a function hyvaksytyt(suoritukset: list, pisteraja: int) that gets as a parameter a list of test runs and the lowest accepted score as an integer.
 The function creates and returns a new list in which only the approved performances from the list are stored.
 Do not change the original list or category Koesuoritus.
 """
+
+
 class Koesuoritus:
     def __init__(self, suorittaja: str, pisteet: int):
         self.suorittaja = suorittaja
@@ -42,12 +48,14 @@ class Koesuoritus:
     def __str__(self):
         return f'Koesuoritus (suorittaja: {self.suorittaja}, pisteet: {self.pisteet})'
 
+
 def hyvaksytyt(suoritukset: list, pisteraja: int):
     result = []
     for item in suoritukset:
         if item.pisteet >= pisteraja:
             result.append(item)
     return result
+
 
 if __name__ == "__main__":
     s1 = Koesuoritus("Pekka", 12)
@@ -60,18 +68,21 @@ if __name__ == "__main__":
     for hyvaksytty in hyv:
         print(hyvaksytty)
 
-#osa9-03
+# osa9-03
 """
 - Implement punnitsethe(henkilo: Henkilo) method that is intended to return the weight of the person from Henkilo.paino.
 - Implement syota(henkilo: Henkilo) method that increases the weight of the person in the parameter by one
 - Implement punnitukset() method that calculates how many times the punnitse method is called
 """
+
+
 class Henkilo:
     def __init__(self, nimi: str, ika: int, pituus: int, paino: int):
         self.nimi = nimi
         self.ika = ika
         self.pituus = pituus
         self.paino = paino
+
 
 class Kasvatuslaitos:
     def __init__(self):
@@ -80,13 +91,14 @@ class Kasvatuslaitos:
     def punnitse(self, henkilo: Henkilo):
         self.punnitusten_lkm = self.punnitusten_lkm + 1
         return henkilo.paino
-    
+
     def syota(self, henkilo: Henkilo):
         henkilo.paino = henkilo.paino + 1
         return henkilo.paino
-    
+
     def punnitukset(self):
         return self.punnitusten_lkm
+
 
 if __name__ == "__main__":
     haagan_neuvola = Kasvatuslaitos()
@@ -96,7 +108,7 @@ if __name__ == "__main__":
 
     print(f"{eero.nimi} painaa {haagan_neuvola.punnitse(eero)} kg")
     print(f"{pekka.nimi} painaa {haagan_neuvola.punnitse(pekka)} kg")
-    print() 
+    print()
 
     haagan_neuvola.syota(eero)
     haagan_neuvola.syota(eero)
@@ -116,7 +128,7 @@ if __name__ == "__main__":
     haagan_neuvola.punnitse(eero)
     print(f"Punnituksia tehty {haagan_neuvola.punnitukset()}")
 
-#osa9-04
+# osa9-04
 """
 In Maksukortti class:
 - Implement lataa_rahaa(lisays) method that add the balance by lisays
@@ -133,11 +145,13 @@ In Kassapaate class:
 - edulliset to record how many cheap lunches are sold
 - maukkaat to record how many expensive lunches are sold
 """
+
+
 class Maksukortti:
     def __init__(self, saldo: float):
         self.saldo = saldo  # The current balance
 
-    def lataa_rahaa(self, lisays: float): # Add the current balance by lisays
+    def lataa_rahaa(self, lisays: float):  # Add the current balance by lisays
         self.saldo = self.saldo + lisays
 
     def ota_rahaa(self, maara: float):  # Reduce the current balance by maara
@@ -146,6 +160,7 @@ class Maksukortti:
             return True
         else:
             return False
+
 
 class Kassapaate:
     def __init__(self):
@@ -161,7 +176,8 @@ class Kassapaate:
         else:
             return maksu
 
-    def syo_maukkaasti(self, maksu: float):     # 4.30 for the expensive lunch, for cash
+    # 4.30 for the expensive lunch, for cash
+    def syo_maukkaasti(self, maksu: float):
         if maksu >= 4.30:
             self.maukkaat = self.maukkaat + 1
             self.rahaa = self.rahaa + 4.30
@@ -169,14 +185,16 @@ class Kassapaate:
         else:
             return maksu
 
-    def syo_edullisesti_kortilla(self, kortti:Maksukortti): # 2.50 for the cheap lunch, for card
+    # 2.50 for the cheap lunch, for card
+    def syo_edullisesti_kortilla(self, kortti: Maksukortti):
         if kortti.ota_rahaa(2.50):
             self.edulliset = self.edulliset + 1
             return True
         else:
             return False
 
-    def syo_maukkaasti_kortilla(self, kortti:Maksukortti):  # 4.30 for the expensive lunch, for card
+    # 4.30 for the expensive lunch, for card
+    def syo_maukkaasti_kortilla(self, kortti: Maksukortti):
         if kortti.ota_rahaa(4.30):
             self.maukkaat = self.maukkaat + 1
             return True
@@ -187,18 +205,19 @@ class Kassapaate:
         self.rahaa = self.rahaa + summa
         return kortti.lataa_rahaa(summa)
 
+
 if __name__ == "__main__":
     # test1
     kortti = Maksukortti(10)
     print("Rahaa", kortti.saldo)        # Rahaa 10
-    tulos = kortti.ota_rahaa(8)         
+    tulos = kortti.ota_rahaa(8)
     print("Onnistuiko otto:", tulos)    # Onnistuiko otto: True
-    print("Rahaa", kortti.saldo)        # Rahaa 2        
+    print("Rahaa", kortti.saldo)        # Rahaa 2
     tulos = kortti.ota_rahaa(4)
     print("Onnistuiko otto:", tulos)    # Onnistuiko otto: False
     print("Rahaa", kortti.saldo)        # Rahaa 2
     exactum = Kassapaate()
-    
+
     # test2
     exactum = Kassapaate()
     vaihtorahaa = exactum.syo_edullisesti(10)
@@ -207,9 +226,12 @@ if __name__ == "__main__":
     print("Vaihtorahaa jäi", vaihtorahaa)       # Vaihtorahaa jäi 2.5
     vaihtorahaa = exactum.syo_maukkaasti(4.3)
     print("Vaihtorahaa jäi", vaihtorahaa)       # Vaihtorahaa jäi 0.0
-    print("Kassassa rahaa", exactum.rahaa)                      # Kassassa rahaa 1009.3
-    print("Edullisia lounaita myyty", exactum.edulliset)        # Edullisia lounaita myyty 2
-    print("Maukkaita lounaita myyty", exactum.maukkaat)         # Maukkaita lounaita myyty 1
+    # Kassassa rahaa 1009.3
+    print("Kassassa rahaa", exactum.rahaa)
+    # Edullisia lounaita myyty 2
+    print("Edullisia lounaita myyty", exactum.edulliset)
+    # Maukkaita lounaita myyty 1
+    print("Maukkaita lounaita myyty", exactum.maukkaat)
 
     # test3
     exactum = Kassapaate()
@@ -223,44 +245,57 @@ if __name__ == "__main__":
     tulos = exactum.syo_edullisesti_kortilla(kortti)
     print("Riittikö raha:", tulos)              # Riittikö raha: True
     print("Kassassa rahaa", exactum.rahaa)      # Kassassa rahaa 1002.5
-    print("Edullisia lounaita myyty", exactum.edulliset)    # Edullisia lounaita myyty 2
-    print("Maukkaita lounaita myyty", exactum.maukkaat)     # Maukkaita lounaita myyty 1
-    
+    # Edullisia lounaita myyty 2
+    print("Edullisia lounaita myyty", exactum.edulliset)
+    # Maukkaita lounaita myyty 1
+    print("Maukkaita lounaita myyty", exactum.maukkaat)
+
     # test4
     exactum = Kassapaate()
     antin_kortti = Maksukortti(2)
-    print(f"Kortilla rahaa {antin_kortti.saldo} euroa")     # Kortilla rahaa 2 euroa
+    # Kortilla rahaa 2 euroa
+    print(f"Kortilla rahaa {antin_kortti.saldo} euroa")
     tulos = exactum.syo_maukkaasti_kortilla(antin_kortti)
-    print("Riittikö raha:", tulos)                          # Riittikö raha: False
+    # Riittikö raha: False
+    print("Riittikö raha:", tulos)
     exactum.lataa_rahaa_kortille(antin_kortti, 100)
-    print(f"Kortilla rahaa {antin_kortti.saldo} euroa")     # Kortilla rahaa 102 euroa
+    # Kortilla rahaa 102 euroa
+    print(f"Kortilla rahaa {antin_kortti.saldo} euroa")
     tulos = exactum.syo_maukkaasti_kortilla(antin_kortti)
-    print("Riittikö raha:", tulos)                          # Riittikö raha: True
-    print(f"Kortilla rahaa {antin_kortti.saldo} euroa")     # Kortilla rahaa 97.7 euroa
-    print("Kassassa rahaa", exactum.rahaa)                  # Kassassa rahaa 1100
-    print("Edullisia lounaita myyty", exactum.edulliset)    # Edullisia lounaita myyty 0
-    print("Maukkaita lounaita myyty", exactum.maukkaat)     # Maukkaita lounaita myyty 1
+    # Riittikö raha: True
+    print("Riittikö raha:", tulos)
+    # Kortilla rahaa 97.7 euroa
+    print(f"Kortilla rahaa {antin_kortti.saldo} euroa")
+    # Kassassa rahaa 1100
+    print("Kassassa rahaa", exactum.rahaa)
+    # Edullisia lounaita myyty 0
+    print("Edullisia lounaita myyty", exactum.edulliset)
+    # Maukkaita lounaita myyty 1
+    print("Maukkaita lounaita myyty", exactum.maukkaat)
 
-#osa9-05
+# osa9-05
 """
 Make a method suurempi(self, verrattava) that returns True if the dwelling object itself is larger in area than the comparable dwelling object.
 Make a method hintaero(self, verrattava) that returns the price difference between a dwelling object and a comparable dwelling object. 
 Make a method kalliimpi(self, verrattava) that returns Trueif the dwelling object is more expensive than the comparable dwelling object.
 """
+
+
 class Asunto:
     def __init__(self, huoneita: int, nelioita: int, neliohinta: int):
         self.huoneita = huoneita
         self.nelioita = nelioita
         self.neliohinta = neliohinta
-    
+
     def suurempi(self, verrattava):
         return self.nelioita > verrattava.nelioita
-    
+
     def hintaero(self, verrattava):
         return abs(self.nelioita * self.neliohinta - verrattava.nelioita * verrattava.neliohinta)
-    
+
     def kalliimpi(self, verrattava):
         return self.nelioita * self.neliohinta > verrattava.nelioita * verrattava.neliohinta
+
 
 if __name__ == "__main__":
     eira_yksio = Asunto(1, 16, 5500)
@@ -274,13 +309,15 @@ if __name__ == "__main__":
     print(jakomaki_kolmio.hintaero(kallio_kaksio))  # 35400
 
     print(eira_yksio.kalliimpi(kallio_kaksio))      # False
-    print(jakomaki_kolmio.kalliimpi(kallio_kaksio)) # True
+    print(jakomaki_kolmio.kalliimpi(kallio_kaksio))  # True
 
-#osa9-06
+# osa9-06
 """
 Complete the class Henkilo method __str__so that the method returns a string that
 tells the person's name in addition to the pet's name and breed under the sample printout.
 """
+
+
 class Lemmikki:
     def __init__(self, nimi: str, kuvaus: str):
         self.nimi = nimi
@@ -288,6 +325,7 @@ class Lemmikki:
 
     def __str__(self):
         return f"{self.nimi} ({self.kuvaus})"
+
 
 class Henkilo:
     def __init__(self, nimi: str, lemmikki: Lemmikki):
@@ -297,23 +335,27 @@ class Henkilo:
     def __str__(self):
         return f"{self.nimi}, kaverina {self.lemmikki.nimi}, joka on {self.lemmikki.kuvaus}"
 
+
 if __name__ == "__main__":
     hulda = Lemmikki("Hulda", "sekarotuinen koira")
     leevi = Henkilo("Leevi", hulda)
     print(leevi)    # Leevi, kaverina Hulda, joka on sekarotuinen koira
 
-#osa9-07
+# osa9-07
 """
 Class Lahja contains the the name and weight of the gift (kg).
 Class Pakkausto adds a parameter to the gift to be given to the package and stores the total weight of the gifts in the package.
 """
+
+
 class Lahja:
     def __init__(self, nimi: str, paino: int):
         self.nimi = nimi
         self.paino = paino
-    
+
     def __str__(self):
         return f"{self.nimi} ({self.paino} kg)"
+
 
 class Pakkaus:
     def __init__(self):
@@ -328,6 +370,7 @@ class Pakkaus:
             total_weight = total_weight + item.paino
         return total_weight
 
+
 if __name__ == "__main__":
     kirja = Lahja("Aapiskukko", 2)
     pakkaus = Pakkaus()
@@ -337,7 +380,7 @@ if __name__ == "__main__":
     pakkaus.lisaa_lahja(cd_levy)
     print(pakkaus.yhteispaino())    # 3
 
-#osa9-08
+# osa9-08
 """
 Implement class Huone that contains a list of people with the following methods:
 - lisaa(henkilo: Henkilo) add the person given to the parameter in the room.
@@ -346,6 +389,8 @@ Implement class Huone that contains a list of people with the following methods:
 - lyhin() returns the shortest of the people added to the room
 - poista_lyhin() that removes and returns the shortest person from the room
 """
+
+
 class Henkilo:
     def __init__(self, nimi: str, pituus: int):
         self.nimi = nimi        # Name
@@ -354,43 +399,46 @@ class Henkilo:
     def __str__(self):
         return self.nimi
 
+
 class Huone:
     def __init__(self):
         self.people_list = []
-    
+
     def lisaa(self, henkilo: Henkilo):
         self.people_list.append(henkilo)
-    
+
     def on_tyhja(self):
         if len(self.people_list) == 0:
             return True
         return False
-    
+
     def tulosta_tiedot(self):
         if not self.on_tyhja():
             total_height = 0
             for item in self.people_list:
                 total_height = total_height + item.pituus
-            print("Huoneessa {} henkilöä, yhteispituus {} cm".format(len(self.people_list), total_height))
+            print("Huoneessa {} henkilöä, yhteispituus {} cm".format(
+                len(self.people_list), total_height))
             for item in self.people_list:
                 print("{} ({} cm)".format(item.nimi, item.pituus))
-    
+
     def lyhin(self):
         if not self.on_tyhja():
             tmp_dic = {}
             for item in self.people_list:
                 tmp_dic[item.nimi] = item.pituus
             for item in self.people_list:
-                if item.nimi == min(tmp_dic, key = tmp_dic.get):
+                if item.nimi == min(tmp_dic, key=tmp_dic.get):
                     return item
         return None
-    
+
     def poista_lyhin(self):
         if self.lyhin() is not None:
             shortest_person = self.lyhin()
             self.people_list.remove(shortest_person)
             return shortest_person
         return None
+
 
 if __name__ == "__main__":
     huone = Huone()
@@ -403,11 +451,11 @@ if __name__ == "__main__":
     huone.lisaa(Henkilo('Jaana', 171))
     huone.lisaa(Henkilo('Aune', 149))
     print()
-    print("Lyhin:", huone.poista_lyhin())   
+    print("Lyhin:", huone.poista_lyhin())
     print()
     huone.tulosta_tiedot()
 
-#osa9-09
+# osa9-09
 """
 Implement the following methods for the class Auto:
 Two variables for the mileage of driving and the amount of gasoline
@@ -423,6 +471,8 @@ Auto: ajettu 60 km, bensaa 0 litraa
 Auto: ajettu 60 km, bensaa 0 litraa
 Auto: ajettu 60 km, bensaa 60 litraa
 """
+
+
 class Auto:
     def __init__(self):
         self.__km = 0
@@ -431,7 +481,7 @@ class Auto:
     def tankkaa(self):
         self.__liter = 60
 
-    def aja(self, km:int):
+    def aja(self, km: int):
         if self.__liter >= km:
             self.__km = self.__km + km
             self.__liter = self.__liter - km
@@ -441,6 +491,7 @@ class Auto:
 
     def __str__(self):
         return "Auto: ajettu {} km, bensaa {} litraa".format(self.__km, self.__liter)
+
 
 if __name__ == "__main__":
     auto = Auto()
