@@ -115,3 +115,128 @@ if __name__ == "__main__":
     haagan_neuvola.punnitse(eero)
     haagan_neuvola.punnitse(eero)
     print(f"Punnituksia tehty {haagan_neuvola.punnitukset()}")
+
+#osa9-04
+"""
+In Maksukortti class:
+- Implement lataa_rahaa(lisays) method that add the balance by lisays
+- Implement ota_rahaa(maara) method that reduce the balance by maara, while the balance wont go negative.
+If the balance is less than maara, return False, otherwise, return True.
+
+In Kassapaate class:
+- Implement syo_edullisesti(maksu) method to buy the cheap lunch (2.50e) with maksu cash, check whether the cash is enough
+- Implement syo_maukkaasti(maksu) method to buy the expensive lunch (4.30e) with maksu cash, check whether the cash is enough
+- Implement syo_edullisesti_kortilla(kortti) method to buy the cheap lunch (2.50e) with card, card info is stored in kortti:Maksukortti class
+- Implement syo_maukkaasti_kortilla(kortti) method to buy the expensive lunch (4.30e) with card, card info is stored in kortti:Maksukortti class
+- Implement lataa_rahaa_kortille(kortti, summa) method to top up the card with summa
+- rahaa variable to record cash changes, the original value is 1000
+- edulliset to record how many cheap lunches are sold
+- maukkaat to record how many expensive lunches are sold
+"""
+class Maksukortti:
+    def __init__(self, saldo: float):
+        self.saldo = saldo  # The current balance
+
+    def lataa_rahaa(self, lisays: float): # Add the current balance by lisays
+        self.saldo = self.saldo + lisays
+
+    def ota_rahaa(self, maara: float):  # Reduce the current balance by maara
+        if self.saldo >= maara:
+            self.saldo = self.saldo - maara
+            return True
+        else:
+            return False
+
+class Kassapaate:
+    def __init__(self):
+        self.rahaa = 1000   # Cash changes
+        self.edulliset = 0  # Calculate how many cheap lunches are sold
+        self.maukkaat = 0   # Calculate how many expensive lunches are sold
+
+    def syo_edullisesti(self, maksu: float):    # 2.50 for the cheap lunch, for cash
+        if maksu >= 2.50:
+            self.edulliset = self.edulliset + 1
+            self.rahaa = self.rahaa + 2.50
+            return maksu - 2.50
+        else:
+            return maksu
+
+    def syo_maukkaasti(self, maksu: float):     # 4.30 for the expensive lunch, for cash
+        if maksu >= 4.30:
+            self.maukkaat = self.maukkaat + 1
+            self.rahaa = self.rahaa + 4.30
+            return maksu - 4.30
+        else:
+            return maksu
+
+    def syo_edullisesti_kortilla(self, kortti:Maksukortti): # 2.50 for the cheap lunch, for card
+        if kortti.ota_rahaa(2.50):
+            self.edulliset = self.edulliset + 1
+            return True
+        else:
+            return False
+
+    def syo_maukkaasti_kortilla(self, kortti:Maksukortti):  # 4.30 for the expensive lunch, for card
+        if kortti.ota_rahaa(4.30):
+            self.maukkaat = self.maukkaat + 1
+            return True
+        else:
+            return False
+
+    def lataa_rahaa_kortille(self, kortti: Maksukortti, summa: float):
+        self.rahaa = self.rahaa + summa
+        return kortti.lataa_rahaa(summa)
+
+if __name__ == "__main__":
+    # test1
+    kortti = Maksukortti(10)
+    print("Rahaa", kortti.saldo)        # Rahaa 10
+    tulos = kortti.ota_rahaa(8)         
+    print("Onnistuiko otto:", tulos)    # Onnistuiko otto: True
+    print("Rahaa", kortti.saldo)        # Rahaa 2        
+    tulos = kortti.ota_rahaa(4)
+    print("Onnistuiko otto:", tulos)    # Onnistuiko otto: False
+    print("Rahaa", kortti.saldo)        # Rahaa 2
+    exactum = Kassapaate()
+    
+    # test2
+    exactum = Kassapaate()
+    vaihtorahaa = exactum.syo_edullisesti(10)
+    print("Vaihtorahaa jäi", vaihtorahaa)       # Vaihtorahaa jäi 7.5
+    vaihtorahaa = exactum.syo_edullisesti(5)
+    print("Vaihtorahaa jäi", vaihtorahaa)       # Vaihtorahaa jäi 2.5
+    vaihtorahaa = exactum.syo_maukkaasti(4.3)
+    print("Vaihtorahaa jäi", vaihtorahaa)       # Vaihtorahaa jäi 0.0
+    print("Kassassa rahaa", exactum.rahaa)                      # Kassassa rahaa 1009.3
+    print("Edullisia lounaita myyty", exactum.edulliset)        # Edullisia lounaita myyty 2
+    print("Maukkaita lounaita myyty", exactum.maukkaat)         # Maukkaita lounaita myyty 1
+
+    # test3
+    exactum = Kassapaate()
+    vaihtorahaa = exactum.syo_edullisesti(10)
+    print("Vaihtorahaa jäi", vaihtorahaa)       # Vaihtorahaa jäi 7.5
+    kortti = Maksukortti(7)
+    tulos = exactum.syo_maukkaasti_kortilla(kortti)
+    print("Riittikö raha:", tulos)              # Riittikö raha: True
+    tulos = exactum.syo_maukkaasti_kortilla(kortti)
+    print("Riittikö raha:", tulos)              # Riittikö raha: False
+    tulos = exactum.syo_edullisesti_kortilla(kortti)
+    print("Riittikö raha:", tulos)              # Riittikö raha: True
+    print("Kassassa rahaa", exactum.rahaa)      # Kassassa rahaa 1002.5
+    print("Edullisia lounaita myyty", exactum.edulliset)    # Edullisia lounaita myyty 2
+    print("Maukkaita lounaita myyty", exactum.maukkaat)     # Maukkaita lounaita myyty 1
+    
+    # test4
+    exactum = Kassapaate()
+    antin_kortti = Maksukortti(2)
+    print(f"Kortilla rahaa {antin_kortti.saldo} euroa")     # Kortilla rahaa 2 euroa
+    tulos = exactum.syo_maukkaasti_kortilla(antin_kortti)
+    print("Riittikö raha:", tulos)                          # Riittikö raha: False
+    exactum.lataa_rahaa_kortille(antin_kortti, 100)
+    print(f"Kortilla rahaa {antin_kortti.saldo} euroa")     # Kortilla rahaa 102 euroa
+    tulos = exactum.syo_maukkaasti_kortilla(antin_kortti)
+    print("Riittikö raha:", tulos)                          # Riittikö raha: True
+    print(f"Kortilla rahaa {antin_kortti.saldo} euroa")     # Kortilla rahaa 97.7 euroa
+    print("Kassassa rahaa", exactum.rahaa)                  # Kassassa rahaa 1100
+    print("Edullisia lounaita myyty", exactum.edulliset)    # Edullisia lounaita myyty 0
+    print("Maukkaita lounaita myyty", exactum.maukkaat)     # Maukkaita lounaita myyty 1
