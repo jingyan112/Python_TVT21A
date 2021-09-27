@@ -275,3 +275,29 @@ if __name__ == "__main__":
 
     print(eira_yksio.kalliimpi(kallio_kaksio))      # False
     print(jakomaki_kolmio.kalliimpi(kallio_kaksio)) # True
+
+#osa9-06
+"""
+Complete the class Henkilo method __str__so that the method returns a string that
+tells the person's name in addition to the pet's name and breed under the sample printout.
+"""
+class Lemmikki:
+    def __init__(self, nimi: str, kuvaus: str):
+        self.nimi = nimi
+        self.kuvaus = kuvaus
+
+    def __str__(self):
+        return f"{self.nimi} ({self.kuvaus})"
+
+class Henkilo:
+    def __init__(self, nimi: str, lemmikki: Lemmikki):
+        self.nimi = nimi
+        self.lemmikki = lemmikki
+
+    def __str__(self):
+        return f"{self.nimi}, kaverina {self.lemmikki.nimi}, joka on {self.lemmikki.kuvaus}"
+
+if __name__ == "__main__":
+    hulda = Lemmikki("Hulda", "sekarotuinen koira")
+    leevi = Henkilo("Leevi", hulda)
+    print(leevi)    # Leevi, kaverina Hulda, joka on sekarotuinen koira
