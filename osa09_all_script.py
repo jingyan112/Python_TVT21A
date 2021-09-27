@@ -336,3 +336,73 @@ if __name__ == "__main__":
     cd_levy = Lahja("Pink Floyd: Dark side of the moon", 1)
     pakkaus.lisaa_lahja(cd_levy)
     print(pakkaus.yhteispaino())    # 3
+
+#osa9-08
+"""
+Implement class Huone that contains a list of people with the following methods:
+- lisaa(henkilo: Henkilo) add the person given to the parameter in the room.
+- on_tyhja() returns the value True or False, which indicates whether the room is empty.
+- tulosta_tiedot() prints the people in the room, including the number of people, the total height of people and the info for single person
+- lyhin() returns the shortest of the people added to the room
+- poista_lyhin() that removes and returns the shortest person from the room
+"""
+class Henkilo:
+    def __init__(self, nimi: str, pituus: int):
+        self.nimi = nimi        # Name
+        self.pituus = pituus    # Height
+
+    def __str__(self):
+        return self.nimi
+
+class Huone:
+    def __init__(self):
+        self.people_list = []
+    
+    def lisaa(self, henkilo: Henkilo):
+        self.people_list.append(henkilo)
+    
+    def on_tyhja(self):
+        if len(self.people_list) == 0:
+            return True
+        return False
+    
+    def tulosta_tiedot(self):
+        if not self.on_tyhja():
+            total_height = 0
+            for item in self.people_list:
+                total_height = total_height + item.pituus
+            print("Huoneessa {} henkilöä, yhteispituus {} cm".format(len(self.people_list), total_height))
+            for item in self.people_list:
+                print("{} ({} cm)".format(item.nimi, item.pituus))
+    
+    def lyhin(self):
+        if not self.on_tyhja():
+            tmp_dic = {}
+            for item in self.people_list:
+                tmp_dic[item.nimi] = item.pituus
+            for item in self.people_list:
+                if item.nimi == min(tmp_dic, key = tmp_dic.get):
+                    return item
+        return None
+    
+    def poista_lyhin(self):
+        if self.lyhin() is not None:
+            shortest_person = self.lyhin()
+            self.people_list.remove(shortest_person)
+            return shortest_person
+        return None
+
+if __name__ == "__main__":
+    huone = Huone()
+    print("Huone tyhjä?", huone.on_tyhja())
+    print("Lyhin:", huone.poista_lyhin())
+    huone.lisaa(Henkilo('Arto', 180))
+    huone.lisaa(Henkilo('Jani', 175))
+    huone.lisaa(Henkilo('Liisa', 150))
+    huone.lisaa(Henkilo('Kimmo', 204))
+    huone.lisaa(Henkilo('Jaana', 171))
+    huone.lisaa(Henkilo('Aune', 149))
+    print()
+    print("Lyhin:", huone.poista_lyhin())   
+    print()
+    huone.tulosta_tiedot()
