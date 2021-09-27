@@ -409,7 +409,8 @@ if __name__ == "__main__":
 
 #osa9-09
 """
-Implement the following methods for the class:
+Implement the following methods for the class Auto:
+Two variables for the mileage of driving and the amount of gasoline
 - tankkaa(), which fills a gas tank; the contents of the gas tank (0-60 liters)
 - aja(km:int), which drives the mileage of the parameter or as far as enough gasoline, the car consumes a liter of petrol per kilometer
 - __str__, which shows a description of the car according to the example
