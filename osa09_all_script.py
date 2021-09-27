@@ -240,3 +240,38 @@ if __name__ == "__main__":
     print("Kassassa rahaa", exactum.rahaa)                  # Kassassa rahaa 1100
     print("Edullisia lounaita myyty", exactum.edulliset)    # Edullisia lounaita myyty 0
     print("Maukkaita lounaita myyty", exactum.maukkaat)     # Maukkaita lounaita myyty 1
+
+#osa9-05
+"""
+Make a method suurempi(self, verrattava) that returns True if the dwelling object itself is larger in area than the comparable dwelling object.
+Make a method hintaero(self, verrattava) that returns the price difference between a dwelling object and a comparable dwelling object. 
+Make a method kalliimpi(self, verrattava) that returns Trueif the dwelling object is more expensive than the comparable dwelling object.
+"""
+class Asunto:
+    def __init__(self, huoneita: int, nelioita: int, neliohinta: int):
+        self.huoneita = huoneita
+        self.nelioita = nelioita
+        self.neliohinta = neliohinta
+    
+    def suurempi(self, verrattava):
+        return self.nelioita > verrattava.nelioita
+    
+    def hintaero(self, verrattava):
+        return abs(self.nelioita * self.neliohinta - verrattava.nelioita * verrattava.neliohinta)
+    
+    def kalliimpi(self, verrattava):
+        return self.nelioita * self.neliohinta > verrattava.nelioita * verrattava.neliohinta
+
+if __name__ == "__main__":
+    eira_yksio = Asunto(1, 16, 5500)
+    kallio_kaksio = Asunto(2, 38, 4200)
+    jakomaki_kolmio = Asunto(3, 78, 2500)
+
+    print(eira_yksio.suurempi(kallio_kaksio))       # False
+    print(jakomaki_kolmio.suurempi(kallio_kaksio))  # True
+
+    print(eira_yksio.hintaero(kallio_kaksio))       # 71600
+    print(jakomaki_kolmio.hintaero(kallio_kaksio))  # 35400
+
+    print(eira_yksio.kalliimpi(kallio_kaksio))      # False
+    print(jakomaki_kolmio.kalliimpi(kallio_kaksio)) # True
