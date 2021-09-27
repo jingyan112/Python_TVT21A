@@ -1,5 +1,4 @@
-#osa9-01 Tee ratkaisusi luokan Auto perään
-# Älä muuta luokkaa!
+#osa9-01
 """
 Write a function nopein_auto(autot: list) that gets Autoobjects in the list class as its parameter.
 The function returns the fastest car mark of the cars in the list.
@@ -19,7 +18,6 @@ def nopein_auto(autot: list):
         new_dic[item.merkki] = item.huippunopeus
     return max(new_dic, key = new_dic.get)
 
-# TEE RATKAISUSI TÄHÄN:
 if __name__ == "__main__":
     auto1 = Auto("Mersu", 195)
     auto2 = Auto("Lada", 110)
@@ -29,8 +27,7 @@ if __name__ == "__main__":
     autot = [auto1, auto2, auto3, auto4]
     print(nopein_auto(autot))
 
-#osa9-02 Tee ratkaisusi luokan Koesuoritus perään.
-# ÄLÄ MUUTA LUOKKAA
+#osa9-02
 """
 Class Koesuoritus that models the test performance according to its name with two attributes, namely suorittaja(str) and pisteet(int).
 Write a function hyvaksytyt(suoritukset: list, pisteraja: int) that gets as a parameter a list of test runs and the lowest accepted score as an integer.
@@ -52,7 +49,6 @@ def hyvaksytyt(suoritukset: list, pisteraja: int):
             result.append(item)
     return result
 
-# TEE RATKAISUSI TÄHÄN:
 if __name__ == "__main__":
     s1 = Koesuoritus("Pekka", 12)
     s2 = Koesuoritus("Pirjo", 19)
@@ -64,8 +60,7 @@ if __name__ == "__main__":
     for hyvaksytty in hyv:
         print(hyvaksytty)
 
-#osa9-03 TEE RATKAISUSI TÄHÄN:
-# Huom! Älä muuta luokkaa Henkilo!
+#osa9-03
 """
 - Implement punnitsethe(henkilo: Henkilo) method that is intended to return the weight of the person from Henkilo.paino.
 - Implement syota(henkilo: Henkilo) method that increases the weight of the person in the parameter by one
@@ -84,7 +79,6 @@ class Kasvatuslaitos:
 
     def punnitse(self, henkilo: Henkilo):
         self.punnitusten_lkm = self.punnitusten_lkm + 1
-        # palautetaan parametrina annetun henkilön paino
         return henkilo.paino
     
     def syota(self, henkilo: Henkilo):
