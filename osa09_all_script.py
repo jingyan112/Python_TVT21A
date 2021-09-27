@@ -301,3 +301,38 @@ if __name__ == "__main__":
     hulda = Lemmikki("Hulda", "sekarotuinen koira")
     leevi = Henkilo("Leevi", hulda)
     print(leevi)    # Leevi, kaverina Hulda, joka on sekarotuinen koira
+
+#osa9-07
+"""
+Class Lahja contains the the name and weight of the gift (kg).
+Class Pakkausto adds a parameter to the gift to be given to the package and stores the total weight of the gifts in the package.
+"""
+class Lahja:
+    def __init__(self, nimi: str, paino: int):
+        self.nimi = nimi
+        self.paino = paino
+    
+    def __str__(self):
+        return f"{self.nimi} ({self.paino} kg)"
+
+class Pakkaus:
+    def __init__(self):
+        self.lahja_list = []
+
+    def lisaa_lahja(self, lahja: Lahja):
+        self.lahja_list.append(lahja)
+
+    def yhteispaino(self):
+        total_weight = 0
+        for item in self.lahja_list:
+            total_weight = total_weight + item.paino
+        return total_weight
+
+if __name__ == "__main__":
+    kirja = Lahja("Aapiskukko", 2)
+    pakkaus = Pakkaus()
+    pakkaus.lisaa_lahja(kirja)
+    print(pakkaus.yhteispaino())    # 2
+    cd_levy = Lahja("Pink Floyd: Dark side of the moon", 1)
+    pakkaus.lisaa_lahja(cd_levy)
+    print(pakkaus.yhteispaino())    # 3
