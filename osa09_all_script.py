@@ -507,3 +507,36 @@ if __name__ == "__main__":
     auto.tankkaa()
     auto.tankkaa()
     print(auto)
+
+#osa9-10
+"""
+Implement a class Aanite that models a single recording with one hidden attribute, integer type __pituus
+- a constructor that takes length as its parameter
+- a detection method pituusthat returns the length
+- a setting method that sets the length value
+"""
+class Aanite:
+    def __init__(self, orginal_value: int):
+        if orginal_value >= 0:
+            self.__pituus = orginal_value
+        else:
+            raise ValueError("Wrong value")
+    
+    @property
+    def pituus(self):
+        return self.__pituus
+    
+    @pituus.setter
+    def pituus(self, new_value: int):
+        if new_value >= 0:
+            self.__pituus = new_value
+        else:
+            raise ValueError("Wrong value")
+
+if __name__ == "__main__":
+    the_wall = Aanite(-1)
+    print(the_wall.pituus)
+    the_wall.pituus = 44
+    print(the_wall.pituus)
+    the_wall.pituus = -1
+    print(the_wall.pituus)
