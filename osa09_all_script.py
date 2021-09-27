@@ -540,3 +540,41 @@ if __name__ == "__main__":
     print(the_wall.pituus)
     the_wall.pituus = -1
     print(the_wall.pituus)
+
+#osa9-11
+"""
+Implement Havaintoasema class with the following methods:
+- a constructor that gets the position name of the parameter
+- a method lisaa_havainto(havainto: str) that adds a observation after the list
+- a method viimeisin_havainto() that returns the last added observation
+- a method havaintojen_maara() that returns the total number of observations
+- a method __str__ that returns the station name and the total number of observations in the format shown in the example below.
+"""
+class Havaintoasema:
+    def __init__(self, position: str):
+        self.__position = position
+        self.__observation_list = []
+    
+    def lisaa_havainto(self, havainto: str):
+        self.__observation_list.append(havainto)
+    
+    def havaintojen_maara(self):
+        return len(self.__observation_list)
+
+    def viimeisin_havainto(self):
+        if self.havaintojen_maara() != 0:
+            return self.__observation_list[-1]
+        return ""
+
+    def __str__(self):
+        return "{}, {} havaintoa".format(self.__position, len(self.__observation_list))
+        
+if __name__ == "__main__":
+    asema = Havaintoasema("Kumpula")
+    asema.lisaa_havainto("Sadetta 10mm")
+    asema.lisaa_havainto("Aurinkoista")
+    print(asema.viimeisin_havainto())       # Aurinkoista
+    asema.lisaa_havainto("Ukkosta")
+    print(asema.viimeisin_havainto())       # Ukkosta
+    print(asema.havaintojen_maara())        # 3
+    print(asema)                            # Kumpula, 3 havaintoa
