@@ -406,3 +406,52 @@ if __name__ == "__main__":
     print("Lyhin:", huone.poista_lyhin())   
     print()
     huone.tulosta_tiedot()
+
+#osa9-09
+"""
+Implement the following methods for the class:
+- tankkaa(), which fills a gas tank; the contents of the gas tank (0-60 liters)
+- aja(km:int), which drives the mileage of the parameter or as far as enough gasoline, the car consumes a liter of petrol per kilometer
+- __str__, which shows a description of the car according to the example
+
+Output:
+Auto: ajettu 0 km, bensaa 0 litraa
+Auto: ajettu 0 km, bensaa 60 litraa
+Auto: ajettu 20 km, bensaa 40 litraa
+Auto: ajettu 60 km, bensaa 0 litraa
+Auto: ajettu 60 km, bensaa 0 litraa
+Auto: ajettu 60 km, bensaa 60 litraa
+"""
+class Auto:
+    def __init__(self):
+        self.__km = 0
+        self.__liter = 0
+
+    def tankkaa(self):
+        self.__liter = 60
+
+    def aja(self, km:int):
+        if self.__liter >= km:
+            self.__km = self.__km + km
+            self.__liter = self.__liter - km
+        else:
+            self.__km = self.__km + self.__liter
+            self.__liter = 0
+
+    def __str__(self):
+        return "Auto: ajettu {} km, bensaa {} litraa".format(self.__km, self.__liter)
+
+if __name__ == "__main__":
+    auto = Auto()
+    print(auto)
+    auto.tankkaa()
+    print(auto)
+    auto.aja(20)
+    print(auto)
+    auto.aja(50)
+    print(auto)
+    auto.aja(10)
+    print(auto)
+    auto.tankkaa()
+    auto.tankkaa()
+    print(auto)
