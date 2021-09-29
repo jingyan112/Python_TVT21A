@@ -578,3 +578,41 @@ if __name__ == "__main__":
     print(asema.viimeisin_havainto())       # Ukkosta
     print(asema.havaintojen_maara())        # 3
     print(asema)                            # Kumpula, 3 havaintoa
+
+#osa9-12
+"""
+Implement class Pankkitili with the following methods:
+- a constructor that gets the account owner(str), account number(str) and balance(float) as its parameters
+- talleta(summa: float) method by which money can be deposited into an account
+- nosta(summa: float) method that withdraws money from an account
+- __saldo method that returns the account balance
+- All attributes of the class are private
+- __palvelumaksu() method deducts one percent of the money from the account.
+The class calls this method whenever the client calls either of the methods talletaor nosta.
+The percentage is always deducted after the actual operation
+"""
+class Pankkitili:
+    def __init__(self, owner: str, number: str, balance: float):
+        self.__owner = owner
+        self.__number = number
+        self.__saldo = balance
+    
+    @property
+    def saldo(self):
+        return self.__saldo
+
+    def nosta(self, decrease: float):
+        self.__saldo = self.__saldo - decrease - self.__palvelumaksu(self.__saldo - decrease)
+
+    def talleta(self, add: float):
+        self.__saldo = self.__saldo + add - self.__palvelumaksu(self.__saldo + add)
+    
+    def __palvelumaksu(self, deduction: float):
+        return deduction*0.01
+
+if __name__ == "__main__":
+    tili = Pankkitili("Raimo Rahakas", "12345-6789", 1000)
+    tili.nosta(100)
+    print(tili.saldo)   # 891.0
+    tili.talleta(100)
+    print(tili.saldo)   # 981.09
