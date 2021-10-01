@@ -671,3 +671,26 @@ if __name__ == "__main__":
     luvut = [1, 1, 2, 1, 3, 3, 4, 5, 5, 5, 6, 5, 5, 5]
     print(ListaApuri.suurin_frekvenssi(luvut))          # 5
     print(ListaApuri.tuplia(luvut))                     # 3
+
+#osa9-15
+"""
+Make a class Tavara in which
+- the constructor gets the name and weight of the item (kg) in a private way.
+- nimi() method returns the name
+- paino() method returns the weight
+- __str__ method returns the infomation in this format: nimi (paino kg)
+
+Make a class Matkalaukku in which:
+- the constructor gets the maximum weight
+- lisaa_tavara() method that adds a parameter to the item to be placed in the suitcase.
+- __str__ method that returns the string format "x tavaraa (y kg)"
+- tulosta_tavarat() method which prints all the items in the suitcase
+- paino() method which returns an integer representing the total weight of the suitcase
+- raskain_tavara() method that returns the item with the highest weight.
+
+Make a class Lastiruuma in which:
+- the constructor to which the maximum weight is given
+- lisaa_matkalaukku method that adds a parameter to the hold of a given suitcase
+- __str__ method that returns the string format "x matkalaukkua, tilaa y kg"
+- tulosta_tavarat method that prints all the items in the holds of the hold.
+"""
