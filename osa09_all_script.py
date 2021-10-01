@@ -638,3 +638,36 @@ class Kaupunki:
 
     def __str__(self):
         return f"{self.__nimi} ({self.__asukasluku} as.)"
+
+#osa9-14
+"""
+Write a category ListaApuri that has the following two class methods:
+The method suurin_frekvenssi(lista: list) returns the item that appears the most in the given list
+The method tuplia(lista: list) returns the number of items that appear in the list at least twice
+The methods must be able to be used without creating an object from the class.
+"""
+class ListaApuri:
+    @classmethod
+    def suurin_frekvenssi(cls, lista: list):
+        element_count = {}
+        for element in lista:
+            if element not in element_count:
+                element_count[element] = lista.count(element)
+        return max(element_count, key = element_count.get)
+
+    @classmethod
+    def tuplia(cls, lista: list):
+        element_count = {}
+        for element in lista:
+            if element not in element_count:
+                element_count[element] = lista.count(element)
+        count = 0
+        for index, value in element_count.items():
+            if value >= 2:
+                count = count + 1
+        return count
+
+if __name__ == "__main__":
+    luvut = [1, 1, 2, 1, 3, 3, 4, 5, 5, 5, 6, 5, 5, 5]
+    print(ListaApuri.suurin_frekvenssi(luvut))          # 5
+    print(ListaApuri.tuplia(luvut))                     # 3
