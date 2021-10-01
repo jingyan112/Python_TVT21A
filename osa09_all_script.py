@@ -671,3 +671,119 @@ if __name__ == "__main__":
     luvut = [1, 1, 2, 1, 3, 3, 4, 5, 5, 5, 6, 5, 5, 5]
     print(ListaApuri.suurin_frekvenssi(luvut))          # 5
     print(ListaApuri.tuplia(luvut))                     # 3
+
+#osa9-15
+"""
+Make a class Tavara in which
+- the constructor gets the name and weight of the item (kg) in a private way.
+- nimi() method returns the name
+- paino() method returns the weight
+- __str__ method returns the infomation in this format: nimi (paino kg)
+
+Make a class Matkalaukku in which:
+- the constructor gets the maximum weight
+- lisaa_tavara() method that adds a parameter to the item to be placed in the suitcase.
+- __str__ method that returns the string format "x tavaraa (y kg)"
+- tulosta_tavarat() method which prints all the items in the suitcase
+- paino() method which returns an integer representing the total weight of the suitcase
+- raskain_tavara() method that returns the item with the highest weight.
+
+Make a class Lastiruuma in which:
+- the constructor to which the maximum weight is given
+- lisaa_matkalaukku method that adds a parameter to the hold of a given suitcase
+- __str__ method that returns the string format "x matkalaukkua, tilaa y kg"
+- tulosta_tavarat method that prints all the items in the holds of the hold.
+"""
+class Tavara:
+    def __init__(self, nimi: str, paino: int):
+        self.__nimi = nimi
+        self.__paino = paino
+    
+    def nimi(self):
+        return self.__nimi
+
+    def paino(self):
+        return self.__paino
+
+    def __str__(self):
+        return "{} ({} kg)".format(self.__nimi, self.__paino)    
+
+class Matkalaukku:
+    def __init__(self, max_paino: int):
+        self.max_paino = max_paino
+        self.stuff_list = []
+
+    def paino(self):
+        current_paino = 0
+        for element in self.stuff_list:
+            current_paino = current_paino + element.paino()
+        return current_paino
+
+    def lisaa_tavara(self, tavara: Tavara):
+        if self.paino() + tavara.paino() <= self.max_paino:
+            self.stuff_list.append(tavara)
+    
+    def tulosta_tavarat(self):
+        for element in self.stuff_list:
+            print("{} ({} kg)".format(element.nimi(), element.paino()))
+    
+    def raskain_tavara(self):
+        data_dic = {}
+        if len(self.stuff_list) == 0:
+            return None
+        else:
+            for element in self.stuff_list:
+                data_dic[element] = element.paino()
+            return max(data_dic, key = data_dic.get)
+        
+    def __str__(self):
+        if len(self.stuff_list) == 1:
+            return "{} tavara ({} kg)".format(len(self.stuff_list), self.paino())
+        else:
+            return "{} tavaraa ({} kg)".format(len(self.stuff_list), self.paino())
+    
+class Lastiruuma:
+    def __init__(self, max_paino: int):
+        self.max_paino = max_paino
+        self.stuff_list = []
+
+    def paino(self):
+        current_paino = 0
+        for element in self.stuff_list:
+            current_paino = current_paino + element.paino()
+        return current_paino
+
+    def lisaa_matkalaukku(self, matkalaukku: Matkalaukku):
+        if self.paino() + matkalaukku.paino() <= self.max_paino:
+            #for element in matkalaukku.stuff_list:
+            self.stuff_list.append(matkalaukku)
+
+    def tulosta_tavarat(self):
+        for class_mat in self.stuff_list:
+            for element in class_mat.stuff_list:
+                print("{} ({} kg)".format(element.nimi(), element.paino()))
+
+    def __str__(self):
+        if len(self.stuff_list) == 1:
+            return "{} matkalaukku, tilaa {} kg".format(len(self.stuff_list), self.max_paino - self.paino())
+        else:
+            return "{} matkalaukkua, tilaa {} kg".format(len(self.stuff_list), self.max_paino - self.paino())
+
+if __name__ == "__main__":
+    kirja = Tavara("Aapiskukko", 2)
+    puhelin = Tavara("Nokia 3210", 1)
+    tiiliskivi = Tavara("Tiiliskivi", 4)
+
+    adan_laukku = Matkalaukku(10)
+    adan_laukku.lisaa_tavara(kirja)
+    adan_laukku.lisaa_tavara(puhelin)
+
+    pekan_laukku = Matkalaukku(10)
+    pekan_laukku.lisaa_tavara(tiiliskivi)
+
+    lastiruuma = Lastiruuma(1000)
+    lastiruuma.lisaa_matkalaukku(adan_laukku)
+    lastiruuma.lisaa_matkalaukku(pekan_laukku)
+
+    print("Ruuman matkalaukuissa on seuraavat tavarat:")
+    lastiruuma.tulosta_tavarat()
