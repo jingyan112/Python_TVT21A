@@ -31,3 +31,52 @@ class KannettavaTietokone(Tietokone):
 if __name__ == "__main__":
     ipm = KannettavaTietokone("IPM MikroMauri", 1500, 2)
     print(ipm)  # IPM MikroMauri, 1500 MHz, 2 kg
+
+#osa10-2
+"""
+Make Pelimuseo class inherits the Pelivarasto class.
+In the Game Museum category, the method is re-implemented anna_pelit()
+so that it returns only games made before 1990 to the list.
+In addition, the class must have a constructor called the superclass Game Store constructor.
+The constructor has no parameters.
+"""
+class Tietokonepeli:
+    def __init__(self, nimi: str, julkaisija: str, vuosi: int):
+        self.nimi = nimi
+        self.julkaisija = julkaisija
+        self.vuosi = vuosi
+
+class Pelivarasto:
+    def __init__(self):
+        self.__pelit = []
+
+    def lisaa_peli(self, peli: Tietokonepeli):
+        self.__pelit.append(peli)
+
+    def anna_pelit(self):
+        return self.__pelit
+
+class Pelimuseo(Pelivarasto):
+    def __init__(self):
+        super().__init__()
+    
+    def lisaa_peli(self, peli: Tietokonepeli):
+        super().lisaa_peli(peli)
+    
+    def anna_pelit(self):
+        proper_game_list = []
+        for game in super().anna_pelit():
+            if game.vuosi <= 1990:
+                proper_game_list.append(game)
+        return proper_game_list
+
+if __name__ == "__main__":
+    museo = Pelimuseo()
+    museo.lisaa_peli(Tietokonepeli("Pacman", "Namco", 1980))
+    museo.lisaa_peli(Tietokonepeli("GTA 2", "Rockstar", 1999))
+    museo.lisaa_peli(Tietokonepeli("Bubble Bobble", "Taito", 1986))
+    for peli in museo.anna_pelit():
+        print(peli.nimi)    
+# Output:
+# Pacman
+# Bubble Bobble
