@@ -80,3 +80,41 @@ if __name__ == "__main__":
 # Output:
 # Pacman
 # Bubble Bobble
+
+#osa10-3
+"""
+Implement a class Nelio that inherits the class Suorakulmio.
+Unlike rectangle square all sides are the same length, that is,
+the square is a kind of simpler special case of a rectangle.
+The class must not define new attributes!
+"""
+class Suorakulmio:
+    def __init__(self, leveys: int, korkeus: int):
+        self.leveys = leveys
+        self.korkeus = korkeus
+
+    def __str__(self):
+        return f"suorakulmio {self.leveys}x{self.korkeus}"
+
+    def pinta_ala(self):
+        return self.leveys * self.korkeus
+
+class Nelio(Suorakulmio):
+    def __init__(self, side_length: int):
+        super().__init__(side_length, side_length)
+    
+    def __str__(self):
+        return "neliö {}x{}".format(self.leveys, self.korkeus)
+    
+    def pinta_ala(self):
+        super().pinta_ala()
+        return self.leveys * self.korkeus
+
+if __name__ == "__main__":
+    suorakulmio = Suorakulmio(2, 3)
+    print(suorakulmio)                              # suorakulmio 2x3
+    print("pinta-ala:", suorakulmio.pinta_ala())    # pinta-ala: 6
+
+    nelio = Nelio(4)
+    print(nelio)                                    # neliö  4x4
+    print("pinta-ala:", nelio.pinta_ala())          # pinta-ala: 16
