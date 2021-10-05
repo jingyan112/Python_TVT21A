@@ -439,3 +439,66 @@ if __name__ == "__main__":
     print(e4)
 
     e5 = e2-e1
+
+#osa10-8
+"""
+Implement Paivays class with the following characteristics:
+- makes it possible to handle dates, but do not use datetime module, and assume every month has 30 days
+- Implement the class body and its comparison operators <,>, == and! =
+- Implement operator + for the date, and do not change the original date
+- Implement an operator for the date that returns the difference in dates in days
+"""
+class Paivays:
+    def __init__(self, date: int, month: int, year: int):
+        self.date = date
+        self.month = month
+        self.year = year
+    
+    def __str__(self):
+        return "{}.{}.{}".format(self.date, self.month, self.year)
+
+    def __repr__(self):
+        if self.date >= 10:
+            if self.month >= 10:
+                return "{}{}{}".format(self.year, self.month, self.date)
+            else:
+                return "{}0{}{}".format(self.year, self.month, self.date)
+        else:
+            if self.month >= 10:
+                return "{}{}0{}".format(self.year, self.month, self.date)
+            else:
+                return "{}0{}0{}".format(self.year, self.month, self.date)
+            
+    def __eq__(self, toinen):
+        return int(self.__repr__()) == int(toinen.__repr__())
+    
+    def __lt__(self, toinen):
+        return int(self.__repr__()) < int(toinen.__repr__())
+    
+    def __gt__(self, toinen):
+        return int(self.__repr__()) > int(toinen.__repr__())
+    
+    def __ne__(self, toinen):
+        return int(self.__repr__()) != int(toinen.__repr__())
+    
+    # Assume every month has 30 days
+    def __add__(self, days: int):
+        new_date = Paivays(0, 0, 0)
+        new_date.year = self.year + days//360
+        new_date.month = self.month + days%360//30
+        new_date.date = self.date + days%360%30
+        if new_date.date > 30:
+            new_date.date = new_date.date - 30
+            new_date.month = new_date.month + 1
+        if new_date.month > 12:
+            new_date.month = new_date.month - 12
+            new_date.year = new_date.year + 1
+        return new_date
+    
+    def __sub__(self, dateb):
+        return abs((self.year-1)*360 + (self.month-1)*30 + self.date - (dateb.year-1)*360 - (dateb.month-1)*30 - dateb.date)
+
+if __name__ == "__main__":
+    pv1 = Paivays(19, 9, 1976)
+    pv2 = Paivays(9, 10, 1976)
+    print(pv2>pv1)              # True
