@@ -245,3 +245,59 @@ peli päättyi, voitot:
 pelaaja 1: 1
 pelaaja 2: 1
 """
+
+#osa10-5
+"""
+A class is ready in the task template SuperSankari.
+Write a class SuperRyhma that models a group of superheroes.
+The class must have the following characteristics:
+- Protected attributes name (string), domicile (string) and members (list)
+- A constructor that gets its name and domicile as its parameter in this order
+- Detection methods for name and domicile
+- A method lisaa_jasen(sankari: SuperSankari)that adds a new member to a group
+- A method tulosta_ryhmathat prints the information for a group and its members according to the example below
+
+Expected output:
+Output:
+Ryhmä Z, Kälviä
+Jäsenet:
+Supermiekkonen, superkyvyt: Supernopeus, supervoimakkuus
+Näkymätön Makkonen, superkyvyt: Näkymättömyys
+"""
+class SuperSankari:
+    def __init__(self, nimi: str, supervoimat: str):
+        self.nimi = nimi
+        self.supervoimat = supervoimat
+
+    def __str__(self):
+        return f'{self.nimi}, superkyvyt: {self.supervoimat}'
+
+class SuperRyhma():
+    def __init__(self, nimi: str, kotipaikka: str):
+        self._nimi = nimi
+        self._kotipaikka = kotipaikka
+        self._jasenet = []
+    
+    def nimi(self):
+        return self._nimi
+    
+    def kotipaikka(self):
+        return self._kotipaikka
+    
+    def lisaa_jasen(self, sankari: SuperSankari):
+        self._jasenet.append(sankari)
+    
+    def tulosta_ryhma(self):
+        print("{}, {}".format(self.nimi(), self.kotipaikka()))
+        print("Jäsenet:")
+        for element in self._jasenet:
+            print("{}, superkyvyt: {}".format(element.nimi, element.supervoimat))
+
+if __name__ == "__main__":
+    supermiekkonen = SuperSankari("Supermiekkonen", "Supernopeus, supervoimakkuus")
+    nakymaton = SuperSankari("Näkymätön Makkonen", "Näkymättömyys")
+    ryhma_z = SuperRyhma("Ryhmä Z", "Kälviä")
+
+    ryhma_z.lisaa_jasen(supermiekkonen)
+    ryhma_z.lisaa_jasen(nakymaton)
+    ryhma_z.tulosta_ryhma()
