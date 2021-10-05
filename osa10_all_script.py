@@ -363,3 +363,79 @@ if __name__ == "__main__":
     kutistus.tulosta_resepti("hokkuspokkus")
     kutistus.lisaa_aines("Sammakonkutuhhhhhh", 8.0, "hokkuspokkussss")
     kutistus.tulosta_resepti("pokkushokkus") # VÄÄRÄ SALASANA!
+
+#osa10-7
+"""
+Implement the following methods for Raha class:
+- __init__(self) method to construct the integer and decimal part of the money
+- __str__(self) method to make sure the value of money is printed in the right format
+- __eq__, __lt__, __gt__, __ne__ to compare the two different amounts of money
+- __add__, __sub__ to operate  the two different amounts of money, and return the object
+
+Expected output:
+7.70 eur
+1.80 eur
+Traceback (most recent call last):
+  File "raha.py", line 58, in <module>
+    e5 = e2-e1
+  File "raha.py", line 46, in __sub__
+    raise ValueError("negatiivinen tulos ei sallittu")
+ValueError: negatiivinen tulos ei sallittu
+"""
+class Raha:
+    def __init__(self, eurot: int, sentit: int):
+        self._eurot = eurot
+        self._sentit = sentit
+
+    def __str__(self):
+        if self._sentit < 10:
+            return f"{self._eurot}.0{self._sentit} eur"
+        else:
+            return f"{self._eurot}.{self._sentit} eur"
+
+    def __repr__(self):
+        if self._sentit < 10:
+            return float("{}.0{}".format(self._eurot, self._sentit))
+        else:
+            return float("{}.{}".format(self._eurot, self._sentit))
+
+    def __eq__(self, toinen):
+        return self.__repr__() == toinen.__repr__()
+    
+    def __lt__(self, toinen):
+        return self.__repr__() < toinen.__repr__()
+    
+    def __gt__(self, toinen):
+        return self.__repr__() > toinen.__repr__()
+    
+    def __ne__(self, toinen):
+        return self.__repr__() != toinen.__repr__()
+    
+    def __add__(self, toinen):
+        result = round(self.__repr__() + toinen.__repr__(), 2)
+        add_result = Raha(0, 0)
+        add_result._eurot = int(result)
+        add_result._sentit = int(round(result - add_result._eurot, 2) * 100)
+        return add_result
+
+    def __sub__(self, toinen):
+        result = round(self.__repr__() - toinen.__repr__(), 2)
+        if result >= 0:
+            sub_result = Raha(0, 0)
+            sub_result._eurot = int(result)
+            sub_result._sentit = int(round(result - sub_result._eurot, 2) * 100)
+            return sub_result
+        else:
+            raise ValueError("negatiivinen tulos ei sallittu")
+
+if __name__ == "__main__":
+    e1 = Raha(4, 75)
+    e2 = Raha(2, 95)
+
+    e3 = e1 + e2
+    e4 = e1 - e2
+
+    print(e3)
+    print(e4)
+
+    e5 = e2-e1
