@@ -118,3 +118,130 @@ if __name__ == "__main__":
     nelio = Nelio(4)
     print(nelio)                                    # neliö  4x4
     print("pinta-ala:", nelio.pinta_ala())          # pinta-ala: 16
+
+#osa10-4
+"""
+Implement class PisinSana that inherits from class Sanapeli, which returns the winner with the longest word
+Implement class EnitenVokaaleja that inherits from class Sanapeli, which returns the winner with more vowels in the word
+Implement class KiviPaperiSakset that inherits from class Sanapeli,which returns the winner following stone, paper and scissors rules
+(Rock, Paper, Scissors) = (kivi, paperi, sakset)
+"""
+import random
+
+class Sanapeli():
+    def __init__(self, kierrokset: int):
+        self.voitot1 = 0
+        self.voitot2 = 0
+        self.kierrokset = kierrokset
+
+    def kierroksen_voittaja(self, pelaaja1_sana: str, pelaaja2_sana: str):
+        # arvotaan voittaja
+        return random.randint(1, 2)
+
+    def pelaa(self):
+        print("Sanapeli:")
+        for i in range(1, self.kierrokset+1):
+            print(f"kierros {i}")
+            vastaus1 = input("pelaaja1: ")
+            vastaus2 = input("pelaaja2: ")
+
+            if self.kierroksen_voittaja(vastaus1, vastaus2) == 1:
+                self.voitot1 += 1
+                print("pelaaja 1 voitti")
+            elif self.kierroksen_voittaja(vastaus1, vastaus2) == 2:
+                self.voitot2 += 1
+                print("pelaaja 2 voitti")
+            else:
+                pass # tasapeli
+
+        print("peli päättyi, voitot:")
+        print(f"pelaaja 1: {self.voitot1}")
+        print(f"pelaaja 2: {self.voitot2}")
+
+class PisinSana(Sanapeli):
+    def __init__(self, kierrokset: int):
+        super().__init__(kierrokset)
+
+    def kierroksen_voittaja(self, pelaaja1_sana: str, pelaaja2_sana: str):
+        if len(pelaaja1_sana) > len(pelaaja2_sana):
+            return 1
+        elif len(pelaaja1_sana) < len(pelaaja2_sana):
+            return 2
+        else:
+            pass
+
+class EnitenVokaaleja(Sanapeli):
+    def __init__(self, kierrokset: int):
+        super().__init__(kierrokset)
+
+    def kierroksen_voittaja(self, pelaaja1_sana: str, pelaaja2_sana: str):
+        counter1 = pelaaja1_sana.count('ä') + pelaaja1_sana.count('a') + pelaaja1_sana.count('å') + pelaaja1_sana.count('e') + pelaaja1_sana.count('i') + pelaaja1_sana.count('o') + pelaaja1_sana.count('ö') + pelaaja1_sana.count('u') + pelaaja1_sana.count('y')
+        counter2 = pelaaja2_sana.count('ä') + pelaaja2_sana.count('a') + pelaaja2_sana.count('å') + pelaaja2_sana.count('e') + pelaaja2_sana.count('i') + pelaaja2_sana.count('o') + pelaaja2_sana.count('ö') + pelaaja2_sana.count('u') + pelaaja2_sana.count('y')
+        if counter1 > counter2:
+            return 1
+        elif counter1 < counter2:
+            return 2
+        else:
+            pass
+
+class KiviPaperiSakset(Sanapeli):
+    def __init__(self, kierrokset: int):
+        super().__init__(kierrokset)
+    
+    def kierroksen_voittaja(self, pelaaja1_sana: str, pelaaja2_sana: str):
+        if pelaaja1_sana in ["kivi", "paperi", "sakset"] and pelaaja2_sana in ["kivi", "paperi", "sakset"]:
+            if pelaaja1_sana == "kivi":         # rock
+                if pelaaja2_sana == "paperi":
+                    return 2
+                elif pelaaja2_sana == "sakset":
+                    return 1
+                else:
+                    pass
+            elif pelaaja1_sana == "paperi":     # paper
+                if pelaaja2_sana == "kivi":
+                    return 1
+                elif pelaaja2_sana == "sakset":
+                    return 2
+                else:
+                    pass
+            elif pelaaja1_sana == "sakset":     # scissors
+                if pelaaja2_sana == "kivi":
+                    return 2
+                elif pelaaja2_sana == "paperi":
+                    return 1
+                else:
+                    pass
+            else:
+                pass
+        elif pelaaja1_sana in ["kivi", "paperi", "sakset"] and pelaaja2_sana not in ["kivi", "paperi", "sakset"]:
+            return 1
+        elif pelaaja1_sana not in ["kivi", "paperi", "sakset"] and pelaaja2_sana in ["kivi", "paperi", "sakset"]:
+            return 2
+        else:
+            pass
+
+
+
+if __name__ == "__main__":
+    p = KiviPaperiSakset(3)
+    p.pelaa()
+
+"""
+Example:
+yanjing@yanjingdeMacBook-Pro src % cd /Users/yanjing/Downloads/osa10/*/src; python3 *.py
+Sanapeli:
+kierros 1
+pelaaja1: kivi
+pelaaja2: laiva
+pelaaja 1 voitti
+kierros 2
+pelaaja1: dynamiitti
+pelaaja2: sakset
+pelaaja 2 voitti
+kierros 3
+pelaaja1: auto
+pelaaja2: mopo
+peli päättyi, voitot:
+pelaaja 1: 1
+pelaaja 2: 1
+"""
