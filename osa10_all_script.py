@@ -502,3 +502,38 @@ if __name__ == "__main__":
     pv1 = Paivays(19, 9, 1976)
     pv2 = Paivays(9, 10, 1976)
     print(pv2>pv1)              # True
+
+#osa10-9
+"""
+Make the class Kauppalista iterable and the code block in main function can work properly
+"""
+class Kauppalista:
+    def __init__(self):
+        self.tuotteet = []
+
+    def tuotteita(self):
+        return len(self.tuotteet)
+
+    def lisaa(self, tuote: str, maara: int):
+        self.tuotteet.append((tuote, maara))
+
+    def __iter__(self):
+        self.n = 0
+        return self
+    
+    def __next__(self):
+        if self.n < self.tuotteita():
+            element = self.tuotteet[self.n]
+            self.n += 1
+            return element
+        else:
+            raise StopIteration    
+
+if __name__ == "__main__":
+    lista = Kauppalista()
+    lista.lisaa("banaanit", 10)
+    lista.lisaa("omenat", 5)
+    lista.lisaa("ananas", 1)
+
+    for tuote in lista:
+        print(f"{tuote[0]}: {tuote[1]} kpl")
