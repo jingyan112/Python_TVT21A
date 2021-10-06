@@ -309,3 +309,22 @@ def yleisimmat_sanat(tiedoston_nimi: str, raja: int):
 
 if __name__ == "__main__":
     print(yleisimmat_sanat("comprehensions.txt", 4))        # {'comprehension': 4, 'list': 4}
+
+#osa10-13
+"""
+Write a recursive function listaan_lukuja(luvut: list) that adds numbers to the list
+until the length of the list is divisible by five.
+Each number added to the list is always one greater than the last number in the list.
+
+Output:
+[1, 3, 4, 5, 10, 11, 12, 13, 14, 15]
+"""
+def listaan_lukuja(luvut: list):
+    if len(luvut)%5 != 0:
+        luvut.append(luvut[-1]+1)
+        listaan_lukuja(luvut)
+
+if __name__ == "__main__":
+    luvut = [1,3,4,5,10,11]
+    listaan_lukuja(luvut)
+    print(luvut)
