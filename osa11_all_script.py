@@ -272,3 +272,20 @@ if __name__ == "__main__":
     print(f"asuntoa {a3.kuvaus} halvemmat vaihtoehdot:")
     for alkio in halvemmat(asunnot, a3):
         print(f"{alkio[0].kuvaus:30} hintaero {alkio[1]} euroa")
+
+#osa11-11
+"""
+Using a dictionary compilation with a conditional part to  pituudet(merkkijonot: list)
+gets a list of strings as a parameter
+returns a dictionary with keys as list strings and values ​​as string lengths.
+
+Output:
+{'suo': 3, 'kuokka': 6, 'python': 6, 'ja': 2, 'koodari': 7}
+"""
+def pituudet(merkkijonot: list):
+    return {item: len(item) for item in merkkijonot}
+
+if __name__ == "__main__":
+    sanalista = ["suo", "kuokka" , "python", "ja", "koodari"]
+    sanojen_pituudet = pituudet(sanalista)
+    print(sanojen_pituudet)
