@@ -157,3 +157,19 @@ if __name__ == "__main__":
     oikea = Lottorivi(8, [1,2,3,10,20,30,33])
     oma_rivi = [1,4,7,10,11,20,30]
     print(oikea.osumat_paikoillaan(oma_rivi))   # [1, -1, -1, 10, -1, 20, 30]
+
+#osa11-8
+"""
+Using a list compilation with a conditional part to implement suodata_kielletyt(merkkijono: str, kielletyt: str)
+returns a newstring in its parameter that does not contain any characters from its second parameter.
+
+Output:
+Suo kuokka ja python hieno yhdistelmä
+"""
+def suodata_kielletyt(merkkijono: str, kielletyt: str):
+    return "".join([element for element in list(merkkijono) if element not in list(kielletyt)])
+
+if __name__ == "__main__":
+    lause = "Suo! kuokka, ja python: hieno yhdistelmä!??!?!"
+    suodatettu = suodata_kielletyt(lause, "!?:,.")
+    print(suodatettu)
