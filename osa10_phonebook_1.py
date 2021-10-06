@@ -1,5 +1,8 @@
 #osa10-10
 # Phonebook category {"name1": ["number1", "number2",...], ...}
+"""
+Expand your solution with a command 3 that allows you to search for a name by number. 
+"""
 class Puhelinluettelo:
     def __init__(self):
         self.__henkilot = {}
@@ -109,3 +112,31 @@ class PuhelinluetteloSovellus:
 
 sovellus = PuhelinluetteloSovellus()
 sovellus.suorita()
+
+"""
+
+Examples:
+komennot:
+0 lopetus   # end
+1 lisäys    # add: name and telephone number
+2 haku      # search
+3 haku numeron perusteella      # search by number
+
+komento: 1
+nimi: Erkki
+numero: 02-123456
+
+komento: 1
+nimi: Erkki
+numero: 045-4356713
+
+komento: 3
+numero: 02-123456
+Erkki
+
+komento: 3
+numero: 0100100
+tuntematon numero
+
+komento: 0
+"""
