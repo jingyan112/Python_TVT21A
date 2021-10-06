@@ -328,3 +328,23 @@ if __name__ == "__main__":
     luvut = [1,3,4,5,10,11]
     listaan_lukuja(luvut)
     print(luvut)
+
+#osa10-14
+"""
+Write a recursive function def summa(luku: int) that calculate the summa(luku: int)sum 1 + 2 + ... + luku.
+
+Output:
+6
+15
+55
+"""
+def summa(luku: int):
+    if luku <= 1:
+        return luku
+    return luku + summa(luku-1)
+
+if __name__ == "__main__":
+    tulos = summa(3)
+    print(tulos)
+    print(summa(5))
+    print(summa(10))
