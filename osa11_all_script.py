@@ -115,3 +115,18 @@ if __name__ == "__main__":
     lukuja = [1,65, 32, -6, 9, 11]
     print(poista_pienemmat(lukuja, 10))
     print(poista_pienemmat([-4, 7, 8, -100], 0))
+
+#osa11-6
+"""
+Using a list compilation with a conditional part to implement vokaalilla_alkavat(sanat: list)
+gets a list of strings as its parameter
+returns a new list that contains only those words from the original list that begin with a vowel (a, e, i, o, u, y, ä, ö)
+Both uppercase and lowercase letters must be valid.
+"""
+def vokaalilla_alkavat(sanat: list):
+    return [element for element in sanat if element[0].lower() in ["a", "e", "i", "o", "u", "y", "ä", "ö"]]
+
+if __name__ == "__main__":
+    klista = ["auto","mopo","Etana","kissa","Koira","OMENA","appelsiini"]
+    for vok in vokaalilla_alkavat(klista):
+        print(vok)
