@@ -275,7 +275,7 @@ if __name__ == "__main__":
 
 #osa11-11
 """
-Using a dictionary compilation with a conditional part to  pituudet(merkkijonot: list)
+Using a dictionary compilation with a conditional part to implement pituudet(merkkijonot: list)
 gets a list of strings as a parameter
 returns a dictionary with keys as list strings and values ​​as string lengths.
 
@@ -289,3 +289,23 @@ if __name__ == "__main__":
     sanalista = ["suo", "kuokka" , "python", "ja", "koodari"]
     sanojen_pituudet = pituudet(sanalista)
     print(sanojen_pituudet)
+
+#osa11-12
+"""
+Using a dictionary compilation with a conditional part to implement yleisimmat_sanat(tiedoston_nimi: str, raja: int)
+gets the file name as its parameter
+returns a dictionary that contains the number of occurrences of the words not less than raja
+Note: The punctuation should be removed first, otherwise, they will influence the count()
+"""
+import string
+def yleisimmat_sanat(tiedoston_nimi: str, raja: int):
+    all_info = ""
+    with open(tiedoston_nimi) as file_name:
+        for line in file_name:
+            all_info += line.replace("\n", " ")
+    all_info = "".join([element for element in list(all_info) if element not in string.punctuation])
+    word_list = all_info.split(" ")
+    return {word: word_list.count(word) for word in word_list if word_list.count(word) >= raja}
+
+if __name__ == "__main__":
+    print(yleisimmat_sanat("comprehensions.txt", 4))        # {'comprehension': 4, 'list': 4}
