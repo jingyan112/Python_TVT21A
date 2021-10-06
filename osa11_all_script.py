@@ -1,6 +1,7 @@
 #osa11-1
 """
 Using a list compilation to implement neliojuuret(luvut: list)
+gets a list of integers as a parameter
 returns a list of the square roots of the numbers in the parameter.
 
 Output:
@@ -21,6 +22,7 @@ if __name__ == "__main__":
 #osa11-2
 """
 Using a list compilation to implement tahtirivit(luvut: list)
+ gets a list of integers as a parameter
 returns a list consisting of rows of stars whose length corresponds to the numbers in the list in the parameter.
 
 Output:
@@ -79,3 +81,19 @@ if __name__ == "__main__":
     suoritus3 = Koesuoritus("Paavo",2,1,3)
     suoritukset = [suoritus1, suoritus2, suoritus3]
     print(parhaat_tulokset(suoritukset))
+
+#osa11-4
+"""
+Using a list compilation to implement pituudet(listat: list)
+gets a list containing lists that contain integers
+returns a list containing the lengths of the lists in the parameter.
+
+Output:
+[5, 4, 0]
+"""
+def pituudet(listat: list):
+    return [len(element) for element in listat]
+
+if __name__ == "__main__":
+    listat = [[1,2,3,4,5], [324, -1, 31, 7],[]]
+    print(pituudet(listat))
