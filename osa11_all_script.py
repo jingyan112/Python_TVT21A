@@ -130,3 +130,30 @@ if __name__ == "__main__":
     klista = ["auto","mopo","Etana","kissa","Koira","OMENA","appelsiini"]
     for vok in vokaalilla_alkavat(klista):
         print(vok)
+
+#osa11-7
+"""
+Implement a class Lottorivi
+- the constructor gets a round number (integer) and a seven-item integer list
+- osumien_maara(pelattu_rivi: list) method returns times of hits of the element in pelattu_rivi to the seven-item integer list
+- osumat_paikoillaan(pelattu_rivi: list) method returns a new list has the hitting numbers in their old places and others are replaced by -1 
+"""
+class Lottorivi:
+    def __init__(self, round_num: int, seven_item: list):
+        self.round_num = round_num
+        self.seven_item = seven_item
+    
+    def osumien_maara(self, pelattu_rivi: list):
+        return len([element for element in pelattu_rivi if element in self.seven_item])
+    
+    def osumat_paikoillaan(self, pelattu_rivi: list):
+        return [element if element in self.seven_item else -1 for element in pelattu_rivi]
+
+if __name__ == "__main__":
+    oikea = Lottorivi(5, [1,2,3,4,5,6,7])
+    oma_rivi = [1,4,7,11,13,19,24]
+    print(oikea.osumien_maara(oma_rivi))    # 3
+
+    oikea = Lottorivi(8, [1,2,3,10,20,30,33])
+    oma_rivi = [1,4,7,10,11,20,30]
+    print(oikea.osumat_paikoillaan(oma_rivi))   # [1, -1, -1, 10, -1, 20, 30]
