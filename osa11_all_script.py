@@ -97,3 +97,21 @@ def pituudet(listat: list):
 if __name__ == "__main__":
     listat = [[1,2,3,4,5], [324, -1, 31, 7],[]]
     print(pituudet(listat))
+
+#osa11-5
+"""
+Using a list compilation with a conditional part to implement poista_pienemmat(luvut: list, raja: int)
+gets a list of integers and a limit value that is also an integer
+returns a new list with numbers below the limit value omitted.
+
+Output:
+[65, 32, 11]
+[7, 8]
+"""
+def poista_pienemmat(luvut: list, raja: int):
+    return [element for element in luvut if element >= raja]
+
+if __name__ == "__main__":
+    lukuja = [1,65, 32, -6, 9, 11]
+    print(poista_pienemmat(lukuja, 10))
+    print(poista_pienemmat([-4, 7, 8, -100], 0))
