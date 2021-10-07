@@ -63,3 +63,53 @@ if __name__ == "__main__":
     print("IMDB:n mukainen pistemäärä")
     for sarja in jarjesta_pisteiden_mukaan(sarjat):
         print(f"{sarja['nimi']}  {sarja['pisteet']}")
+
+#osa12-4
+"""
+Implement pituuden_mukaan(reitit: list) to sort the list based on the pituus attribute of the class descendingly.
+Implement vaikeuden_mukaan(reitit: list) to sort the list based on the grade attribute of the class descendingly,
+if the grades are same, then based on the pituus attribute of the class descendingly.
+
+Output:
+Kantti, pituus 38 metriä, grade 6A+
+Syncro, pituus 14 metriä, grade 8C+
+Pieniä askelia, pituus 12 metriä, grade 6A+
+Smooth operator, pituus 11 metriä, grade 7A
+
+Syncro, pituus 14 metriä, grade 8C+
+Smooth operator, pituus 11 metriä, grade 7A
+Kantti, pituus 38 metriä, grade 6A+
+Pieniä askelia, pituus 12 metriä, grade 6A+
+"""
+class Kiipeilyreitti:
+    def __init__(self, nimi: str, pituus: int, grade: str):
+        self.nimi = nimi
+        self.pituus = pituus
+        self.grade = grade
+
+    def __str__(self):
+        return f"{self.nimi}, pituus {self.pituus} metriä, grade {self.grade}"
+
+def pituuden_mukaan(reitit: list):
+    def class_item(class_item: Kiipeilyreitti):
+        return class_item.pituus
+    return sorted(reitit, key = class_item, reverse = True)
+
+def vaikeuden_mukaan(reitit: list):
+    def class_item(class_item: Kiipeilyreitti):
+        return (class_item.grade, class_item.pituus)
+    return sorted(reitit, key = class_item, reverse = True)
+
+if __name__ == "__main__":
+    r1 = Kiipeilyreitti("Kantti", 38, "6A+")
+    r2 = Kiipeilyreitti("Smooth operator", 11, "7A")
+    r3 = Kiipeilyreitti("Syncro", 14, "8C+")
+    r4 = Kiipeilyreitti("Pieniä askelia", 12, "6A+")
+
+    reitit = [r1, r2, r3, r4]
+
+    for reitti in pituuden_mukaan(reitit):
+        print(reitti)
+    print()
+    for reitti in vaikeuden_mukaan(reitit):
+        print(reitti)
