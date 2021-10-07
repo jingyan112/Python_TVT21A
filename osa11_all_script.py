@@ -348,3 +348,28 @@ if __name__ == "__main__":
     print(tulos)
     print(summa(5))
     print(summa(10))
+
+#osa11-15
+"""
+Using recursion algrithorim to implement sulut_tasapainossa(merkkijono: str)
+which checks whether the each "opening" parenthesis/square bracket in the string has its own "closing" parenthesis/square bracket.
+return True if so, otherwise, return False
+"""
+def sulut_tasapainossa(merkkijono: str):
+    merkkijono = "".join(element for element in list(merkkijono) if element in ["(", "[", ")", "]"])
+    if len(merkkijono) == 0:
+        return True
+    if (merkkijono[0] == '(' and merkkijono[-1] != ')') or (merkkijono[0] == '[' and merkkijono[-1] != ']') or merkkijono[0] == ')' or merkkijono[0] == ']':
+        return False
+    return sulut_tasapainossa(merkkijono[1:-1])
+
+if __name__ == "__main__":
+    print(sulut_tasapainossa("(((())))"))                           # True
+    print(sulut_tasapainossa("()())"))                              # False
+    print(sulut_tasapainossa(")()"))                                # False
+    print(sulut_tasapainossa("()(())"))                             # False
+    print(sulut_tasapainossa("([([])])"))                           # True
+    print(sulut_tasapainossa("(python versio [3.7]) käytä tätä!"))  # True
+    print(sulut_tasapainossa("(()]"))                               # False
+    print(sulut_tasapainossa("([huono)]"))                          # False
+    print(sulut_tasapainossa("(x)y)"))                              # False
