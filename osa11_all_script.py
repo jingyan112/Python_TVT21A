@@ -490,3 +490,104 @@ if __name__ == "__main__":
     print(laske_alaiset(t1))
     print(laske_alaiset(t4))
     print(laske_alaiset(t5))
+
+#osa11-18
+"""
+Implement a class Tehtava (task):
+- with attributes: id, description, software comapny name, estimation of workload, complete_status
+  - the id starts from 1 (the first task to be created gets an id of 1, the next an id of 2, etc)
+  - the complete_status of the task is False at the time it is created
+- the complete_status of the task can be checked with trhe method on_valmis(self)
+- the complete_status of the task can be marked by calling the method merkkaa_valmiiksi(self)
+
+Implement a class Tilauskirja which compiles all the Tehtava objects:
+- lisaa_tilaus(self, kuvaus, koodari, tyomaara) method add a new order to the order book
+- kaikki_tilaukset(self) method returns all tasks
+- koodarit(self) method returns as a list all software comapny names in the tasks without repeating
+- merkkaa_valmiiksi(self, id: int) marks the task with id as completed, if no matching, raise ValueError
+- valmiit_tilaukset(self) method returns a list of complete tasks
+- ei_valmiit_tilaukset(self) method returns a list of unfinished tasks
+- koodarin_status(self, koodari: str) method returns a tuple of tasks with koodari, if no matching, raise ValueError
+  (complete_tasks, unfinished_tasks, complete_tasks_workload, unfinished_tasks_workload)
+"""
+class id_generator:
+    def __init__(self):
+        self.count = 0
+    
+    def id_caller(self):
+        self.count += 1
+        return self.count
+
+# kuvaus(description), koodari(software comapny name), tyomaara(estimation of workload)
+class Tehtava:
+    global id_counting
+    id_counting = id_generator()
+
+    def __init__(self, kuvaus: str, koodari: str, tyomaara: int, complete_status: bool = False):
+        self.id = id_counting.id_caller()
+        self.kuvaus = kuvaus
+        self.koodari = koodari
+        self.tyomaara = tyomaara
+        self.complete_status = complete_status
+    
+    def on_valmis(self):
+        return self.complete_status
+    
+    def merkkaa_valmiiksi(self):
+        self.complete_status = True
+
+    def __str__(self):
+        if self.on_valmis():
+            return "{}: {} ({} tuntia), koodari {} VALMIS".format(self.id, self.kuvaus, self.tyomaara, self.koodari)   
+        else:
+            return "{}: {} ({} tuntia), koodari {} EI VALMIS".format(self.id, self.kuvaus, self.tyomaara, self.koodari)
+
+class Tilauskirja:
+    def __init__(self):
+        self.task_list = []
+
+    def lisaa_tilaus(self, kuvaus: str, koodari: str, tyomaara: int):
+        self.task_list.append(Tehtava(kuvaus, koodari, tyomaara))
+    
+    def kaikki_tilaukset(self):
+        return self.task_list
+    
+    def koodarit(self):
+        return list(set([element.koodari for element in self.task_list]))
+
+    def merkkaa_valmiiksi(self, id: int):
+        matching_times = 0
+        for element in self.task_list:
+            if id == element.id:
+                element.merkkaa_valmiiksi()
+                matching_times += 1
+        if matching_times == 0:
+            raise ValueError("No matching")
+    
+    def valmiit_tilaukset(self):
+        return [element for element in self.task_list if element.on_valmis()]
+    
+    def ei_valmiit_tilaukset(self):
+        return [element for element in self.task_list if not element.on_valmis()]
+    
+    def koodarin_status(self, koodari: str):
+        matching_times = 0
+        completed_tasks = 0
+        completed_tasks_workload = 0
+        unfinished_tasks = 0
+        unfinished_tasks_workload =0
+
+        for element in self.task_list:
+            if element.koodari == koodari:
+                matching_times += 1
+                if element.on_valmis():
+                    completed_tasks += 1
+                    completed_tasks_workload += element.tyomaara
+                else:
+                    unfinished_tasks += 1
+                    unfinished_tasks_workload += element.tyomaara
+        
+        if matching_times == 0:
+            raise ValueError("No matching")
+        else:
+            return (completed_tasks, unfinished_tasks, completed_tasks_workload, unfinished_tasks_workload)
