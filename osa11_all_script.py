@@ -454,3 +454,39 @@ if __name__ == "__main__":
     puu.oikea_lapsi = Alkio(4)
     puu.oikea_lapsi.oikea_lapsi = Alkio(11)
     print(suurin_alkio(puu))    # 48
+
+#osa11-17
+"""
+Make a function laske_alaiset(tyontekija: Tyontekija) that recursively 
+calculates the number of subordinates of a given employee.
+"""
+# class Tyontekija, describe the employee name and his/her subordinates
+class Tyontekija:
+    def __init__(self, nimi: str):
+        self.nimi = nimi
+        self.alaiset = []
+
+    def lisaa_alainen(self, tyontekija: 'Tyontekija'):
+        self.alaiset.append(tyontekija)
+
+def laske_alaiset(tyontekija: Tyontekija):
+    subordinates = len(tyontekija.alaiset)
+    for element in tyontekija.alaiset:
+        subordinates += laske_alaiset(element)
+    return subordinates
+
+if __name__ == "__main__":
+    t1 = Tyontekija("Sasu")
+    t2 = Tyontekija("Erkki")
+    t3 = Tyontekija("Matti")
+    t4 = Tyontekija("Emilia")
+    t5 = Tyontekija("Antti")
+    t6 = Tyontekija("Kjell")
+    t1.lisaa_alainen(t4)
+    t1.lisaa_alainen(t6)
+    t4.lisaa_alainen(t2)
+    t4.lisaa_alainen(t3)
+    t4.lisaa_alainen(t5)
+    print(laske_alaiset(t1))
+    print(laske_alaiset(t4))
+    print(laske_alaiset(t5))
