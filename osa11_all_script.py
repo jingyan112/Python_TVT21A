@@ -373,3 +373,84 @@ if __name__ == "__main__":
     print(sulut_tasapainossa("(()]"))                               # False
     print(sulut_tasapainossa("([huono)]"))                          # False
     print(sulut_tasapainossa("(x)y)"))                              # False
+
+#osa11-16
+"""
+Traverse the binary tree and find the node with the largest value
+
+Output:
+original target:  2
+original target:  3
+original target:  15
+after target:  15
+original target:  15
+after target:  15
+target, juuri.arvo, suurin_alkio(juuri.vasen_lapsi) (15, 3, 15)
+original target:  48
+after target:  48
+original target:  48
+after target:  48
+target, juuri.arvo, suurin_alkio(juuri.oikea_lapsi) (48, 3, 48)
+after target:  48
+original target:  3
+original target:  15
+after target:  15
+original target:  15
+after target:  15
+target, juuri.arvo, suurin_alkio(juuri.vasen_lapsi) (15, 3, 15)
+original target:  48
+after target:  48
+original target:  48
+after target:  48
+target, juuri.arvo, suurin_alkio(juuri.oikea_lapsi) (48, 3, 48)
+after target:  48
+target, juuri.arvo, suurin_alkio(juuri.vasen_lapsi) (48, 2, 48)
+original target:  4
+original target:  11
+after target:  11
+original target:  11
+after target:  11
+target, juuri.arvo, suurin_alkio(juuri.oikea_lapsi) (11, 4, 11)
+after target:  11
+original target:  4
+original target:  11
+after target:  11
+original target:  11
+after target:  11
+target, juuri.arvo, suurin_alkio(juuri.oikea_lapsi) (11, 4, 11)
+after target:  11
+target, juuri.arvo, suurin_alkio(juuri.oikea_lapsi) (48, 2, 11)
+after target:  48
+48
+"""
+# class Alkio, describing a binary tree
+class Alkio:
+    def __init__(self, arvo, vasen_lapsi:'Alkio' = None, oikea_lapsi:'Alkio' = None):
+        self.arvo = arvo                # root node
+        self.vasen_lapsi = vasen_lapsi  # left node
+        self.oikea_lapsi = oikea_lapsi  # right node
+
+def suurin_alkio(juuri: Alkio):
+    target = juuri.arvo
+    #print("original target: ", target)
+
+    if juuri.vasen_lapsi is not None:
+        target = max(target, juuri.arvo, suurin_alkio(juuri.vasen_lapsi))
+        #print("target, juuri.arvo, suurin_alkio(juuri.vasen_lapsi)", (target, juuri.arvo, suurin_alkio(juuri.vasen_lapsi)))
+
+    if juuri.oikea_lapsi is not None:
+        target = max(target, juuri.arvo, suurin_alkio(juuri.oikea_lapsi))
+        #print("target, juuri.arvo, suurin_alkio(juuri.oikea_lapsi)", (target, juuri.arvo, suurin_alkio(juuri.oikea_lapsi)))
+    
+    #print("after target: ", target)
+
+    return target
+
+if __name__ == "__main__":
+    puu = Alkio(2)
+    puu.vasen_lapsi = Alkio(3)
+    puu.vasen_lapsi.vasen_lapsi = Alkio(15)
+    puu.vasen_lapsi.oikea_lapsi = Alkio(48)
+    puu.oikea_lapsi = Alkio(4)
+    puu.oikea_lapsi.oikea_lapsi = Alkio(11)
+    print(suurin_alkio(puu))    # 48
