@@ -437,3 +437,65 @@ if __name__ == "__main__":
 
     for suoritus in kurssin_suorittajat([s1, s2, s3, s4], "Tietoliikenteen perusteet"):
         print(suoritus)
+
+#osa12-13
+"""
+Implement a function kaikkien_opintopisteiden_summa that gets a list of classes
+returns the sum of each class's opintopisteet attribute
+
+Implement a function hyvaksyttyjen_opintopisteiden_summa that gets a list of classes
+returns the sum of each class's opintopisteet attribute only when the class's arvosana attribute is more than 0
+
+Implement a function keskiarvo that gets a list of classes
+returns the average of the class's arvosana attribute, only including the classes with arvosana attribute more than 0
+
+Output:
+20
+15
+4.0
+"""
+from functools import reduce
+
+class Suoritus:
+    def __init__(self, kurssi: str, arvosana: int, opintopisteet: int):
+        self.kurssi = kurssi
+        self.arvosana = arvosana
+        self.opintopisteet = opintopisteet
+
+    def __str__(self):
+        return f"{self.kurssi} ({self.opintopisteet} op) arvosana {self.arvosana}"
+
+def kaikkien_opintopisteiden_summa(suoritusset: list):
+    def summaaja(summa, suoritus):
+        return summa + suoritus.opintopisteet
+    return reduce(summaaja, suoritusset, 0)
+
+def hyvaksyttyjen_opintopisteiden_summa(suoritusset: list):
+    def summaaja(summa, suoritus):
+        return summa + suoritus.opintopisteet
+    filter_res = filter(lambda suoritus: suoritus.arvosana > 0 , suoritusset)
+    return reduce(summaaja, filter_res, 0)
+
+def keskiarvo(suoritusset: list):
+    def length(suoritusset: list):
+        return [suoritus for suoritus in suoritusset if suoritus.arvosana > 0]
+    def summaaja(summa, suoritus):
+        return summa + suoritus.arvosana
+    filter_res = filter(lambda suoritus: suoritus.arvosana > 0 , suoritusset)
+    return reduce(summaaja, filter_res, 0)/len(length(suoritusset))  
+    """
+    Another method:
+    filter_res = list(map(lambda suoritus: suoritus.arvosana, filter(lambda suoritus: suoritus.arvosana > 0 , suoritusset)))
+    return sum(filter_res)/len(filter_res)
+    """
+
+if __name__ == "__main__":
+    s1 = Suoritus("Ohjelmoinnin perusteet", 5, 5)
+    s2 = Suoritus("Ohjelmoinnin jatkokutssi", 0, 5)
+    s3 = Suoritus("Tietorakenteet ja algoritmit", 3, 10)
+    summa = kaikkien_opintopisteiden_summa([s1, s2, s3])
+    print(summa)
+    summa = hyvaksyttyjen_opintopisteiden_summa([s1, s2, s3])
+    print(summa)
+    summa = keskiarvo([s1, s2, s3])
+    print(summa)
