@@ -370,3 +370,70 @@ if __name__ == "__main__":
     print()
     for nimi in kurssien_nimet([s1, s2, s3]):
         print(nimi, end = ", ")
+
+#osa12-12
+"""
+Implement a function hyvaksytyt(suoritukset: list) that gets the list of classes and 
+returns a list of classes with arvosana not less than 1.
+
+Implement a function suoritus_arvosanalla(suoritukset: list, arvosana: int) that gets the list of classes and an integer
+returns a list of classes with arvosana equals the second parameter.
+
+Implement a function kurssin_suorittajat(suoritukset: list, kurssi: str) that the list of classes and a string
+returns a list of opiskelijan_nimi in alphabetical order of classes with kurssi equals the second parameter and arvosana greater than zero.
+
+Output:
+Pekka Python, arvosana kurssilta Ohjelmoinnin perusteet 3
+Olivia Ohjelmoija, arvosana kurssilta Ohjelmoinnin perusteet 5
+
+Pekka Python, arvosana kurssilta Ohjelmoinnin perusteet 3
+Pekka Python, arvosana kurssilta Tietoliikenteen perusteet 3
+Olivia Ohjelmoija, arvosana kurssilta Johdatus yliopistomatematiikkaan 3
+
+Niilo Nörtti
+Olivia Ohjelmoija
+"""
+class Suoritus:
+    def __init__(self, opiskelijan_nimi: str, kurssi: str, arvosana: int):
+        self.opiskelijan_nimi = opiskelijan_nimi
+        self.kurssi = kurssi
+        self.arvosana = arvosana
+
+    def __str__(self):
+        return f"{self.opiskelijan_nimi}, arvosana kurssilta {self.kurssi} {self.arvosana}"
+
+def hyvaksytyt(suoritukset: list):
+    return filter(lambda suoritus: suoritus.arvosana >= 1, suoritukset)
+
+def suoritus_arvosanalla(suoritukset: list, arvosana: int):
+    return filter(lambda suoritus: suoritus.arvosana == arvosana, suoritukset)
+
+def kurssin_suorittajat(suoritukset: list, kurssi: str):
+    result = filter(lambda suoritus: suoritus.kurssi == kurssi and suoritus.arvosana > 0, suoritukset)
+    return sorted(map(lambda suoritus: suoritus.opiskelijan_nimi, result))
+
+if __name__ == "__main__":
+    s1 = Suoritus("Pekka Python", "Ohjelmoinnin perusteet", 3)
+    s2 = Suoritus("Olivia Ohjelmoija", "Ohjelmoinnin perusteet", 5)
+    s3 = Suoritus("Pekka Python", "Ohjelmoinnin jatkokurssi", 0)
+
+    for suoritus in hyvaksytyt([s1, s2, s3]):
+        print(suoritus)
+    print()
+
+    s1 = Suoritus("Pekka Python", "Ohjelmoinnin perusteet", 3)
+    s2 = Suoritus("Olivia Ohjelmoija", "Ohjelmoinnin perusteet", 5)
+    s3 = Suoritus("Pekka Python", "Tietoliikenteen perusteet", 3)
+    s4 = Suoritus("Olivia Ohjelmoija", "Johdatus yliopistomatematiikkaan", 3)
+
+    for suoritus in suoritus_arvosanalla([s1, s2, s3, s4], 3):
+        print(suoritus)
+    print()
+
+    s1 = Suoritus("Pekka Python", "Ohjelmoinnin perusteet", 3)
+    s2 = Suoritus("Olivia Ohjelmoija", "Tietoliikenteen perusteet", 5)
+    s3 = Suoritus("Pekka Python", "Tietoliikenteen perusteet", 0)
+    s4 = Suoritus("Niilo Nörtti", "Tietoliikenteen perusteet", 3)
+
+    for suoritus in kurssin_suorittajat([s1, s2, s3, s4], "Tietoliikenteen perusteet"):
+        print(suoritus)
