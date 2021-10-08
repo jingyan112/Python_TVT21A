@@ -237,3 +237,25 @@ if __name__ == "__main__":
     print(eniten_maaleja(joukkue))
     print(eniten_pisteita(joukkue))
     print(vahiten_minuutteja(joukkue))
+
+#osa12-7
+"""
+Implement a function hae(tuotteet: list, kriteeri: callable),
+where the second parameter is a function that gets one double of the product as the parameter and returns the true value.
+The function returns those of the products given by the parameter in the list that fulfill the criterion.
+
+Output:
+[('omena', 3.95, 3), ('Kaali', 0.99, 1)]
+[('banaani', 5.95, 12), ('vesimeloni', 4.95, 22)]
+"""
+def hae(tuotteet: list, kriteeri = lambda t: True):
+    new_list = []
+    for item in tuotteet:
+        if kriteeri(item):
+            new_list.append(item)
+    return new_list
+
+if __name__ == "__main__":
+    tuotteet = [("banaani", 5.95, 12), ("omena", 3.95, 3), ("appelsiini", 4.50, 2), ("vesimeloni", 4.95, 22), ("Kaali", 0.99, 1)]
+    print(hae(tuotteet, lambda t: t[1] < 4))
+    print(hae(tuotteet, lambda t: t[2] > 10))
