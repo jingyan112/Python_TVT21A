@@ -259,3 +259,26 @@ if __name__ == "__main__":
     tuotteet = [("banaani", 5.95, 12), ("omena", 3.95, 3), ("appelsiini", 4.50, 2), ("vesimeloni", 4.95, 22), ("Kaali", 0.99, 1)]
     print(hae(tuotteet, lambda t: t[1] < 4))
     print(hae(tuotteet, lambda t: t[2] > 10))
+
+#osa12-8
+"""
+Write a generator function parilliset(alku: int, maksimi: int) that gets its parameter initial value and maximum.
+The function produces even numbers from the initial value. When the maximum is reached, the generator stops.
+
+Output:
+2 4 6 8 10
+12 14 16 18 20
+"""
+def parilliset(alku: int, maksimi: int):
+    for index in range(alku, maksimi+1):
+        if index % 2 == 0:
+            luku = index
+            yield luku
+        index = index + 1
+
+if __name__ == "__main__":
+    for luku in parilliset(2, 10):
+        print(luku, end = " ")
+    print()
+    for luku in parilliset(11, 21):
+        print(luku, end = " ")
