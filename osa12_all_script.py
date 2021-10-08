@@ -191,3 +191,49 @@ if __name__ == "__main__":
 
     for kallio in vaikeimman_reitin_mukaan(kalliot):
         print(kallio)
+
+#osa12-6
+"""
+Given the class Palloilija describing ball player: name, number, goals, entries, minutes of play
+Using lambda method to:
+- Implement eniten_maaleja(joukkue: list) which returns the player name with highest maalit
+- Implement eniten_pisteita(joukkue: list) which returns the player name and player number with highest sum of maalit and goals
+- Implement vahiten_minuutteja(joukkue: list) which returns the class of the player with least minutes of play
+
+Output:
+Kelju Kojootti
+('Uka Naakka', 9)
+Palloilija(nimi=Hessu Hopo, pelinumero=4, maalit=3, syotot=9, minuutit=12)
+"""
+class Palloilija:
+    def __init__(self, nimi: str, pelinumero: int, maalit: int, syotot: int, minuutit: int):
+        self.nimi = nimi
+        self.pelinumero = pelinumero
+        self.maalit = maalit
+        self.syotot = syotot
+        self.minuutit = minuutit
+
+    def __str__(self):
+        return (f'Palloilija(nimi={self.nimi}, pelinumero={self.pelinumero}, '
+            f'maalit={self.maalit}, syotot={self.syotot}, minuutit={self.minuutit})')
+
+def eniten_maaleja(joukkue: list):
+    return sorted(joukkue, key=lambda class_item: class_item.maalit)[-1].nimi
+
+def eniten_pisteita(joukkue: list):
+    result = sorted(joukkue, key=lambda class_item: class_item.maalit + class_item.syotot)[-1]
+    return (result.nimi, result.pelinumero)
+
+def vahiten_minuutteja(joukkue: list):
+    return sorted(joukkue, key=lambda class_item: class_item.minuutit)[0]
+
+if __name__ == "__main__":
+    pelaaja1 = Palloilija("Kelju Kojootti", 13, 5, 12, 46)
+    pelaaja2 = Palloilija("Maantiekiitäjä", 7, 2, 26, 55)
+    pelaaja3 = Palloilija("Uka Naakka", 9, 1, 32, 26)
+    pelaaja4 = Palloilija("Pelle Peloton", 12, 1, 11, 41)
+    pelaaja5 = Palloilija("Hessu Hopo", 4, 3, 9, 12)
+    joukkue = [pelaaja1, pelaaja2, pelaaja3, pelaaja4, pelaaja5]
+    print(eniten_maaleja(joukkue))
+    print(eniten_pisteita(joukkue))
+    print(vahiten_minuutteja(joukkue))
