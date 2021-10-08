@@ -282,3 +282,30 @@ if __name__ == "__main__":
     print()
     for luku in parilliset(11, 21):
         print(luku, end = " ")
+
+#osa12-9
+"""
+Write a generator function alkuluvut() that creates a new generator.
+The generator returns the prime numbers one by one, starting from 2 in order.
+Note that the generator never stops, but returns more numbers as long as they are requested.
+
+Output:
+2 3 5 7 11 13 17 19
+"""
+def alkuluvut():
+    luku = 2
+    index = 3
+    while True:
+        flag = 0
+        for i in range(2, index):
+            if index % i == 0:
+                flag = flag + 1
+        if flag == 0:
+            yield luku
+            luku = index
+        index = index + 1
+
+if __name__ == "__main__":
+    luvut = alkuluvut()
+    for i in range(8):
+        print(next(luvut), end = " ")
