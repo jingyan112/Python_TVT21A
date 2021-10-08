@@ -499,3 +499,38 @@ if __name__ == "__main__":
     print(summa)
     summa = keskiarvo([s1, s2, s3])
     print(summa)
+
+#osa12-14
+import re
+"""
+Implement on_viikonpaiva(merkkijono: str) that returns True if the parameter is the abbreviation of the day of the week (ma, ti, ke, to, pe, la tai su).
+Implement kaikki_vokaaleja(merkkijono: str) that returns True if all the characters in the parameter are vowels.
+Implement kellonaika(merkkijono: str) that returns True if the parameter is time format tt:mm:ss.
+"""
+def on_viikonpaiva(merkkijono: str):
+    for day in ["ma", "ti", "ke", "to", "pe", "la tai su"]:
+        if re.search(merkkijono, day):
+            return True
+    return False
+
+def kaikki_vokaaleja(merkkijono: str):
+    for character in merkkijono:
+        if character not in ["a", "e", "i", "o", "u", "y", "ä", "ö", "å"]:
+            return False
+    return True
+
+def kellonaika(merkkijono: str):
+    if re.search("[0-2][0-9]:[0-5][0-9]:[0-5][0-9]", merkkijono) and int(merkkijono.split(":")[0]) <= 24:
+        return True
+    return False
+
+if __name__ == "__main__":
+    print(on_viikonpaiva("ma"))                     # True
+    print(on_viikonpaiva("pe"))                     # True
+    print(on_viikonpaiva("tu"))                     # False
+    print(kaikki_vokaaleja("eioueioieoieouyyyy"))   # True
+    print(kaikki_vokaaleja("autoooo"))              # False
+    print(kellonaika("12:43:01"))                   # True
+    print(kellonaika("AB:01:CD"))                   # False
+    print(kellonaika("17:59:59"))                   # True
+    print(kellonaika("33:66:77"))                   # False
