@@ -309,3 +309,26 @@ if __name__ == "__main__":
     luvut = alkuluvut()
     for i in range(8):
         print(next(luvut), end = " ")
+
+#osa12-10
+"""
+Make a function sanageneraattori(kirjaimet: str, pituus: int, maara: int) that generates and
+returns a generator that generates random words using the given parameters.
+A random word is formed by selecting pituus pieces of letters from a selection kirjaimet.
+The same letter may appear in the word many times.
+The generator returns maarapieces of words before it stops.
+"""
+import random
+
+def sanageneraattori(kirjaimet: str, pituus: int, maara: int):
+    def random_string(kirjaimet: str, pituus: int):
+        result = ""
+        for i in range(0, pituus):
+            result += kirjaimet[random.randint(0, len(kirjaimet)-1)]
+        return result
+    return (random_string(kirjaimet, pituus) for i in range(maara))
+
+if __name__ == "__main__":
+    sanagen = sanageneraattori("abcdefg", 3, 5)
+    for sana in sanagen:
+        print(sana)
