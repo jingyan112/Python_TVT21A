@@ -191,4 +191,3 @@ if __name__ == "__main__":
 
     for kallio in vaikeimman_reitin_mukaan(kalliot):
         print(kallio)
-    print()
