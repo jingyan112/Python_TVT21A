@@ -45,3 +45,27 @@ while True:
     for tapahtuma in pygame.event.get():
         if tapahtuma.type == pygame.QUIT:
             exit()
+
+#osa13-3
+"""
+Draw 10*10 robots in the whole window with overlapping
+"""
+import pygame
+
+pygame.init()
+naytto = pygame.display.set_mode((640, 480))
+
+robo = pygame.image.load("robo.png")
+leveys = robo.get_width()
+korkeus = robo.get_height()
+
+naytto.fill((0, 0, 0))
+for row in range(1, 11):
+    for row1 in range(0, 10):
+        naytto.blit(robo, ((640 - leveys*10)/2 + leveys*row1 + row*6, korkeus + row*6))
+pygame.display.flip()
+
+while True:
+    for tapahtuma in pygame.event.get():
+        if tapahtuma.type == pygame.QUIT:
+            exit()
