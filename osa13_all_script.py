@@ -170,3 +170,47 @@ while True:
             nopeus = -nopeus
 
     kello.tick(60)
+
+#osa13-7
+"""
+Make two robotes keep moving left and right, once it reaches the boundry, chgange the direction
+The moving speed of the second robot is twice of the first robot
+"""
+import pygame
+
+pygame.init()
+naytto = pygame.display.set_mode((640, 480))
+
+robo = pygame.image.load("robo.png")
+
+x1 = 0
+x2 = 0
+y1 = robo.get_width()*2
+y2 = robo.get_width()*4
+nopeus1 = 1
+nopeus2 = 2
+kello = pygame.time.Clock()
+
+while True:
+    for tapahtuma in pygame.event.get():
+        if tapahtuma.type == pygame.QUIT:
+            exit()
+
+    naytto.fill((0, 0, 0))
+    naytto.blit(robo, (x1, y1))
+    naytto.blit(robo, (x2, y2))
+    pygame.display.flip()
+    
+    x1 += nopeus1
+    if nopeus1 > 0 and x1 + robo.get_width() >= 640:
+        nopeus1 = -nopeus1
+    if nopeus1 < 0 and x1 <= 0:
+        nopeus1 = -nopeus1
+
+    x2 += nopeus2
+    if nopeus2 > 0 and x2 + robo.get_width() >= 640:
+        nopeus2 = -nopeus2
+    if nopeus2 < 0 and x2 <= 0:
+        nopeus2 = -nopeus2
+
+    kello.tick(60)
