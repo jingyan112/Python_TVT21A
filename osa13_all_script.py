@@ -69,3 +69,28 @@ while True:
     for tapahtuma in pygame.event.get():
         if tapahtuma.type == pygame.QUIT:
             exit()
+
+#osa13-4
+"""
+Draw 1000 robots randomly distributing in thge whole window
+"""
+import random
+import pygame
+
+pygame.init()
+naytto = pygame.display.set_mode((640, 480))
+
+robo = pygame.image.load("robo.png")
+leveys = robo.get_width()
+korkeus = robo.get_height()
+
+naytto.fill((0, 0, 0))
+for i in range(0, 1000):
+    coordinate = (random.randint(0, 640 - leveys), random.randint(0, 480 - korkeus))
+    naytto.blit(robo, (coordinate[0], coordinate[1]))
+pygame.display.flip()
+
+while True:
+    for tapahtuma in pygame.event.get():
+        if tapahtuma.type == pygame.QUIT:
+            exit()
